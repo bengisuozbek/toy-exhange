@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %} 
+  <div class="row">
+    <div class="col-sm-12 mb-3">
+        <h4 class="text-center"> Welcome! {{ user.username }} </h4>
+    </div>
+  </div>
+
+  <section class="py-2 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <p class="lead text-muted">Hello. </p>
+        <p>If you want to share more fun and enjoy it, you should take a look here.</p>
+        <p>
+          <!-- href  url 'category' %} -->
+          <a href="#" class="btn btn-secondary my-2">All of the Toys</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+<!--
+  <h7>Dynamic content</h7>
+  <p style="font-size:1vw">The library has the following record counts:</p>
+  <ul>
+    <li><strong style="font-size:1vw">Product Variety:</strong> {{ num_products }}</li>
+    <li><strong style="font-size:1vw">Number of the Product:</strong> {{ num_instances }}</li>
+    <li><strong style="font-size:1vw">Copies available:</strong> {{ num_instances_available }}</li>
+    <li><strong style="font-size:1vw">Customers:</strong> {{ num_customers }}</li>
+  </ul>
+-->
+<h2>Dynamic content</h2>
+
+<p>The library has the following record counts:</p>
+<ul>
+  <li><strong>Toys:</strong> {{ num_products }}</li>
+  <li><strong>Toys available:</strong> {{ num_instances_available }}</li>
+</ul>
+
+<p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+  <br>
+  
+  <!-- STATUS WILL BE ADDED !!!!!!!!!!
+  
+    include status.html 
+
+  -->
+
+
+
+  {% include 'main/cards.html' %}
+
+{% endblock %}

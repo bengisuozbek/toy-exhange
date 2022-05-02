@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Support Approved {% endblock %}
+
+{% block content %}
+<h1>Thank you for your inquiry</h1>
+<p>Your contact information and message was successfully submitted.</p>
+
+<div class="col-md">
+    <p>If you want to return Toys page, you can click the button.</p>
+    <a class="btn btn-light" style="background-color: rgba(130, 129, 129, 0.6);" href="{% url 'all_toys' %}">Back</a> 
+</div>
+
+{% endblock %}

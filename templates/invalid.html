@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Invalid Form {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<h1>Thank you for your inquiry</h1>
+<p>The information you entered could not be saved, please try again.</p>
+
+<div class="col-md">
+  <p>If you want to return Toys page, you can click the button.</p>
+  <!-- url 'all_toys' -->
+  <a class="btn btn-light" style="background-color: rgba(130, 129, 129, 0.6);" href="#">Back</a> 
+</div>
+
+{% endblock %}
