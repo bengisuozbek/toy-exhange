@@ -24,15 +24,35 @@ from catalog import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', include('catalog.urls')),
-    path('', RedirectView.as_view(url='index/')),
+    path('home/', views.home, name='home'),
 
+    path('allToys/', views.all_toys, name="all_toys"),
+    path('category/<int:pk>/', views.category, name="category"),
+    path('dashboard/', views.dashboard, name="dashboard"),
     path('support/', views.support, name="support"),
+
     path('searchbar/', views.searchbar, name="searchbar"),
     path('invalid/', views.invalid, name="invalid"),
-    path('home/', views.home, name='home'),
     
+    path('account/', views.accountSettings, name="account"),
     path('register/', views.register, name="register"),
     path('login/', views.loginPage, name="loginPage"),
     path('logout/', views.logout_view, name="logout"),
+
+    path('user/', views.userPage, name="user-page"),
+    path('customer/<str:pk>/', views.customer, name='customer'),
+
+    path('product/<int:pk>/', views.detail, name='detail'),
+   
+    path('addProduct/<int:pk>/', views.addProduct, name='addProduct'),
+    path('updateProduct/<int:pk>/', views.updateProduct, name='updateProduct'),
+    path('deleteProduct/<int:pk>/', views.deleteProduct, name='deleteProduct'),
+        
+    path('<int:pk>/add-comment/', views.add_comment, name='add_comment'),
+    path('<int:pk>/delete-comment/', views.delete_comment, name='delete_comment'),
+
+    path('add_request/<int:pk>/', views.add_request, name='add_request'),
+
+    path('', RedirectView.as_view(url='index/', permanent=True)),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

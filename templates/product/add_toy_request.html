@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{% url 'all_toys' %}" class="btn btn-light">Back</a>
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{% static  product_object.image.url %}" style="margin-left: 30%;"> 
+                </div>
+
+                <div class="col-md-12">
+                    <h4><strong>Name:</strong> {{ product_object.name }}</h4>
+
+                    <p><strong>Brand:</strong> {{ product_object.brand }}</p> <!-- author detail link not yet defined -->
+                    <p><strong>Age:</strong> {{ product_object.age }}</p>
+                    <p><strong>Image:</strong> {{ product_object.image }}</p>
+                    <p><strong>Category:</strong> {{ product_object.display_category }}</p>
+                    <p><strong>Description:</strong> {{ product_object.description }}</p>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-16">
+                    <div style="margin: 10px;">
+                        <div class="form-group">
+                            <h4><strong>Crete a Request for {{ product_object.name }}</strong></h4>
+                            <br>
+
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                            
+                                {% for field in form.visible_fields %}
+                                    <div class="form-group">
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field|add_class:'form-control' }}
+                                    {% for error in field.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                    </div>
+                                {% endfor %}
+
+                                <br>
+                                <h3>Choose the Toy you want to trade</h3>
+                                <div class="form-group">
+                                    <label for="sended_toy">Sender Toy</label>
+                                    <select id="toy_select" name="sended_toy" class="form-control">
+                                        <option value="0">
+                                            --SELECT--
+                                        </option>
+                                        {% for sender_toy in sender_toys %}
+                                        <option value="{{sender_toy}}">
+                                            {{ sender_toy.name }}
+                                        </option>
+                                        {% endfor %}
+                                      </select>
+                                </div>                         
+                                                
+                                <br>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-light" style="background: #6d7fcc !important;">
+                                    <span class="glyphicon glyphicon-ok"></span> Save
+                                    </button>
+                                    <button href="{% url 'detail' product_object.id %}" class="btn btn-light" >Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

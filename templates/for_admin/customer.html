@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Member Details {% endblock %}
+{% block content %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <div class="row">
+    <div class="col-md">
+          <div class="card card-body">
+                <h5>Customer:</h5>
+                <hr>
+                <a class="btn btn-light btn-sm" style="background-color: #641aeeb9;" href="">Update Customer</a>
+                <a class="btn btn-light btn-sm" style="background-color: #f7bb5bb5;" href="">Delete Customer</a>
+          </div>
+    </div>
+
+    <div class="col-md">
+      <div class="card card-body">
+          <h5>Contact Information</h5>
+          <hr>
+          <p>Email: {{customer.email}}</p>
+          <p>Phone: {{customer.phone}}</p>
+      </div>
+    </div>
+
+    <div class="col-md">
+      <div class="card card-body">
+          <h5>Member's Number of Toys</h5>
+          <hr>
+          <h1 style="text-align: center; padding: 10px">{{order_count}}</h1>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md">
+      <div class="card card-body">
+        <table class="table table-sm">
+          <tr>
+            <th>Toy Id</th>
+            <th>Toy</th>
+            <th>Image</th>
+            <th>Category</th>
+            <th>Date Created</th>
+            <th>Status</th>
+            <th>Owner</th>
+            <th>Update</th>
+            <th>Remove</th>
+          </tr>
+
+          {% for order in orders %}
+              <tr>
+                  <td>{{ order.id }}</td>
+                  <td>{{ order.name }}</td>
+                  <td>
+                    <img class="card-img-top" src="{% static  order.image.url %}" style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                  </td>
+                  <td>{{ order.display_category }}</td>
+                  <td>{{ order.dat_created }}</td>
+                  <td>{{ order.product_status }}</td>
+                  <td>{{ order.owner }}</td>
+                  <td><a class="btn btn-sm btn-light" href="">Update</a></td>
+                  <td><a class="btn btn-sm btn-dark" href="">Remove</a></td>
+              </tr>
+          {% endfor %}
+
+        </table>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

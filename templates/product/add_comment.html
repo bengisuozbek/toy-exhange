@@ -1,20 +1,14 @@
 {% extends 'base.html' %}
-{% load static %}
 {% load widget_tweaks %}
 
-{% block title %} Support Page {% endblock %}
+{% block title %} Add Comment {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-<div class="col-md-9">
-    <div class="col-md">
-        <a class="btn btn-light" style="background-color: rgba(130, 129, 129, 0.6);" href="{% url 'all_toys' %}">Back</a> 
-    </div>
-    <div class="card card-body">
-        <form method="POST" action="" >
+    <div class="form-group">
+        <form action="" method="POST">
             {% csrf_token %}
-
             {% for field in form.visible_fields %}
             <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
@@ -24,17 +18,13 @@
                 {% endfor %}
             </div>
             {% endfor %}
-
-            <div>
-                <br>
-            </div>
                             
             <div class="form-group">
-                <button type="submit" value="submit" class="btn btn-light" style="background: #6d7fcc !important;">
-                <span class="glyphicon glyphicon-ok"></span>  Submit
+                <button type="submit" class="btn btn-light" style="background: #6d7fcc !important;">
+                <span class="glyphicon glyphicon-ok"></span> Save
                 </button>
+                <button href="{% url 'detail' product_object.id %}" class="btn btn-light" >Cancel</button>
             </div>
-
         </form>
-</div>
+    </div>
 {% endblock %}

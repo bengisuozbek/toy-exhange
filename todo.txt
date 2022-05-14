@@ -1,0 +1,1 @@
+{% url 'inbox' %} --> navbar.çhtml  80.satır

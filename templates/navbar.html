@@ -13,34 +13,29 @@
       <div class="collapse navbar-collapse" id="navbarsExample06">
         <ul class="navbar-nav me-auto mb-2 mb-xl-0">
           <li class="nav-item">
-            <!--   url 'index' -->
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="hello-msg active" aria-current="page" href="{% url 'index' %}">Home</a>
           </li>
           <li class="nav-item">
-            <!-- url 'all_toys' -->
-            <a class="nav-link" href="#">All of the Toys</a>
+            <a class="hello-msg" href="{% url 'all_toys' %}">All of the Toys</a>
           </li>
 
           <!--admin-->
           {%if request.user.is_staff  %} 
             <li class="nav-item">
-              <!-- url 'dashboard' -->
-              <a class="nav-link" href="#">Dashboard</a>
+              <a class="hello-msg" href="{% url 'dashboard' %}">Dashboard</a>
             </li>
           {% elif user.is_authenticated %}
             <li class="nav-item">
-              <!--  url 'user-page'  -->
-              <a class="nav-link" href="#">My Toys</a>
+              <a class="hello-msg" href="{% url 'user-page' %}">My Toys</a>
             </li>
           {% endif %}
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+            <a class="hello-msg dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown06">
               {% for category in categories %}
                 <li class="list-group-item">
-                  <!--  url 'category' category.id  -->
-                  <a class="dropdown-item" href="#">{{ category.name }}</a>
+                  <a class="dropdown-item" href="{% url 'category' category.id %}">{{ category.name }}</a>
                 </li>
               {% endfor %}
             </ul>
@@ -68,30 +63,32 @@
         {% if user.is_authenticated %}
           <ul class="nav navbar-nav navbar-right">
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">{{request.user}}</a>
+              <a class="hello-msg dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown" aria-expanded="false">{{request.user}}</a>
               <ul class="dropdown-menu" aria-labelledby="dropdown06">
                 <li class="list-group-item">
-                  <!--  url 'home' -->
-                  <a class="dropdown-item" href="#">My Profile</a>
+                  <a class="dropdown-item" href="{% url 'home' %}">My Profile</a>
                 </li>
                 
                 <li class="list-group-item">
-                  <!--  url 'account'  -->
-                  <a class="dropdown-item" href="#">My Profile Settings</a>
+                  <a class="dropdown-item" href="{% url 'account' %}">My Profile Settings</a>
                 </li>
 
                 <li class="list-group-item">
-                  <!--  url 'user-page'  -->
-                  <a class="dropdown-item" href="#">My toys (Adding and Listed)</a>
+                  <a class="dropdown-item" href="{% url 'user-page' %}">My toys (Adding and Listed)</a>
                 </li>
 
                 <li class="list-group-item">
-                  <!-- url 'inbox'  -->
+                  <!-- url 'inbox'   -->
+                  <!-- DÜZELT -->
                   <a class="dropdown-item" href="#">Messages</a>
                 </li>
 
                 <li class="list-group-item">
                   <a class="dropdown-item" href="{% url 'support' %}">Support</a>
+                </li>
+
+                <li class="list-group-item">
+                  <a class="dropdown-item" href="{% url 'support' %}">Support11</a>
                 </li>
 
                 <li class="list-group-item">
@@ -105,7 +102,7 @@
             <span><a class="hello-msg" href="{% url 'loginPage' %}">Login</a></span>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <a class="dropdown-item" href="{% url 'support' %}">Support</a>
+            <a class="hello-msg" href="{% url 'support' %}">Support</a>
           </ul>
         {% endif %}
       </div>

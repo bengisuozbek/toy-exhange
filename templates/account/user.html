@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<div class="row">
+    <div class="col-md">
+      <div class="card card-body">
+        <table class="table table-sm">
+          <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Owner</th>
+          </tr>
+  
+          {% for product in user_products %}
+              <tr>
+                  <td>
+                    <img class="card-img-top" src="{% static  product.image.url %}" style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                  </td>
+                  <td>
+                    <a href="{% url 'detail' product.id %}">{{ product.name }}</a>
+                  </td> 
+                  <td>{{ product.brand }}</td>
+                  <td>{{ product.display_category }}</td>
+                  <td>{{ product.product_status }}</td>
+                  <td>{{ product.owner }}</td>
+                  <td><a href="{% url 'updateProduct' product.id %}" class="btn btn-light">Update</a></td>
+                  <td><a href="{% url 'deleteProduct' product.id %}" class="btn btn-light">Delete</a></td>
+              </tr>
+          {% endfor %}
+  
+        </table>
+      </div>
+
+      <div class="col-md-12 text-center">
+        <a href="{% url 'addProduct' user.id %}" type="button" class="btn btn-light" style="background-color: #c2a5f9;" >Add a New Toy</a>
+      </div>
+     
+    </div>
+  </div>
+
+{% endblock %}

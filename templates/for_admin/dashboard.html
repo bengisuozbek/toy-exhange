@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'accounts/status.html' %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<div class="row">
+    <div class="col-md-5">
+      <h5>Customers:</h5>
+      <hr>
+      <div class="card card-body">
+            <a class="btn btn-light btn-sm btn-block" style="background-color: #979696b0;" href="">Create Customer</a>
+            <table class="table table-sm">
+                <tr>
+                    <th></th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                </tr>
+
+                {% for customer in customers %}
+                <tr>
+                    <td><a class="btn btn-sm btn-light" href="{% url 'customer' customer.id %}">View</a></td>
+                    <td>{{customer.first_name}} {{customer.last_name}}</td> 
+                    <td>{{customer.phone}}</td>
+                </tr>
+                {% endfor %}
+
+            </table>        
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <h5>Toys:</h5>
+        <hr>
+        <div class="card card-body">
+              <table class="table table-sm">
+                    <tr>
+                        <th>Product</th>
+                        <th>Date Added</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
+
+                    {% for product in product_objects %}
+                    <tr>
+                        <td>{{product.name}}</td> 
+                        <td>{{product.date_created}}</td>
+                        <td>{{product.product_status}}</td>
+                        <td><a class="btn btn-sm btn-light" href="{% url 'updateProduct' product.id %}">Update</a></td>
+                        <td><a class="btn btn-sm btn-light" href="{% url 'deleteProduct' product.id %}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+              </table>        
+        </div>
+      </div>
+
+      <div>
+          <br>
+      </div>
+
+      <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Products</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Category</th>
+                    </tr>
+    
+                    {% for i in product_objects %}
+                        <tr>
+                            <td>
+                                <img src="{% static  i.image.url %}" style="width:100px;height:100px;" class="card-img-top"> 
+                            </td>
+                            <td>{{ i.name }}</td>
+                            <td>{{ i.display_category }} </td>
+                        </tr>    
+                    {% endfor %}
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
