@@ -1,1 +1,8 @@
 {% url 'inbox' %} --> navbar.çhtml  80.satır
+
+akakce.py -> sadece bir fiyat çekiliyor!!
+cimri.py -> ikinci fiyat çekilecek!
+
+pip3 install xlml
+
+///// NOT ! pip3 install django-adaptors

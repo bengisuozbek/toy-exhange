@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'widget_tweaks', # forms design
     'crispy_forms', # forms design
     
-    'catalog.apps.CatalogConfig', # new application is added
+    'price.apps.PriceConfig',     # new application is added
+    'catalog.apps.CatalogConfig',   # new application is added
 ]
 
 MIDDLEWARE = [
