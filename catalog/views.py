@@ -402,14 +402,17 @@ def detail(request, pk):
     else:
         form = CommentForm()
 
+    user = request.user.person
+
     context = {
         'product_object': product_object,
         'product_objects': product_objects,
         'categories': categories,
         'num_comments': num_comments,
         'comments': comments,
+        'user': user,
     }
-    return render(request, 'product/detail.html', context=context)
+    return render(request, 'product/detail3.html', context=context)
 
 
 def add_request(request, pk):
@@ -464,7 +467,7 @@ def dashboard(request):
         product_objects = ToyProduct.objects.filter(category__name = category)
 
 
-    customers = Person.objects.all()
+    customers = Person.objects.all() 
     orders = ToyProduct.objects.all()
 
     num_instances_available = ToyProduct.objects.filter(product_status__exact='a').count()

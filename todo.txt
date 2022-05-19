@@ -6,3 +6,25 @@ cimri.py -> ikinci fiyat çekilecek!
 pip3 install xlml
 
 ///// NOT ! pip3 install django-adaptors
+
+
+smtp şifrem güncellenecek
+
+COMMENT PHOTO DETAİLS KISMINDAN SİLİNEBİLİR!!
+
+views.py dosyasında FILE kontrolü eklenecek!!! Error ekle-> dosya eklenmemişse
+
+
+
+--> CSV dosyasında price kısmı için:  delimiter=',' DEĞİŞMELİ
+
+ for column in csv.reader(io_string, delimiter=',', quotechar='|'):
+        print(column[0])
+        print(column[1])
+        print(column[2])
+
+        _, created = akakce.objects.update_or_create(
+            serial_number = column[0],
+            name = column[1],
+            prices1 = (column[2]),
+        )

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms', # forms design
     
     'price.apps.PriceConfig',     # new application is added
+    'message.apps.MessageConfig',   # new application is added
     'catalog.apps.CatalogConfig',   # new application is added
 ]
 

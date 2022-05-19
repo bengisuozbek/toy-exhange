@@ -90,3 +90,5 @@ with open(file_name, 'w') as file:
         #print(Names[i])
         #print(Prices1[i])
 
+#print("Prices 1: ", Prices1[1])
+

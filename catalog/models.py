@@ -34,12 +34,12 @@ class Person(models.Model):
         default = uuid.uuid4,
     )
 
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, editable=False)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE, editable=False)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(default='', max_length=255, unique=True)
-    phone = models.CharField(max_length=100)
-    profile_pic = models.ImageField(default = "{% static 'images/profile.png' %}", null=True, blank=True)
+    phone = models.CharField(max_length=100)   
+    profile_pic = models.ImageField(default = "{% static 'profile.png' %}", null=True, blank=True)
 
     class Meta:
         ordering = ['last_name', 'first_name']
@@ -214,3 +214,4 @@ class Contact(models.Model): # for support page!
 
     def __str__(self):
         return self.email
+        

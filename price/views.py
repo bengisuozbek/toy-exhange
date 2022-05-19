@@ -15,7 +15,7 @@ def price_upload(request):
     template = "for_admin/price_upload.html"
 
     prompt = {
-        'product': 'Product information must include Sr.No, Name, Price1, Price2'
+        'product': 'Product information must include Sr.No, Name, Price1'
     }
 
     if request.method == 'GET':
@@ -36,13 +36,10 @@ def price_upload(request):
         print(column[1])
         print(column[2])
 
-        num = float(column[2]) 
-        print(num)
-
         _, created = akakce.objects.update_or_create(
             serial_number = column[0],
             name = column[1],
-            prices1 = column[2],
+            prices1 = (column[2]),
         )
 
     context = {}
