@@ -26,21 +26,32 @@ def price_upload(request):
     if not csv_file.name.endswith(".csv"):
         messages.error(request, 'This is not a csv file.')
 
-    data_set = csv_file.read().decode('UTF-8')
-    io_string = io.StringIO(data_set)
+    #data_set = csv_file.read().decode('UTF-8')
+    #io_string = io.StringIO(data_set)
 
-    next(io_string) # The first line is skipped
+    #next(io_string) # The first line is skipped
 
-    for column in csv.reader(io_string, delimiter=',', quotechar='|'):
-        print(column[0])
-        print(column[1])
-        print(column[2])
+    csvreader = csv.reader(request.FILES['file'])
+    header = next(csvreader)
+    print(header)
+    rows = []
+    for row in csvreader:
+        rows.append(row)
 
         _, created = akakce.objects.update_or_create(
-            serial_number = column[0],
-            name = column[1],
-            prices1 = (column[2]),
+            serial_number = row[0],
+            name = row[1],
+            prices1 = row[2],
         )
+    print(rows)
+    
+
+    #for column in csv.reader(io_string, delimiter=',', quotechar='|'):
+        #print(column[0])
+        #print(column[1])
+        #print(column[2])
+
+       #Create updated part
 
     context = {}
 

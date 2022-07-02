@@ -28,3 +28,21 @@ views.py dosyasında FILE kontrolü eklenecek!!! Error ekle-> dosya eklenmemişs
             name = column[1],
             prices1 = (column[2]),
         )
+
+
+css files için static/css ya da css/ olarak incele. Hangisinde css'ler inceleniyor.!!!!! CSS!!!
+
+
+
+
+
+## Settings'de Github ve Twitter eklenecek. 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+

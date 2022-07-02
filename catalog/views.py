@@ -276,6 +276,24 @@ def all_toys(request):
     }
     return render(request, 'all_toys.html', context=context)
 
+
+def toy_slider(request):
+    categories = Category.objects.all()
+
+    product_objects = ToyProduct.objects.all()
+ 
+    #paginator code 
+    product_objects = ToyProduct.objects.filter(product_status = 'a')
+    paginator = Paginator(product_objects, 6) #4 is changable!
+    page = request.GET.get('page')
+    product_objects = paginator.get_page(page)
+
+    context = {
+        'product_objects': product_objects,
+        'categories': categories,
+    }
+    return render(request, 'slider.html', context=context)
+
   
 
 def support(request):

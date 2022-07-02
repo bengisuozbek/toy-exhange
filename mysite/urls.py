@@ -30,6 +30,7 @@ urlpatterns = [
     path('home/', views.home, name='home'),
 
     path('allToys/', views.all_toys, name="all_toys"),
+    path('toyslider/', views.toy_slider, name="toy_slider"),
     path('category/<int:pk>/', views.category, name="category"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('support/', views.support, name="support"),
