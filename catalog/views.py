@@ -203,7 +203,7 @@ def userPage(request):
         'product_objects': product_objects,
         'categories': categories,
     }
-    return render(request, 'account/user.html', context)
+    return render(request, 'account_set/user.html', context)
 
 @login_required(login_url='loginPage')
 def accountSettings(request):
@@ -233,7 +233,7 @@ def accountSettings(request):
         'product_objects': product_objects,
         'categories': categories,
     }
-    return render(request, 'account/account_settings.html', context)
+    return render(request, 'account_set/account_settings.html', context)
 
 
 def category(request,pk):
@@ -277,7 +277,7 @@ def all_toys(request):
     return render(request, 'all_toys.html', context=context)
 
 
-def toy_slider(request):
+def privacy(request):
     categories = Category.objects.all()
 
     product_objects = ToyProduct.objects.all()
@@ -292,7 +292,7 @@ def toy_slider(request):
         'product_objects': product_objects,
         'categories': categories,
     }
-    return render(request, 'slider.html', context=context)
+    return render(request, 'privacy.html', context=context)
 
   
 

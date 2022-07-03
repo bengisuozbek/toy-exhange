@@ -18,10 +18,23 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
+from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
 
 from catalog import views
 
+
+#    path('', TemplateView.as_view(template_name="index.html")),
+#   For the above url, check the conditions! 
+
 urlpatterns = [
+
+    path('', TemplateView.as_view(template_name="index.html")),
+    path('accounts/', include('allauth.urls')),
+
+    # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('social-auth/', include('social_django.urls', namespace='social')),
+
     path('admin/', admin.site.urls),
     path('index/', include('catalog.urls')),
     path('upload/', include('price.urls')),
@@ -30,7 +43,7 @@ urlpatterns = [
     path('home/', views.home, name='home'),
 
     path('allToys/', views.all_toys, name="all_toys"),
-    path('toyslider/', views.toy_slider, name="toy_slider"),
+    path('privacy/', views.privacy, name="privacy"),
     path('category/<int:pk>/', views.category, name="category"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('support/', views.support, name="support"),

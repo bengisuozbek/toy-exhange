@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     'widget_tweaks', # forms design
     'crispy_forms', # forms design
     'social_django', # social auth app
+
+    # for google authentication
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     
     'price.apps.PriceConfig',     # new application is added
     'message.apps.MessageConfig',   # new application is added
@@ -120,9 +126,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.facebook.FacebookOAuth2',
-
     'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 # Internationalization
@@ -159,12 +165,33 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SITE_ID = 2
+
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/logout/'
 
 LOGIN_URL = 'catalog/login'
 LOGOUT_URL = 'catalog/logout'
+
+SOCIAL_AUTH_FACEBOOK_KEY = "453188142826932"
+SOCIAL_AUTH_FACEBOOK_SECRET = "93563f41be0e617641f7826f73665038"
+#for extra info
+SOCIAL_AUTH_FACEBOOK_SCOPE = [
+    'email',
+]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
