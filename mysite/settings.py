@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-)ihyy!x-(!x74n$ofwr&d1pbyy#2#z2a!+bih&vae_wluqc(kt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['toy-app-33.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['toy-app-33.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     
     'price.apps.PriceConfig',     # new application is added
     'message.apps.MessageConfig',   # new application is added
@@ -126,8 +127,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
@@ -174,7 +177,35 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
-    }
+    },
+
+     'facebook':
+        {
+         'METHOD': 'oauth2',
+         'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+         'SCOPE': ['email', 'public_profile'],
+         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+         'INIT_PARAMS': {'cookie': True},
+         'FIELDS': [
+             'id',
+             'first_name',
+             'last_name',
+             'name',
+             'name_format',
+             'picture',
+             'short_name'
+         ],
+         'EXCHANGE_TOKEN': True,
+         'LOCALE_FUNC': lambda request: 'ru_RU',
+         'VERIFIED_EMAIL': False,
+         'VERSION': 'v7.0',
+         # you should fill in 'APP' only if you don't create a Facebook instance at /admin/socialaccount/socialapp/
+         'APP': {
+             'client_id': '453188142826932',  # !!! THIS App ID
+             'secret': '93563f41be0e617641f7826f73665038',  # !!! THIS App Secret
+             'key': ''
+                }
+         }
 }
 
 SITE_ID = 2
@@ -192,6 +223,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = "93563f41be0e617641f7826f73665038"
 SOCIAL_AUTH_FACEBOOK_SCOPE = [
     'email',
 ]
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
