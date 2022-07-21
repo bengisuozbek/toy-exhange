@@ -4,51 +4,65 @@
 
 {% block content %}
 
- <div class="columns is-mobile">
+<!-- <div class="columns is-mobile">
   <div class="column is-offset-one-fifth">
-
-
-<div class="field has-addons">
-<form>
-  <div class="control">
-    <input class="input is-large" name="q" type="text" placeholder="Search users..." value="{{ request.GET.q }}">
+    <div class="field has-addons">
+      <form>
+        <div class="control">
+          <input class="input is-large" name="q" type="text" placeholder="Search users..." value="{{ request.GET.q }}">
+        </div>
+        <div class="control">
+          <button type="submit" class="button is-success">Search</button>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="control">
-  	<button type="submit" class="button is-success">Search</button>
-  </div>
-  </form>
-</div>
+</div> -->
 
-
-</div>
+<div class="column is-mobile">
+    <div class="column is-offset-one-fifth">
+      <div class="field has-addons">
+        <form action="{% url 'searchbar_user' %}" method="get" class="card card-sm-6">
+          <div class="input-group">
+              <div class="col">
+                  <input type="search" name="item_name" placeholder="Search for User"
+                  class="form-control form-control-borderless">
+              </div>
+              <div class="col-auto">
+                  <button class="btn btn-light" type="submit">Search</button>
+              </div>
+          </div>
+        </form> 
+      </div>
+      </div>
 </div>
 
 <div class="column is-one-quarter">
 
-{% for user in users %}
-<div class="box">
-  <article class="media">
-    <div class="media-left">
-      <figure class="image is-64x64">
+  {% for user in users %}
+  <div class="box">
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-64x64">
           {% if user.person.profile_pic %}
-            <img src="{{ user.person.profile_pic.url }}" alt="Placeholder image">
+          <img src="{{ user.person.profile_pic.url }}" alt="Placeholder image">
           {% else %}
-            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
           {% endif %}
-      </figure>
-    </div>
-    <div class="media-content">
-      <div class="content">
-        <p>
-          <strong>{{ user.person.first_name }} {{ user.person.last_name }}</strong><small>@{{ user.username }}</small>
-        </p>
-        <a href="{% url 'new_conversation' user.username %}" class="button is-info">Send a message!</a>
+        </figure>
       </div>
-    </div>
-  </article>
-</div>
-{% endfor %}
-	
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <strong>{{ user.person.first_name }} {{ user.person.last_name }}</strong><small>@{{ user.username }}</small>
+          </p>
+          <a href="{% url 'new_conversation' user.username %}" class="button is-info">Send a message!</a>
+        </div>
+      </div>
+    </article>
+  </div>
+  {% endfor %}
+
 
 </div>
 

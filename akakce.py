@@ -92,3 +92,20 @@ with open(file_name, 'w') as file:
 
 #print("Prices 1: ", Prices1[1])
 
+# IMAGE WEB SCRAPING :
+from urllib.request import urlopen
+
+""" htmldata = urlopen('https://www.geeksforgeeks.org/')
+soup = BeautifulSoup(htmldata, 'html.parser')
+images = soup.find_all('img')
+  
+for item in images:
+    print(item['src']) """
+
+htmldata = urlopen('https://www.akakce.com/model-bebek.html')
+soup = BeautifulSoup(htmldata, 'html.parser')
+images = soup.find_all('img')
+  
+for item in images:
+    print(item['src'])
+

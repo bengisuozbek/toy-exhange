@@ -80,14 +80,82 @@ for a in li_items_names:
             Prices2.append(i.get_text())
             index = 0
 
-file_name = 'cimri.csv'
+imageContent = []
+
+url = 'https://www.cimri.com/oyuncak-bebekler'
+r = requests.get(url)
+soup = BeautifulSoup(r.text, 'html.parser')
+
+
+img = soup.find('div', 's1cegxbo-1 cACjAF')
+images = img.find_all('img')
+
+#print(images)
+
+for image in images:
+    name = image['alt']
+    link = image['data-src']
+    imageContent.append(link.strip())
+    print(name, "lnk: ", link)
+
+
+file_name = 'cimri1111.csv'
 
 with open(file_name, 'w') as file:
     writer = csv.writer(file)
-    writer.writerow(['Sr.No', 'Name', 'Prices1', 'Prices2'])
+    writer.writerow(['Sr.No', 'Name', 'Prices1', 'Prices2', 'image'])
 
     for i in range(len(Names)):
-        writer.writerow([i, Names[i], Prices1[i], Prices2[i]])
+        writer.writerow([i, Names[i], Prices1[i], Prices2[i], imageContent[i]])
         #print(i)
         #print(Names[i])
         #print(Prices1[i])
+
+# IMAGE WEB SCRAPING :
+
+#https://www.cimri.com/oyuncak-bebekler/en-ucuz-barbie-fhy73-barbienin-ruya-evi-fiyatlari,403103312
+
+# def getdata(url): 
+#     r = requests.get(url) 
+#     return r.text 
+    
+# htmldata = getdata("https://www.cimri.com/oyuncak-bebekler/en-ucuz-barbie-fhy73-barbienin-ruya-evi-fiyatlari,403103312") 
+# soup = BeautifulSoup(htmldata, 'html.parser') 
+# b = 0
+# for item in soup.find_all('img'):
+#     b += 1
+#     print('b', b)
+#     print(item['src'])
+
+
+# def getdata(url): 
+#     r = requests.get(url) 
+#     return r.text 
+    
+# htmldata = getdata("https://www.cimri.com/oyuncak-bebekler/en-ucuz-barbie-fhy73-barbienin-ruya-evi-fiyatlari,403103312") 
+# soup = BeautifulSoup(htmldata, 'html.parser') 
+# images = []
+# imageContent = soup.find('li', class_="s1wxq1uo-2 iVTokt")
+# i= 0
+    
+# print(i) 
+
+# image_content = imageContent.find_all('img', {'class':'s51lp5-0 iRZUoF initial loading'})
+
+
+# for item in image_content:
+#     i += 1
+#     print(i) 
+#     string = i.text
+#     images.append( string.strip() )
+
+# # for item in soup.find_all('div', {'class':'m50b2p-0 iHtcZy'}):
+# #     for images in soup.find_all('img'):
+# #         print(images['src'])
+
+
+# print(i)
+# for item in soup.find_all('img', {'class':'s51lp5-0 cRlUpX loaded'}):
+#     i += 1
+#     print(i) 
+#     print(item['src'])

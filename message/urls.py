@@ -8,4 +8,5 @@ urlpatterns = [
     path('send/', views.send_direct, name='send_direct'),
     path('new/', views.user_search, name='user_search'),
     path('new/<username>/', views.new_conversation, name='user_search'),
+    path('searchbarUser/', views.searchbar_user, name="searchbar_user"),
 ]
