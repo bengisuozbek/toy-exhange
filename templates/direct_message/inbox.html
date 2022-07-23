@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<div class="columns is-mobile">
+  <div class="column is-one-quarter bg-light text-dark">
+    <aside class="menu">
+      <!-- <h4 class="title is-4">
+        Messages
+      </h4> -->
+      <p class="menu-label">MESSAGES</p>
+
+      <ul style="overflow-y: scroll; height: 400px" class="menu-list">
+        <li style="font-size: 12px;"><strong>Users:</strong> {{ num_users }} </li>
+        
+        {% for message in messages %}
+        <a class="{% if active_direct == message.user.username %}is-active{% endif %}" href="{% url 'directs' message.user.username %}">
+        <div class="box">
+          <article class="media">
+            <div class="media-left">
+              <figure class="image is-64x64">
+                {% if message.user.person.profile_pic %}
+                  <img src="{% static message.user.person.profile_pic.url %}" alt="Placeholder image">
+                {% else %}
+                  <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                {% endif %}
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p style="font-size: 12px;">
+                  <strong>{{ message.user.first_name }} {{ message.user.last_name }}</strong> 
+                  <small>@{{ message.user.username }}</small>
+                </p>
+              </div>
+
+              <!--
+                ADDED LATER:
+                <div class="content">
+                                {% if message.unread %}
+                                <p style="font-weight: bold; color: red;">
+                                  <i class="material-icons">mark_chat_unread</i> {{ message.unread }}
+                                </p>
+                                {% endif %}
+                              </div>
+              -->
+            </div>
+          </article>
+        </div>
+        </a>
+        {% endfor %}
+
+      </ul>
+    </aside>
+
+    <br>
+    <a href="{% url 'user_search' %}" class="button" style="background-color: #7386D5; color: whitesmoke;">New message</a>
+
+  </div>
+
+  <div class="column">
+    <div style="overflow-y: scroll; height: 400px">
+
+      <div class="box">
+        <article class="media">
+          <div class="media-left">
+          </div>
+          <div class="media-content">
+            <div class="content">
+              <p style="font-size: 12px;">
+                <strong>John Smith</strong> 
+                <small>@john</small> on: <strong><small>08/07/2022</small></strong>
+              </p>
+              <p style="font-size: 12px;"> 
+                Lorem ispsdfsfksdjfl jkdsfjkjjlfskdjdls sdklfjpeorjnbe ejieqqigikprowrjeg wergjlglödnaçşiasnv iQKFQWĞWJGEŞLBVLEMB.
+              </p>
+             </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="box">
+        <article class="media">
+          <div class="media-left">
+          </div>
+          <div class="media-content">
+            <div class="content">
+              <p style="font-size: 12px;">
+                <strong>John Smith</strong> 
+                <small>@john</small> on: <strong><small>08/07/2022</small></strong>
+              </p>
+              <p style="font-size: 12px;"> 
+                Lorem ispsdfsfksdjfl jkdsfjkjjlfskdjdls sdklfjpeorjnbe ejieqqigikprowrjeg wergjlglödnaçşiasnv iQKFQWĞWJGEŞLBVLEMB.
+              </p>
+             </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="box">
+        <article class="media">
+          <div class="media-left">
+          </div>
+          <div class="media-content">
+            <div class="content">
+              <p style="font-size: 12px;">
+                <strong>John Smith</strong> 
+                <small>@john</small> on: <strong><small>08/07/2022</small></strong>
+              </p>
+              <p style="font-size: 12px;"> 
+                Lorem ispsdfsfksdjfl jkdsfjkjjlfskdjdls sdklfjpeorjnbe ejieqqigikprowrjeg wergjlglödnaçşiasnv iQKFQWĞWJGEŞLBVLEMB.
+              </p>
+             </div>
+          </div>
+        </article>
+      </div>
+
+                  {% for direct in directs %}
+                  <div class="box">
+                    <article class="media">
+                      <div class="media-left">
+                      </div>
+                      <div class="media-content">
+                        <div class="content">
+                          <p>
+                            <strong>{{ direct.sender.person.first_name }} {{ direct.sender.person.last_name }}</strong> 
+                            <small>@{{direct.sender.username }}</small> on: <strong><small>{{ direct.date|date:'N d G:i'}}</small></strong>
+                          </p>
+                          {{ direct.body }}
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                  {% endfor %}
+    </div>
+
+    <form role="form" method="POST" action="{% url 'send_direct' %}">
+      {% csrf_token %}
+      <article class="media">
+        <figure class="media-left">
+          <p class="image is-64x64">
+            <img src="https://bulma.io/images/placeholders/128x128.png">
+          </p>
+        </figure>
+        <div class="media-content">
+          <input type="hidden" name="to_user" value="{{ active_direct }}">
+          <div class="field">
+            <p class="control">
+              <textarea class="textarea" name="body" placeholder="Add a comment..."></textarea>
+            </p>
+          </div>
+          <nav class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <button type="submit" name="action" class="button is-info">Send</buttom>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </article>
+    </form>
+
+    
+  </div>
+</div>
+
+{% endblock %}

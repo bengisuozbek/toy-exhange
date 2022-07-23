@@ -14,37 +14,34 @@ from catalog.models import *
 # Create your views here.
 @login_required(login_url='loginPage')
 def inbox(request):
-    the_user = request.user.id
-    messages = Message.get_messages(the_user)
-    other_users = User.objects.all()
+    user = request.user
+    messages = Message.get_messages(user=user)
 
     active_direct = None
     directs = None
     
-
     if messages:
         message = messages[0]
-        active_direct = messages['user'].username
-        directs = Message.objects.filter(user=request.user, recipient=message['user'])
+        active_direct = message['user'].username
+        directs = Message.objects.filter(user=user, recipient=message['user'])
         directs.update(is_read=True)
 
         for message in messages:
             if message['user'].username == active_direct:
                 message['unread'] = 0
 
-    num_users = User.objects.all().count()
+    num_users = User.objects.all().count() - 1
     num_products = ToyProduct.objects.all().count()
     
     context = {
         'num_users': num_users,
         'num_products': num_products,
         'directs': directs,
-        'messsages': messages,
+        'messages': messages,
         'active_direct': active_direct,
-        'other_users': other_users,
     }
     
-    return render(request, 'direct_message/direct_deneme.html', context)
+    return render(request, 'direct_message/inbox.html', context)
 
 @login_required(login_url='loginPage')
 def directs(request, username):
