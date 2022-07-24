@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from price.decorators import unauthenticated_user, allowed_users, admin_only
 from django.urls import reverse
+from django.http import HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 from .models import *
 from catalog.models import *
@@ -45,7 +46,7 @@ def inbox(request):
 
 @login_required(login_url='loginPage')
 def directs(request, username):
-    user = request.user.id
+    user = request.user
     messages = Message.get_messages(user=user)
     active_direct = username
     directs = Message.objects.filter(user=user, recipient__username=username)
@@ -62,12 +63,13 @@ def directs(request, username):
 
     context = {
         'num_users': num_users,
+        'num_products': num_products,
         'directs': directs,
         'messages': messages,
         'active_direct': active_direct,
     }
 
-    return render(request, 'direct_message/direct.html', context)
+    return render(request, 'direct_message/inbox.html', context)
 
 
 
@@ -82,7 +84,7 @@ def send_direct(request):
         Message.send_message(from_user, to_user, body)
         return redirect('inbox')
     else:
-        return redirect('index')
+        HttpResponseBadRequest()
 
 
 @login_required(login_url='loginPage')
@@ -132,7 +134,7 @@ def searchbar_user(request):
         searched_objects_last_name = None
 
 
-        search = request.GET.get('item_name')
+        search = request.GET.get('search-input')
         if search != '' and search is not None:
             searched_objects_user_name =  User.objects.all().filter(username__icontains=search) 
             searched_objects_first_name =  User.objects.all().filter(first_name__icontains=search)

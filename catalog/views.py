@@ -357,7 +357,7 @@ def searchbar(request):
         searched_objects_age = None
         searched_objects_category = None
 
-        search = request.GET.get('item_name')
+        search = request.GET.get('search-input')
         if search != '' and search is not None:
             searched_objects_name =  ToyProduct.objects.all().filter(name__icontains=search) 
             searched_objects_brand =  ToyProduct.objects.all().filter(brand__name__icontains=search)

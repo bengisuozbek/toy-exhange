@@ -39,7 +39,7 @@ class Person(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(default='', max_length=255, unique=True)
     phone = models.CharField(max_length=100)   
-    profile_pic = models.ImageField(default = "{% static 'profile.png' %}", null=True, blank=True)
+    profile_pic = models.ImageField(default = "profile.png", null=True, blank=True)
 
     class Meta:
         ordering = ['last_name', 'first_name']

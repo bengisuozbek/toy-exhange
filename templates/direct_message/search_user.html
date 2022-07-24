@@ -4,37 +4,29 @@
 
 {% block content %}
 
-<!-- <div class="columns is-mobile">
-  <div class="column is-offset-one-fifth">
-    <div class="field has-addons">
-      <form>
-        <div class="control">
-          <input class="input is-large" name="q" type="text" placeholder="Search users..." value="{{ request.GET.q }}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static 'css/user-search-bar.css' %}">
+
+<div class="container mt-4">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-12">
+      <div class="card-min p-4 mt-3">
+        <h3 class="heading mt-5 text-center">Hi! You can search users to start a new conversations..</h3>
+        <div class="d-flex justify-content-center px-5">
+          <form action="{% url 'searchbar_user' %}" method="get">
+            <div class="search">
+              <input type="search" name="search-input" placeholder="Search..." class="search-input">
+              <button class="search-icon" type="submit"> <i class="fa fa-search"></i> </button>
+            </div>
+          </form>
         </div>
-        <div class="control">
-          <button type="submit" class="button is-success">Search</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
-</div> -->
-
-<div class="column is-mobile">
-    <div class="column is-offset-one-fifth">
-      <div class="field has-addons">
-        <form action="{% url 'searchbar_user' %}" method="get" class="card card-sm-6">
-          <div class="input-group">
-              <div class="col">
-                  <input type="search" name="item_name" placeholder="Search for User"
-                  class="form-control form-control-borderless">
-              </div>
-              <div class="col-auto">
-                  <button class="btn btn-light" type="submit">Search</button>
-              </div>
-          </div>
-        </form> 
-      </div>
-      </div>
 </div>
 
 <div class="column is-one-quarter">
