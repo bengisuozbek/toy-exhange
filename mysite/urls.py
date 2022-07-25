@@ -72,4 +72,6 @@ urlpatterns = [
 
     path('', RedirectView.as_view(url='index/', permanent=True)),
 
+    path('deneme/', views.deneme, name='deneme'),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

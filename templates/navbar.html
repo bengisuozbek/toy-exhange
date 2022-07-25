@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="navbarsExample06">
       <ul class="navbar-nav me-auto mb-2 mb-xl-0">
         <li class="nav-item">
-          <a class="hello-msg active" aria-current="page" href="{% url 'index' %}">Home</a>
+          <a class="hello-msg" aria-current="page" href="{% url 'index' %}">Home</a>
         </li>
         <li class="nav-item">
           <a class="hello-msg" href="{% url 'all_toys' %}">All of the Toys</a>
@@ -81,7 +81,7 @@
       <li class="nav-item dropdown">
         <a class="hello-msg dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown"
           aria-expanded="false">{{request.user}}</a>
-        <ul class="dropdown-menu" aria-labelledby="dropdown06">
+        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown06">
           <li class="list-group-item">
             <a class="dropdown-item" href="{% url 'home' %}">My Profile</a>
           </li>
@@ -100,10 +100,6 @@
 
           <li class="list-group-item">
             <a class="dropdown-item" href="{% url 'support' %}">Support</a>
-          </li>
-
-          <li class="list-group-item">
-            <a class="dropdown-item" href="{% url 'support' %}">Support11</a>
           </li>
 
           <li class="list-group-item">

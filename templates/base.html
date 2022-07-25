@@ -16,15 +16,10 @@
         <link rel="stylesheet" href="{% static 'static/css/index.css' %}">
         <link rel="stylesheet" href="{% static 'static/css/status.css' %}">
 
-        <link rel="stylesheet" href="{% static 'static/css/sidebar.css' %}">
+        <link rel="stylesheet" href="{% static 'static/css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/search-bar.css' %}">
         
-        <title>Social Auth with Django</title>
-
-        {% block css %}{% endblock %}
-
         <style>
-
           .card {
             width: 100%;
           }
@@ -49,15 +44,8 @@
         </header>
         
         <main>
-            <div class="container-fluid">
-                <div>
-                    <h1 class="center">{% block title %}{% endblock %}</h1>
-                    <div class="card p-5">
                      {% block content %}
                      {% endblock %}
-                    </div>
-                </div>
-            </div>
         </main>
 
         <footer class="text-muted py-5">

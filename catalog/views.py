@@ -29,8 +29,9 @@ def index(request):
     # Generate counts of some of the main objects
     num_toy = ToyProduct.objects.all().count()
 
-    # Available books (status = 'a')
-    #num_instances_available = ToyProduct.objects.filter(status__exact='a').count()
+    num_instances_available = ToyProduct.objects.filter(product_status__exact='a').count()
+    num_instances_reserved = ToyProduct.objects.filter(product_status__exact='r').count()
+    num_products = ToyProduct.objects.all().count()
 
     # num of visitors 
     num_visits = request.session.get('num_visits', 0)
@@ -38,6 +39,9 @@ def index(request):
 
     context = {
         'num_toy': num_toy,
+        'num_products': num_products,
+        'num_instances_available': num_instances_available,
+        'num_instances_reserved': num_instances_reserved,
         'num_visits': num_visits,
         'product_objects': product_objects,
         'categories': categories,
@@ -600,3 +604,26 @@ def delete_comment(request, pk):
     product_id = comment.product.id
     comment.delete()
     return redirect(reverse('detail', args=[product_id]))
+
+
+def deneme(request):
+
+    category = request.GET.get('category')
+    categories = Category.objects.all()
+
+    if category == None:
+        product_objects = ToyProduct.objects.all()
+    else:
+        product_objects = ToyProduct.objects.filter(category__name = category)
+
+    #paginator code 
+    paginator = Paginator(product_objects, 8) #4 is changable!
+    page = request.GET.get('page')
+    product_objects = paginator.get_page(page)
+
+    context = {
+        'product_objects': product_objects,
+        'categories': categories,
+    }
+
+    return render(request, 'main/all-toys.html', context=context)

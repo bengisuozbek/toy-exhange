@@ -1,59 +1,62 @@
 <!-- This can be used for DASHBOARD !! ORDERS  -->
 {% block css %}
 <style>
-  #total-products {
-    background-color: #7386D5;
-  }
+    #total-products {
+        background-color: #7386D5;
+    }
 
-  #products-delivered {
-    background-color: #7386D5;
-  }
+    #products-delivered {
+        background-color: #7386D5;
+    }
 
-  #products-reserved {
-    background-color: #7386D5;
-  }
+    #products-reserved {
+        background-color: #7386D5;
+    }
+
+    .card-title {
+        font-size: 12px;
+    }
 </style>
 {% endblock %}
 
-    <div class="row">
-        <div class="col">
-            <div class="col-md">
-                <div class="card text-center text-white mb-3" id="total-products">
-                    <div class="card-header">
-                        <h5 class="card-title">Total Products</h5>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">{{num_products}}</h3>
-                    </div>
+<div class="row" style="margin-right: 100px; margin-left: 100px;">
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3" style="width: 16rem;" id="total-products">
+                <div class="card-header">
+                    <p class="card-title">Total Products</p>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ num_products }}</h3>
                 </div>
             </div>
         </div>
-
-        <div class="col">
-            <div class="col-md">
-                <div class="card text-center text-white mb-3" id="products-delivered">
-                    <div class="card-header">
-                        <h5 class="card-title">Products Available</h5>
-                    </div>
-                    <div class="card-body">
-                        <!-- WILL BE ADDED -->
-                        <!-- <h3 class="card-title">{{num_instances_available}}</h3> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="col-md">
-                <div class="card text-center text-white mb-3" id="products-reserved">
-                    <div class="card-header">
-                        <h5 class="card-title">Products Reserved</h5>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">{{num_instances_reserved}}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
+
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3" style="width: 16rem;" id="products-delivered">
+                <div class="card-header">
+                    <p class="card-title">Products Available</p>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ num_instances_available }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white mb-3" style="width: 16rem;" id="products-reserved">
+                <div class="card-header">
+                    <p class="card-title">Products Reserved</p>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ num_instances_reserved }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
