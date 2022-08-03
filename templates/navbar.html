@@ -60,6 +60,47 @@
           </div>
         </div> -->
 
+        {% if user.is_authenticated %}
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-item dropdown">
+            <a class="hello-msg dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown"
+              aria-expanded="false">{{request.user}}</a>
+            <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="dropdown06" style="margin-right: 10pt;">
+              <!-- <li class="list-group-item">
+                <a class="dropdown-item" href="{% url 'home' %}">My Profile</a>
+              </li> -->
+    
+              <li class="list-group-item">
+                <a class="dropdown-item" href="{% url 'account' %}">My Profile Settings</a>
+              </li>
+    
+              <li class="list-group-item">
+                <a class="dropdown-item" href="{% url 'user-page' %}">My toys (Add a New Toy)</a>
+              </li>
+    
+              <li class="list-group-item">
+                <a class="dropdown-item" href="{% url 'inbox' %}">Messages</a>
+              </li>
+    
+              <li class="list-group-item">
+                <a class="dropdown-item" href="{% url 'support' %}">Support</a>
+              </li>
+    
+              <li class="list-group-item">
+                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        {% else %}
+        <ul class="nav navbar-nav navbar-right">
+          <span><a class="hello-msg" href="{% url 'loginPage' %}">Login</a></span>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <a class="hello-msg" href="{% url 'support' %}">Support</a>
+        </ul>
+        {% endif %}
+
       <div class="row d-flex justify-content-center">
         <div class="col-sm-12">
           <div class="d-flex justify-content-center px-5">
@@ -76,46 +117,6 @@
 
     <!--<span class="hello-msg">Hello,<a class="dropdown-item" href="{% url 'home' %}" style="color:cornsilk">{{request.user}}</a></span> -->
 
-    {% if user.is_authenticated %}
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
-        <a class="hello-msg dropdown-toggle" href="#" id="dropdown06" data-bs-toggle="dropdown"
-          aria-expanded="false">{{request.user}}</a>
-        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown06">
-          <li class="list-group-item">
-            <a class="dropdown-item" href="{% url 'home' %}">My Profile</a>
-          </li>
 
-          <li class="list-group-item">
-            <a class="dropdown-item" href="{% url 'account' %}">My Profile Settings</a>
-          </li>
-
-          <li class="list-group-item">
-            <a class="dropdown-item" href="{% url 'user-page' %}">My toys (Adding and Listed)</a>
-          </li>
-
-          <li class="list-group-item">
-            <a class="dropdown-item" href="{% url 'inbox' %}">Messages</a>
-          </li>
-
-          <li class="list-group-item">
-            <a class="dropdown-item" href="{% url 'support' %}">Support</a>
-          </li>
-
-          <li class="list-group-item">
-            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    {% else %}
-    <ul class="nav navbar-nav navbar-right">
-      <span><a class="hello-msg" href="{% url 'loginPage' %}">Login</a></span>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <a class="hello-msg" href="{% url 'support' %}">Support</a>
-    </ul>
-    {% endif %}
-  </div>
   </div>
 </nav>

@@ -8,6 +8,7 @@ admin.site.register(Brand)
 admin.site.register(Category)
 admin.site.register(Comment)
 admin.site.register(Contact)
+
 #admin.site.register(ToyRequest)
 #admin.site.register(ToyRequestList)
 #admin.site.register(ToyProduct)
@@ -33,3 +34,8 @@ class ToyRequestListAdmin(admin.ModelAdmin):
 @admin.register(ToyProduct)
 class ToyProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'owner', 'brand', 'age', 'display_category')
+
+
+@admin.register(ProductRequest)
+class ToyProductAdmin(admin.ModelAdmin):
+    list_display = ('sender', 'sender_toy', 'requested_toy', 'notes', 'start_date', 'end_date')

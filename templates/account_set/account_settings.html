@@ -5,57 +5,63 @@
 {% block title %} User Settings {% endblock %}
 
 {% block content %}
-    <style>
-        .profile-pic{
-            max-width: 200px;
-            max-height: 200px;
-            margin: 0 auto;
-            border-radius: 50%;
-        }
-    </style>
+<style>
+    .profile-pic {
+        max-width: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+</style>
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <br>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card card-body">
-                <a class="btn btn-light" style="background: #6d7fcc !important;" href="{% url 'home' %}"> &#8592;
-                    Back to Profile</a>
-                <hr>
-                <h3 style="text-align: center;">Account Settings</h3>
-                <hr>
-                <img class="profile-pic" src="{% static request.user.person.profile_pic.url %}" >
-            </div>          
-        </div>
-
-        <div class="col-md-9">
-            <div class="card card-body">
-                <form method="POST" action="" enctype="multipart/form-data">
-                    {% csrf_token %}
-
-                    {% for field in form.visible_fields %}
-                    <div class="form-group">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {{ field|add_class:'form-control' }}
-                        {% for error in field.errors %}
-                            <span class="help-block">{{ error }}</span>
-                        {% endfor %}
+<div class="wrapper">
+    <div class="card card-body">
+        <div class="col-md">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-body">
+                        <a class="btn btn-light" style="background: #c2a5f9 !important;" href="{% url 'home' %}">
+                            &#8592;
+                            Back to Profile</a>
+                        <hr>
+                        <h3 style="text-align: center;">Account Settings</h3>
+                        <hr>
+                        <img class="profile-pic" src="{% static request.user.person.profile_pic.url %}">
                     </div>
-                    {% endfor %}
+                </div>
 
-                    <div>
-                        <br>
-                    </div>
-                                    
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-light" style="background: #6d7fcc !important;">
-                        <span class="glyphicon glyphicon-ok"></span> Update Information
-                        </button>
-                    </div>
+                <div class="col-md-9">
+                    <div class="card card-body">
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            {% csrf_token %}
 
-                </form>
+                            {% for field in form.visible_fields %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field|add_class:'form-control' }}
+                                {% for error in field.errors %}
+                                <span class="help-block">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+
+                            <div>
+                                <br>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-light" style="background: #c2a5f9 !important;">
+                                    <span class="glyphicon glyphicon-ok"></span> Update Information
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

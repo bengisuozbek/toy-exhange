@@ -42,13 +42,14 @@ class DateInput(forms.DateInput):
 
 class RequestForm(forms.ModelForm):
     class Meta:
-        model = ToyRequest
+        model = ProductRequest
         fields = ['start_date', 'end_date', 'notes', 'sender_toy']
         widgets = {
             'notes': forms.Textarea(attrs={'class': 'form-control'}),
             'start_date': DateInput,
             'end_date': DateInput
         }
+
        
 class ContactForm(forms.ModelForm):
     class Meta:

@@ -1,5 +1,6 @@
 .card {
     width: 16rem;
+    height: auto;
     margin: 0px;
 }
 
@@ -41,7 +42,9 @@ a:focus {
 }
 
 .wrapper {
-    margin: 100px;
+    margin-top: 0%;
+    width: auto;
+    margin: 0px;
     display: flex;
     text-decoration: none;
     transition: all 0.3s;
@@ -50,7 +53,7 @@ a:focus {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #c440bd;
+    background: #7386D5;
     color: #fff;
     transition: all 0.3s;
 }
@@ -61,12 +64,12 @@ a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #36b128;
+    background: #6d7fcc;
 }
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #8b476f;
+    border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul p {

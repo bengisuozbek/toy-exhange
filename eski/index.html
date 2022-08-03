@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %} 
-<div class="card h-100">
-  
+
+<p>DENEME </p>
+
+<div class="card" style="background-color: #35a9d7d5 width: auto;;">
+  <div class="row">
+    <div class="col-sm-12 mb-3">
+        <h4 class="text-center" style="color: red;"> Welcome! {{ user.username }} </h4>
+    </div>
+  </div>
+
   <section class="py-2 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h4 class="text-center"> Welcome! {{ user.username }} </h4>
         <p class="lead text-muted">Hello. </p>
         <p>If you want to share more fun and enjoy it, you should take a look here.</p>
         <p>
@@ -28,20 +35,25 @@
     <li><strong style="font-size:1vw">Customers:</strong> {{ num_customers }}</li>
   </ul>
 -->
-<!-- <h5>Dynamic content</h5>
+<h2>Dynamic content</h2>
 
 <p>The library has the following record counts:</p>
 <ul>
   <li><strong>Toys:</strong> {{ num_toy }}</li>
   <li><strong>Toys available:</strong> {{ num_instances_available }}</li>
-</ul> -->
-<!-- <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p> -->
+</ul>
+
+<p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+  <br>
   
   <!-- STATUS WILL BE ADDED !!!!!!!!!!
+  
     include status.html 
+
   -->
-  <br>
-  {% include 'main/status.html' %}
+
+
+
   {% include 'main/cards.html' %}
 
 {% endblock %}

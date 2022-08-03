@@ -100,7 +100,7 @@ class ToyProduct(models.Model):
         return str(self.id)
 
     def get_absolute_url(self):
-        """Returns the url to access a detail record for this book."""
+        """Returns the url to access a detail record for this toy product."""
         return reverse('product-detail', args=[str(self.name)])
         
 class Comment(models.Model):
@@ -215,3 +215,27 @@ class Contact(models.Model): # for support page!
     def __str__(self):
         return self.email
         
+
+class ProductRequest(models.Model):
+    id = models.AutoField(primary_key=True)
+
+    sender = models.ForeignKey(User, null=True, blank=False, on_delete=models.CASCADE, editable=False)
+    sender_toy = models.ForeignKey(ToyProduct, on_delete=models.CASCADE, related_name='requestsender')
+
+    requested_toy = models.OneToOneField(ToyProduct, on_delete=models.CASCADE, related_name='requestborrow')
+
+    notes = models.CharField(max_length=250, help_text="If you have something to add, you can write it here.")
+
+    start_date = models.DateField(verbose_name="Start Date", help_text="Start date for toy is on ...", null=True, blank=False)
+    end_date = models.DateField(verbose_name="End Date" , help_text="Coming back on ...", null=True, blank=False)
+
+    class Meta:
+        ordering = ['sender', 'sender_toy', 'requested_toy']
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return str(self.id)
+
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this toy product."""
+        return reverse('request-detail', args=[str(self.id)])

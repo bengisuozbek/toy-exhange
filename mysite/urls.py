@@ -29,7 +29,7 @@ from catalog import views
 
 urlpatterns = [
 
-    path('', TemplateView.as_view(template_name="index.html")),
+   
     path('accounts/', include('allauth.urls')),
 
     # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -64,6 +64,10 @@ urlpatterns = [
     path('addProduct/<int:pk>/', views.addProduct, name='addProduct'),
     path('updateProduct/<int:pk>/', views.updateProduct, name='updateProduct'),
     path('deleteProduct/<int:pk>/', views.deleteProduct, name='deleteProduct'),
+
+    path('addRequest/<int:pk>/', views.add_request, name='add_request'),
+    path('updateRequest/<int:pk>/', views.update_request, name='update_request'),
+    path('deleteRequest/<int:pk>/', views.delete_request, name='delete_request'),
         
     path('<int:pk>/add-comment/', views.add_comment, name='add_comment'),
     path('<int:pk>/delete-comment/', views.delete_comment, name='delete_comment'),

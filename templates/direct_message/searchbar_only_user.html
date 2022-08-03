@@ -4,176 +4,107 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-{% if searched_objects_user_name %} 
-    <h3>Search Result Found</h3>
-    <br>
-    <div class="container-fluid">
-        <div>
-            <div class="card p-5">
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-md-3">
-                        {% for i in searched_objects_user_name %}
-                        <div class="col mb-4">
-                          <div class="card h-100" style="width: 32rem;">
-                            <img class="card-img-top" src="{% static  i.image.url %}" style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
-                            <div class="card-body">
-                              <h5 class="card-title">{{ i.username }}</h5>
-                              <p class="card-text">{{ i.first_name }}</p>
-                              <p class="card-text">{{ i.last_name }}</p>
-                              <!--
+{% if searched_objects_user_name %}
+<div class="wrapper">
+    <div class="card p-5" style="width: 85%;">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3">
+                {% for i in searched_objects_user_name %}
+                <div class="col mb-4">
+                    <div class="card h-100" style="width: 32rem;">
+                        <img class="card-img-top" src="{% static  i.image.url %}"
+                            style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ i.username }}</h5>
+                            <p class="card-text">{{ i.first_name }}</p>
+                            <p class="card-text">{{ i.last_name }}</p>
+                            <!--
                                 user profile eklenecek
 
                               <a href="{% url 'detail' i.id %}" class="btn btn-light">View</a>
 
 
                               -->
-                            </div>
-                          </div>
-                        </div>
-                        {% endfor %}  
-                    </div>
-                
-                    <div class="row">
-                        <div class="col-md-3 offset-md-4">
-                            <ul class="pagination">
-                                {% if other_users.has_previous %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ other_users.previous_page_number }}">Previous</a>
-                                    </li>
-                                {% endif %}
-                                
-                                <li class="page-item active">
-                                    <a class="page-link" href="?page={{ other_users.number }}">Current</a>
-                                </li>
-                
-                                {% if other_users.has_next %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ other_users.next_page_number }}">Next</a>
-                                    </li>
-                                {% endif %}
-                            </ul>
                         </div>
                     </div>
                 </div>
-                
+                {% endfor %}
             </div>
+            {% include 'paginator.html' %}
         </div>
     </div>
-{% elif searched_objects_first_name %} 
-    <h3>Search Result Found</h3>
-    <br>
-    <div class="container-fluid">
-        <div>
-            <div class="card p-5">
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-md-3">
-                        {% for i in searched_objects_first_name %}
-                        <div class="col mb-4">
-                          <div class="card h-100" style="width: 32rem;">
-                            <img class="card-img-top" src="" style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
-                            <div class="card-body">
-                              <h5 class="card-title">{{ i.username }}</h5>
-                              <p class="card-text">{{ i.first_name }}</p>
-                              <p class="card-text">{{ i.last_name }}</p>
-                              <!--
+</div>
+{% elif searched_objects_first_name %}
+<div class="wrapper">
+    <div class="card p-5" style="width: 85%;">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3">
+                {% for i in searched_objects_first_name %}
+                <div class="col mb-4">
+                    <div class="card h-100" style="width: 32rem;">
+                        <img class="card-img-top" src=""
+                            style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ i.username }}</h5>
+                            <p class="card-text">{{ i.first_name }}</p>
+                            <p class="card-text">{{ i.last_name }}</p>
+                            <!--
                                 user profile eklenecek
 
                               <a href="{% url 'detail' i.id %}" class="btn btn-light">View</a>
 
 
                               -->
-                            </div>
-                          </div>
-                        </div>
-                        {% endfor %}  
-                    </div>
-                
-                    <div class="row">
-                        <div class="col-md-3 offset-md-4">
-                            <ul class="pagination">
-                                {% if other_users.has_previous %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ other_users.previous_page_number }}">Previous</a>
-                                    </li>
-                                {% endif %}
-                                
-                                <li class="page-item active">
-                                    <a class="page-link" href="?page={{ other_users.number }}">Current</a>
-                                </li>
-                
-                                {% if other_users.has_next %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ other_users.next_page_number }}">Next</a>
-                                    </li>
-                                {% endif %}
-                            </ul>
                         </div>
                     </div>
                 </div>
-                
+                {% endfor %}
             </div>
+            {% include 'paginator.html' %}
         </div>
     </div>
-{% elif searched_objects_last_name %} 
-        <h3>Search Result Found</h3>
-        <br>
-        <div class="container-fluid">
-            <div>
-                <div class="card p-5">
-                    <div class="container">
-                        <div class="row row-cols-1 row-cols-md-3">
-                            {% for i in searched_objects_last_name %}
-                            <div class="col mb-4">
-                              <div class="card h-100" style="width: 32rem;">
-                                <img class="card-img-top" src="" style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
-                                <div class="card-body">
-                                  <h5 class="card-title">{{ i.username }}</h5>
-                                  <p class="card-text">{{ i.first_name }}</p>
-                                  <p class="card-text">{{ i.last_name }}</p>
-                                  <!--
+</div>
+{% elif searched_objects_last_name %}
+<div class="wrapper">
+    <div class="card p-5" style="width: 85%;">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3">
+                {% for i in searched_objects_last_name %}
+                <div class="col mb-4">
+                    <div class="card h-100" style="width: 32rem;">
+                        <img class="card-img-top" src=""
+                            style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ i.username }}</h5>
+                            <p class="card-text">{{ i.first_name }}</p>
+                            <p class="card-text">{{ i.last_name }}</p>
+                            <!--
                                     user profile eklenecek
     
                                   <a href="{% url 'detail' i.id %}" class="btn btn-light">View</a>
     
     
                                   -->
-                                </div>
-                              </div>
-                            </div>
-                            {% endfor %}  
-                        </div>
-                    
-                        <div class="row">
-                            <div class="col-md-3 offset-md-4">
-                                <ul class="pagination">
-                                    {% if other_users.has_previous %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page={{ other_users.previous_page_number }}">Previous</a>
-                                        </li>
-                                    {% endif %}
-                                    
-                                    <li class="page-item active">
-                                        <a class="page-link" href="?page={{ other_users.number }}">Current</a>
-                                    </li>
-                    
-                                    {% if other_users.has_next %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page={{ other_users.next_page_number }}">Next</a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </div>
                         </div>
                     </div>
-                    
                 </div>
+                {% endfor %}
             </div>
+            {% include 'paginator.html' %}
         </div>
+    </div>
+</div>
 {% else %}
-    <h2>Nothing found for this criteria!</h2>
-    <br>
-    <p>
-        <a href="{% url 'user_search' %}" class="btn btn-light my-2" style="background-color: #7386D5;">New Message</a>
-    </p>
+<div class="wrapper">
+    <div class="card card-body" style="width: 85%;">
+        <h2>Nothing found for this criteria!</h2>
+        <br>
+        <a href="{% url 'user_search' %}" class="btn btn-light" style="background-color: #7386D5; width: 12rem; color: whitesmoke;">All of the Toys</a>
+    </div>   
+</div>
+
+
+    <a href="{% url '' %}" class="btn btn-light my-2" style="background-color: #7386D5;">New Message</a>
+</p>
 {% endif %}
 {% endblock %}

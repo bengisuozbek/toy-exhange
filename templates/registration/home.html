@@ -4,28 +4,32 @@
 {% block title %} User Profile {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<div class="wrapper">
+  <div class="card card-body">
+    <div class="row">
+      <div class="col-sm-12 mb-3">
+        <h4 class="text-center">Welcome {{ user.username }}</h4>
+      </div>
 
-<div class="row">
-  <div class="col-sm-12 mb-3">
-    <h4 class="text-center">Welcome {{ user.username }}</h4>
-  </div>
- 
-  <div class="col-md">
-    <!-- url 'addProduct' user.id  -->
-    <a class="btn btn-light" href="#">Add Product</a> 
-    <hr>
-    <a class="btn btn-light" href="#">Settings</a>
-    <hr>
-    <!-- url 'user-page' -->
-    <a class="btn btn-light" href="#">My Toys</a>
-  </div>
+      <div class="col-md">
+        <a href="{% url 'addProduct' user.id %}" type="button" class="btn btn-light"
+          style="background-color: #c2a5f9;">Add a New Toy</a>
+        <hr>
+        <a href="{% url 'account' %}" type="button" class="btn btn-light"
+          style="background-color: #c2a5f9;">Settings</a>
+        <hr>
+        <a href="{% url 'user-page' %}" type="button" class="btn btn-light" style="background-color: #c2a5f9;">My
+          Toys</a>
+      </div>
 
-  {% for req in request_list %}
-    <p>Toy from Owner: {{ req.toy_from_owner.name }}</p>
-    <p>Toy from Borrower: {{ req.toy_from_borrower.product_name }}</p>
-    <p>Notes: {{ req.notes }}</p>
-    <p>Borrower: {{ req.sender }}</p>
-  {% endfor %}
+      {% for req in request_list %}
+      <p>Toy from Owner: {{ req.toy_from_owner.name }}</p>
+      <p>Toy from Borrower: {{ req.toy_from_borrower.product_name }}</p>
+      <p>Notes: {{ req.notes }}</p>
+      <p>Borrower: {{ req.sender }}</p>
+      {% endfor %}
+    </div>
+  </div>
 </div>
 
 {% endblock %}
