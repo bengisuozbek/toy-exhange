@@ -407,7 +407,6 @@ def searchbar(request):
 
 @login_required(login_url='loginPage')
 def detailsPage(request, pk):
-
     category = request.GET.get('category')
     categories = Category.objects.all()
 
@@ -431,24 +430,39 @@ def detailsPage(request, pk):
     num_sender_toy = sender_toy.count()
 
     form = RequestForm(request.POST or None)
-
+    
     if request.method == 'POST':
-        if form.is_valid():
-            toy_request = form.save(commit=False)
-            #sender = User.objects.get(id = pk)
-            sender = request.user
-            requested_toy = ToyProduct.objects.get(id=pk)
+        form = RequestForm(request.POST)
 
-            # you don't need to use this if statment
-            if sender:
-                toy_request.sender = sender
-                toy_request.save()
-                form.save_m2m()
-                return redirect('/all_toys')
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.sender = request.user
+            instance.requested_toy = product_object
+            instance.save()
+
+            username = form.cleaned_data.get('sender_toy')
+            
+            messages.success(request, 'Request was created for ' + product_object + " by "  + username)
+            return redirect('all_toys')
         else:
             print('Form is invalid.')
             return redirect('invalid')
 
+
+    # if request.method == 'POST':
+    #     if form.is_valid():
+    #         toyRequest = form.save(commit=False)
+    #         product_object = ToyProduct.objects.get(id=pk)
+    #         # you don't need to use this if statment
+    #         if sender:
+    #             toyRequest.sender = sender
+    #             toyRequest.save()
+    #             form.save_m2m()
+    #             return redirect('all_toys')
+    #     else:
+    #         print('Form is invalid.')
+    #         return redirect('invalid')
+    
     # paginator code
     paginator = Paginator(product_objects, 8)  # 4 is changable!
     page = request.GET.get('page')
@@ -456,6 +470,7 @@ def detailsPage(request, pk):
 
     context = {
         'sender_toy': sender_toy,
+        'sender': sender,
         'obj': obj,
         'form': form,
         'product_objects': product_objects,
