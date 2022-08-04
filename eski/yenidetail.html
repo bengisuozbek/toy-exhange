@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{% url 'all_toys' %}" class="btn btn-light">Back</a>
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{% static  obj.image.url %}" style="margin-left: 30%;"> 
+                </div>
+
+                <div class="col-md-12">
+                    <h4><strong>Name:</strong> {{ obj.name }}</h4>
+
+                    <p><strong>Brand:</strong> {{ obj.brand }}</p> <!-- author detail link not yet defined -->
+                    <p><strong>Age:</strong> {{ obj.age }}</p>
+                    <p><strong>Image:</strong> {{ obj.image }}</p>
+                    <p><strong>Category:</strong> {{ obj.display_category }}</p>
+                    <p><strong>Description:</strong> {{ obj.description }}</p>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-16">
+                    <div style="margin: 10px;">
+                        <div class="form-group">
+                            <h4><strong>Create a Request for {{ obj.name }}</strong></h4>
+                            <br>
+        
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                            
+                                {% for field in form.visible_fields %}
+                                    <div class="form-group">
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field|add_class:'form-control' }}
+                                    {% for error in field.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                                    </div>
+                                {% endfor %}
+        
+                                <!-- <br>
+                                <h2>Choose the Toy you want to trade</h2>
+                                <div class="form-group">
+                                    <label for="sended_toy">Sender Toy</label>
+                                    <select id='toy_select' name="sended_toy" class="form-control">x
+                                    <script type='text/javascript'>
+                                    // var values=[[1,'tree'],[2,'flower'],[3,'car']];
+                                    for(v in sender_toy){
+                                        var option=$('<option></option>');
+                                        option.attr('value',values[v][0]);
+                                        option.text(values[v][1]);
+                                        $('#sended_toy').append(option);
+                                    }
+                                    </script>
+                                    </select>
+                                </div> -->
+        
+                                <br>
+                                <h2>Choose the Toy you want to trade</h2>
+                                <div class="form-group">
+                                    <label for="sended_toy">Sender Toy</label>
+                                    <select id="toy_select" name="sended_toy" class="form-control">
+                                        <option value="0">
+                                            <p>fnd</p>
+                                        </option>
+                                        <option value="0">
+                                            <p>fnd</p>
+                                        </option>
+                                        {% for send_toy in sender_toy %}
+                                        <option value="{{ send_toy.id }}">
+                                            {{ send_toy.id }}
+                                        </option>
+                                        {% endfor %}
+                                      </select>
+                                </div>                           
+        
+                                <br>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-light" style="background: #6d7fcc !important;">
+                                    <span class="glyphicon glyphicon-ok"></span> Save
+                                    </button>
+                                    <button href="{% url 'all_toys' %}" class="btn btn-light" >Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="card" style="width: 85%; height: auto;">
+
+
+</div>
+
+<div class="wrapper">
+    <div class="row">
+        <div style="margin: 10px;">
+            Add Comments ({{ num_comments }})
+            <br>
+            <hr>               
+            {% if not product_object.comments.all  %}
+            <div class="card-body">
+                <p>Not comments added yet...</p>
+            </div>
+            {% else %}
+                {% for comment in product_object.comments.all %}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <p class="image is-32x32">
+                                    {% if request.user.person.profile_pic %}
+                                        <img src="{% static request.user.person.profile_pic.url %}" alt="Placeholder image">
+                                    {% else %}
+                                        <img src="{% static 'images/toybox.jpeg' %}" alt="Placeholder image">                                      
+                                    {% endif %} 
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><strong>{{ comment.commenter.username }}</strong> </h5>
+                            </div>
+                            <p>
+                                {{ comment.comment_body }}
+                                <br>    
+                                {% if request.user.username == comment.commenter.username %}
+                                    <a class="btn btn-light" href="{% url 'delete_comment' product_object.id %}">Delete Comment</a>
+                                {% endif %}
+                            </p>
+                            <p><small>{{ comment.date_added }}</small></p>
+                        </div>
+                        
+                    </div>
+                {% endfor %}
+            {% endif %}
+        
+            {% if request.user.is_authenticated or request.user.is_staff%}
+                <p><a class="btn btn-light" href="{% url 'add_comment' product_object.id %}" style="background-color: #536bf6; color: whitesmoke;">Add Comment</a></p>
+            {% endif %} 
+        </div>
+    </div>
+</div>
+    
+
+{% endblock %}

@@ -15,6 +15,7 @@ from .forms import ContactForm, CreateUserForm, ProductForm, CommentForm, Custom
 from .models import *
 from catalog.decorators import unauthenticated_user, allowed_users, admin_only
 
+
 def index(request):
     """View function for home page of site."""
     category = request.GET.get('category')
@@ -23,17 +24,18 @@ def index(request):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
-
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
     # Generate counts of some of the main objects
     num_toy = ToyProduct.objects.all().count()
 
-    num_instances_available = ToyProduct.objects.filter(product_status__exact='a').count()
-    num_instances_reserved = ToyProduct.objects.filter(product_status__exact='r').count()
+    num_instances_available = ToyProduct.objects.filter(
+        product_status__exact='a').count()
+    num_instances_reserved = ToyProduct.objects.filter(
+        product_status__exact='r').count()
     num_products = ToyProduct.objects.all().count()
 
-    # num of visitors 
+    # num of visitors
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
 
@@ -49,6 +51,7 @@ def index(request):
 
     return render(request, 'index.html', context=context)
 
+
 def invalid(request):
 
     category = request.GET.get('category')
@@ -57,10 +60,10 @@ def invalid(request):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
-    #paginator code 
-    paginator = Paginator(product_objects, 8) #4 is changable!
+    # paginator code
+    paginator = Paginator(product_objects, 8)  # 4 is changable!
     page = request.GET.get('page')
     product_objects = paginator.get_page(page)
 
@@ -71,6 +74,7 @@ def invalid(request):
 
     return render(request, 'invalid.html', context=context)
 
+
 @unauthenticated_user
 def register(request):
 
@@ -80,13 +84,13 @@ def register(request):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
-    
+        product_objects = ToyProduct.objects.filter(category__name=category)
+
     form = CreateUserForm()
 
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
-            
+
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
@@ -98,7 +102,7 @@ def register(request):
             return redirect('invalid')
 
     context = {
-        'form':form,
+        'form': form,
         'product_objects': product_objects,
         'categories': categories,
     }
@@ -114,7 +118,7 @@ def loginPage(request):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -149,7 +153,7 @@ def home(request):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
     # user = request.user.id
     # request_list = ToyRequestList.objects.get(owner=user)
@@ -172,11 +176,10 @@ def customer(request, pk):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
-
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
     customer = User.objects.get(person__id=pk)
-    
+
     orders = customer.toyproduct_set.all()
     order_count = orders.count()
 
@@ -189,6 +192,7 @@ def customer(request, pk):
     }
     return render(request, 'for_admin/customer.html', context)
 
+
 @login_required(login_url='loginPage')
 def userPage(request):
 
@@ -198,16 +202,17 @@ def userPage(request):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
     user_products = request.user.toyproduct_set.all()
-    
+
     context = {
-        'user_products':user_products,
+        'user_products': user_products,
         'product_objects': product_objects,
         'categories': categories,
     }
     return render(request, 'account_set/user.html', context)
+
 
 @login_required(login_url='loginPage')
 def accountSettings(request):
@@ -218,7 +223,7 @@ def accountSettings(request):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
     user = request.user.person
     form = CustomerForm(instance=user)
@@ -233,24 +238,25 @@ def accountSettings(request):
             return redirect('invalid')
 
     context = {
-        'form':form,
+        'form': form,
         'product_objects': product_objects,
         'categories': categories,
     }
     return render(request, 'account_set/account_settings.html', context)
 
 
-def category(request,pk):
+@login_required(login_url='loginPage')
+def category(request, pk):
     cat_id = Category.objects.get(id=pk)
     cat_name = cat_id.name
     req_category = request.GET.get('category')
     categories = Category.objects.all()
 
-    toys = ToyProduct.objects.filter(category__name = cat_name)
+    toys = ToyProduct.objects.filter(category__name=cat_name)
 
-    #paginator code 
-    product_objects = ToyProduct.objects.filter(product_status = 'a')
-    paginator = Paginator(product_objects, 6) #4 is changable!
+    # paginator code
+    product_objects = ToyProduct.objects.filter(product_status='a')
+    paginator = Paginator(product_objects, 6)  # 4 is changable!
     page = request.GET.get('page')
     product_objects = paginator.get_page(page)
 
@@ -261,16 +267,18 @@ def category(request,pk):
         'product_objects': product_objects,
         'categories': categories,
     }
-    return render(request, 'category.html', context=context)  
+    return render(request, 'category.html', context=context)
 
+
+@login_required(login_url='loginPage')
 def all_toys(request):
     categories = Category.objects.all()
 
     product_objects = ToyProduct.objects.all()
- 
-    #paginator code 
-    product_objects = ToyProduct.objects.filter(product_status = 'a')
-    paginator = Paginator(product_objects, 8) #4 is changable!
+
+    # paginator code
+    product_objects = ToyProduct.objects.filter(product_status='a')
+    paginator = Paginator(product_objects, 8)  # 4 is changable!
     page = request.GET.get('page')
     product_objects = paginator.get_page(page)
 
@@ -281,14 +289,15 @@ def all_toys(request):
     return render(request, 'all_toys.html', context=context)
 
 
+@login_required(login_url='loginPage')
 def privacy(request):
     categories = Category.objects.all()
 
     product_objects = ToyProduct.objects.all()
- 
-    #paginator code 
-    product_objects = ToyProduct.objects.filter(product_status = 'a')
-    paginator = Paginator(product_objects, 6) #4 is changable!
+
+    # paginator code
+    product_objects = ToyProduct.objects.filter(product_status='a')
+    paginator = Paginator(product_objects, 6)  # 4 is changable!
     page = request.GET.get('page')
     product_objects = paginator.get_page(page)
 
@@ -298,8 +307,8 @@ def privacy(request):
     }
     return render(request, 'privacy.html', context=context)
 
-  
 
+@login_required(login_url='loginPage')
 def support(request):
     category = request.GET.get('category')
     categories = Category.objects.all()
@@ -307,10 +316,10 @@ def support(request):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
-    #paginator code 
-    paginator = Paginator(product_objects, 8) #4 is changable!
+    # paginator code
+    paginator = Paginator(product_objects, 8)  # 4 is changable!
     page = request.GET.get('page')
     product_objects = paginator.get_page(page)
 
@@ -325,19 +334,21 @@ def support(request):
                 subject = form.cleaned_data['subject']
                 message = form.cleaned_data['message']
 
-                body = message + "\nSender's email: "+ user_mail
+                body = message + "\nSender's email: " + user_mail
 
-                send_mail(subject, body, settings.CONTACT_EMAIL, settings.ADMIN_EMAIL, fail_silently=False)
+                send_mail(subject, body, settings.CONTACT_EMAIL,
+                          settings.ADMIN_EMAIL, fail_silently=False)
             else:
                 subject = form.cleaned_data['subject']
                 from_email = form.cleaned_data['from_email']
                 message = form.cleaned_data['message']
 
-                body = message + "\nSender's email: "+ from_email
+                body = message + "\nSender's email: " + from_email
 
-                send_mail(subject, body, settings.CONTACT_EMAIL, settings.ADMIN_EMAIL, fail_silently=False)
-          
-            return render(request, 'support/contact_success.html')   
+                send_mail(subject, body, settings.CONTACT_EMAIL,
+                          settings.ADMIN_EMAIL, fail_silently=False)
+
+            return render(request, 'support/contact_success.html')
         else:
             print('Form is invalid.')
             return redirect('invalid')
@@ -351,6 +362,8 @@ def support(request):
     }
     return render(request, 'support/support.html', context=context)
 
+
+@login_required(login_url='loginPage')
 def searchbar(request):
     categories = Category.objects.all()
 
@@ -363,17 +376,19 @@ def searchbar(request):
 
         search = request.GET.get('search-input')
         if search != '' and search is not None:
-            searched_objects_name =  ToyProduct.objects.all().filter(name__icontains=search) 
-            searched_objects_brand =  ToyProduct.objects.all().filter(brand__name__icontains=search)
-            searched_objects_age =  ToyProduct.objects.all().filter(age__name__icontains=search)
-            searched_objects_category =  ToyProduct.objects.all().filter(category__name__icontains=search)
+            searched_objects_name = ToyProduct.objects.all().filter(name__icontains=search)
+            searched_objects_brand = ToyProduct.objects.all().filter(
+                brand__name__icontains=search)
+            searched_objects_age = ToyProduct.objects.all().filter(age__name__icontains=search)
+            searched_objects_category = ToyProduct.objects.all().filter(
+                category__name__icontains=search)
 
     #category = request.GET.get('category')
     #categories = Category.objects.all()
 
-    #if category == None:
+    # if category == None:
     #    product_objects = ToyProduct.objects.all()
-    #else:
+    # else:
     #    product_objects = ToyProduct.objects.filter(category__name = category)
 
     #product_object = ToyProduct.objects.get(id=pk)
@@ -389,105 +404,122 @@ def searchbar(request):
     return render(request, 'main/searchbar.html', context=context)
 
 
-def detail(request, pk):
+
+@login_required(login_url='loginPage')
+def detailsPage(request, pk):
+
     category = request.GET.get('category')
     categories = Category.objects.all()
 
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
+        product_objects = ToyProduct.objects.filter(category__name=category)
+
+    sender_toy = request.user.toyproduct_set.all()
 
     product_object = ToyProduct.objects.get(id=pk)
+    obj = ToyProduct.objects.get(id=pk)
     num_comments = Comment.objects.filter(product=product_object).count()
 
     # Comment
-    comments = Comment.objects.filter(product=product_object).order_by('date_added')
-    
-    # Comment form
-    form = CommentForm(instance=product_object)
-    if request.method == 'POST':
-        form = CommentForm(request.POST, instance=product_object)
-        if form.is_valid():
-            name = request.user.username
-            commenter = request.user
-            body = form.cleaned_data['comment_body']
+    comments = Comment.objects.filter(
+        product=product_object).order_by('date_added')
 
-            c = Comment(product=product_object, commenter_name=name, commenter=commenter, comment_body=body, date_added=datetime.now())
-            product_id = c.product.id
-            c.save()
-            return redirect(reverse('detail', args=[product_id]))
-        else:
-            print('Form is invalid.')
-            return redirect('invalid')
-
-    else:
-        form = CommentForm()
-
-    user = request.user.person
-
-    context = {
-        'product_object': product_object,
-        'product_objects': product_objects,
-        'categories': categories,
-        'num_comments': num_comments,
-        'comments': comments,
-        'user': user,
-    }
-    return render(request, 'product/detail3.html', context=context)
-
-# FOR REQUEST:
-@login_required(login_url='loginPage')
-def add_request(request, pk):
-    #sender = User.objects.get(id=pk)
     sender = request.user
-    sender_toy = ToyProduct.objects.filter(owner = sender)
+
     num_sender_toy = sender_toy.count()
 
-    category = request.GET.get('category')
-    categories = Category.objects.all()
+    form = RequestForm(request.POST or None)
 
-    if category == None:
-        product_objects = ToyProduct.objects.all()
-    else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
-
-    requested_toy = ToyProduct.objects.get(id=pk)
-
-    form = RequestForm(request.POST or None) 
-     
-    if request.method == 'POST': 
-        if form.is_valid(): 
-            toy_request = form.save(commit=False) 
-            #sender = User.objects.get(id = pk) 
+    if request.method == 'POST':
+        if form.is_valid():
+            toy_request = form.save(commit=False)
+            #sender = User.objects.get(id = pk)
             sender = request.user
             requested_toy = ToyProduct.objects.get(id=pk)
 
-            # you don't need to use this if statment 
-            if sender: 
-                toy_request.sender = sender 
-                toy_request.save() 
+            # you don't need to use this if statment
+            if sender:
+                toy_request.sender = sender
+                toy_request.save()
                 form.save_m2m()
                 return redirect('/all_toys')
         else:
             print('Form is invalid.')
             return redirect('invalid')
- 
+
+    # paginator code
+    paginator = Paginator(product_objects, 8)  # 4 is changable!
+    page = request.GET.get('page')
+    product_objects = paginator.get_page(page)
+
     context = {
-        'form': form,
         'sender_toy': sender_toy,
-        'num_sender_toy': num_sender_toy,
-        'categories': categories,
+        'obj': obj,
+        'form': form,
         'product_objects': product_objects,
-        'requested_toy': requested_toy,
+        'categories': categories,
+        'num_comments': num_comments,
+        'comments': comments,
+        'num_sender_toy': num_sender_toy,
+        'product_object': product_object,
     }
-    return render(request, 'product/add_toy_request.html', context)
+
+    return render(request, 'product/detail3.html', context)
+
+# # FOR REQUEST:
+# @login_required(login_url='loginPage')
+# def add_request(request, pk):
+#     #sender = User.objects.get(id=pk)
+#     sender = request.user
+#     sender_toy = ToyProduct.objects.filter(owner = sender)
+#     num_sender_toy = sender_toy.count()
+
+#     category = request.GET.get('category')
+#     categories = Category.objects.all()
+
+#     if category == None:
+#         product_objects = ToyProduct.objects.all()
+#     else:
+#         product_objects = ToyProduct.objects.filter(category__name = category)
+
+#     requested_toy = ToyProduct.objects.get(id=pk)
+
+#     form = RequestForm(request.POST or None)
+
+#     if request.method == 'POST':
+#         if form.is_valid():
+#             toy_request = form.save(commit=False)
+#             #sender = User.objects.get(id = pk)
+#             sender = request.user
+#             requested_toy = ToyProduct.objects.get(id=pk)
+
+#             # you don't need to use this if statment
+#             if sender:
+#                 toy_request.sender = sender
+#                 toy_request.save()
+#                 form.save_m2m()
+#                 return redirect('/all_toys')
+#         else:
+#             print('Form is invalid.')
+#             return redirect('invalid')
+
+#     context = {
+#         'form': form,
+#         'sender_toy': sender_toy,
+#         'num_sender_toy': num_sender_toy,
+#         'categories': categories,
+#         'product_objects': product_objects,
+#         'requested_toy': requested_toy,
+#     }
+#     return render(request, 'product/add_toy_request.html', context)
 
 
 @login_required(login_url='loginPage')
 def update_request(request, pk):
 
-    toy_request = ProductRequest.objects.get(id=pk) 
+    toy_request = ProductRequest.objects.get(id=pk)
     request_id = toy_request.id
     #product = ToyProduct.objects.get(id=pk)
     #name = product.name
@@ -502,7 +534,7 @@ def update_request(request, pk):
         else:
             print('Form is invalid.')
             return redirect('invalid')
-        
+
     context = {
         'form': form,
         'request_id': request_id
@@ -515,7 +547,7 @@ def delete_request(request, pk):
     toy_request = ProductRequest.objects.get(id=pk)
     #product = ToyProduct.objects.get(id=pk)
     toy_request.delete()
-    return redirect('/category')    
+    return redirect('/category')
 
 #  REQUEST (CONTROL IT ...!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
 # def add_request(request, pk):
@@ -566,15 +598,16 @@ def dashboard(request):
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        #product_name__icontains=item_name
-        product_objects = ToyProduct.objects.filter(category__name = category)
+        # product_name__icontains=item_name
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
-
-    customers = Person.objects.all() 
+    customers = Person.objects.all()
     orders = ToyProduct.objects.all()
 
-    num_instances_available = ToyProduct.objects.filter(product_status__exact='a').count()
-    num_instances_reserved = ToyProduct.objects.filter(product_status__exact='r').count()
+    num_instances_available = ToyProduct.objects.filter(
+        product_status__exact='a').count()
+    num_instances_reserved = ToyProduct.objects.filter(
+        product_status__exact='r').count()
     num_products = ToyProduct.objects.all().count()
 
     context = {
@@ -592,24 +625,24 @@ def dashboard(request):
 @login_required(login_url='loginPage')
 def addProduct(request, pk):
     owner = User.objects.get(id=pk)
-    form = ProductForm(request.POST or None) 
+    form = ProductForm(request.POST or None)
 
-    if request.method == 'POST': 
-        if form.is_valid(): 
-            toy = form.save(commit=False) 
-            owner = User.objects.get(id = pk) 
-            # you don't need to use this if statment 
-            if owner: 
-                toy.owner = owner 
+    if request.method == 'POST':
+        if form.is_valid():
+            toy = form.save(commit=False)
+            owner = User.objects.get(id=pk)
+            # you don't need to use this if statment
+            if owner:
+                toy.owner = owner
                 if toy.brand != None and toy.brand != 'Other':
                     toy.user_brand = toy.brand.name
-                toy.save() 
+                toy.save()
                 form.save_m2m()
                 return redirect('/user')
         else:
             print('Form is invalid.')
             return redirect('invalid')
- 
+
     context = {
         'form': form
     }
@@ -631,7 +664,7 @@ def updateProduct(request, pk):
         else:
             print('Form is invalid.')
             return redirect('invalid')
-        
+
     context = {
         'form': form,
         'name': name
@@ -651,7 +684,7 @@ def add_comment(request, pk):
     product_object = ToyProduct.objects.get(id=pk)
     product_commenter = request.user
     print(product_commenter)
-    
+
     form = CommentForm(instance=product_object)
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=product_object)
@@ -660,7 +693,8 @@ def add_comment(request, pk):
             product_commenter = request.user
             body = form.cleaned_data['comment_body']
 
-            c = Comment(product=product_object, commenter_name=name, commenter=product_commenter, comment_body=body, date_added=datetime.now())
+            c = Comment(product=product_object, commenter_name=name,
+                        commenter=product_commenter, comment_body=body, date_added=datetime.now())
             product_id = c.product.id
             c.save()
             return redirect(reverse('detail', args=[product_id]))
@@ -687,24 +721,61 @@ def delete_comment(request, pk):
     return redirect(reverse('detail', args=[product_id]))
 
 
-def deneme(request):
-
+def deneme(request, pk):
     category = request.GET.get('category')
     categories = Category.objects.all()
 
     if category == None:
         product_objects = ToyProduct.objects.all()
     else:
-        product_objects = ToyProduct.objects.filter(category__name = category)
+        product_objects = ToyProduct.objects.filter(category__name=category)
 
-    #paginator code 
-    paginator = Paginator(product_objects, 8) #4 is changable!
+    product_object = ToyProduct.objects.get(id=pk)
+    obj = ToyProduct.objects.get(id=pk)
+    num_comments = Comment.objects.filter(product=product_object).count()
+
+    # Comment
+    comments = Comment.objects.filter(
+        product=product_object).order_by('date_added')
+
+    sender = request.user
+
+    sender_toy = ToyProduct.objects.filter(owner=sender)
+    num_sender_toy = sender_toy.count()
+
+    form = RequestForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            toy_request = form.save(commit=False)
+            #sender = User.objects.get(id = pk)
+            sender = request.user
+            requested_toy = ToyProduct.objects.get(id=pk)
+
+            # you don't need to use this if statment
+            if sender:
+                toy_request.sender = sender
+                toy_request.save()
+                form.save_m2m()
+                return redirect('/all_toys')
+        else:
+            print('Form is invalid.')
+            return redirect('invalid')
+
+    # paginator code
+    paginator = Paginator(product_objects, 8)  # 4 is changable!
     page = request.GET.get('page')
     product_objects = paginator.get_page(page)
 
     context = {
+        'obj': obj,
+        'form': form,
         'product_objects': product_objects,
         'categories': categories,
+        'num_comments': num_comments,
+        'comments': comments,
+        'num_sender_toy': num_sender_toy,
+        'product_object': product_object,
     }
 
-    return render(request, 'main/all-toys.html', context=context)
+    return render(request, 'product/detail3.html', context=context)
