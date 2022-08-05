@@ -35,7 +35,143 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <br>
+        <div class="col">
+            <a href="{% url 'all_toys' %}" class="btn btn-light">Back</a>
+
+            <div style="margin-left: 5pt;">
+                <div>
+                    <img src="{% static  product_object.image.url %}" style="margin-left: 20%;">
+                </div>
+                <div>
+                    <p class="abc">
+                        <strong>Name:</strong> {{ product_object.name }}
+                        <br>
+                        <strong>Brand:</strong> {{ product_object.brand }}
+                        <br>
+                        <strong>Age:</strong> {{ product_object.age }}
+                        <br>
+                        <strong>Image:</strong> {{ product_object.image }}
+                        <br>
+                        <strong>Category:</strong> {{ product_object.display_category }}
+                        <br>
+                        <strong>Description:</strong> {{ product_object.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="height: auto; width: auto; background-color: rgba(236, 104, 181, 0.187);">
+                <div class="form-group">
+                    <h6><strong>Create a Request for {{ product_object.name }}</strong></h6>
+
+                    <h2>Choose the Toy you <b>want to trade</b></h2>
+
+                    <ul class="list-unstyled components">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+
+                            {% for field in form.visible_fields %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field|add_class:'form-control' }}
+                                {% for error in field.errors %}
+                                <span class="help-block">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                       
+                            <button type="button" class="btn btn-light" style="background-color: rgba(226, 44, 117, 0.866); color: white;" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalCenter">
+                                Click to see your Toys
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-light" 
+                                    style="background: #536bf6 !important; margin-left: 10rem; color: white;">
+                                    <span class="glyphicon glyphicon-ok"></span> Request
+                                </button>
+                            </div>
+                        </form>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <p>3</p>
+
+            Add Comments ({{ num_comments }})
+            <br>
+            <hr>
+            {% if not product_object.comments.all %}
+            <div class="card-body">
+                <p>Not comments added yet...</p>
+            </div>
+            {% else %}
+            {% for comment in product_object.comments.all %}
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <p class="image is-32x32">
+                            {% if request.user.person.profile_pic %}
+                            <img src="{% static request.user.person.profile_pic.url %}" alt="Placeholder image">
+                            {% else %}
+                            <img src="{% static 'images/toybox.jpeg' %}" alt="Placeholder image">
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><strong>{{ comment.commenter.username }}</strong> </h5>
+                    </div>
+                    <p>
+                        {{ comment.comment_body }}
+                        <br>
+                        {% if request.user.username == comment.commenter.username %}
+                        <a class="btn btn-light" href="{% url 'delete_comment' product_object.id %}">Delete
+                            Comment</a>
+                        {% endif %}
+                    </p>
+                    <p><small>{{ comment.date_added }}</small></p>
+                </div>
+
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if request.user.is_authenticated or request.user.is_staff%}
+            <p><a class="btn btn-light" href="{% url 'add_comment' product_object.id %}"
+                    style="background-color: #536bf6; color: whitesmoke;">Add Comment</a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
             <a href="{% url 'all_toys' %}" class="btn btn-light">Back</a>
 
             <div>
@@ -193,7 +329,7 @@
             </div>
         </div> -->
 
-        <div class="col-md-6">
+        <div class="col-sm">
             <div style="margin: 10px;">
                 <div class="form-group">
                     <h6><strong>Create a Request for {{ product_object.name }}</strong></h6>
@@ -215,23 +351,23 @@
                             {% endfor %}
 
                             <!-- <br>
-                        <h2>Choose the Toy you want to trade</h2>
-                        <div class="form-group">
-                            <label for="sended_toy">Sender Toy</label>
-                            <select id='toy_select' name="sended_toy" class="form-control">x
-                            <script type='text/javascript'>
-                            // var values=[[1,'tree'],[2,'flower'],[3,'car']];
-                            for(v in sender_toy){
-                                var option=$('<option></option>');
-                                option.attr('value',values[v][0]);
-                                option.text(values[v][1]);
-                                $('#sended_toy').append(option);
-                            }
-                            </script>
-                            </select>
-                        </div> -->
-
+                            <h2>Choose the Toy you want to trade</h2>
                             <div class="form-group">
+                                <label for="sended_toy">Sender Toy</label>
+                                <select id='toy_select' name="sended_toy" class="form-control">x
+                                <script type='text/javascript'>
+                                // var values=[[1,'tree'],[2,'flower'],[3,'car']];
+                                for(v in sender_toy){
+                                    var option=$('<option></option>');
+                                    option.attr('value',values[v][0]);
+                                    option.text(values[v][1]);
+                                    $('#sended_toy').append(option);
+                                }
+                                </script>
+                                </select>
+                            </div> -->
+
+                            <!-- <div class="form-group">
                                 <label for="sender_toy">Your Toy to Trade</label>
                                 <select id="sender_toy" name="sender_toy" class="form-control">
                                     <option value="0">
@@ -239,28 +375,57 @@
                                     </option>
                                     {% for send_toy in sender_toy %}
                                     <option value="{{ send_toy.id }}">
-                                        {{ send_toy.id }}
+                                        {{ send_toy.name }}
                                     </option>
                                     {% endfor %}
                                 </select>
-                            </div>
+                            </div> -->
 
                             <!-- <div class="form-group">
-                            <input class="form-check-input" type="checkbox" value="" id="{{ product_object.id }}}">
-                            <label class="form-check-label" for="defaultCheck1">
-                              {{ product_object.name }}
-                            </label>
-                        </div>
-                        
-                        {% for i in sender_toy %}
-                            <div class="form-group">
-                                <input class="form-check-input" type="checkbox" value="" id="{{ i.id }}}">
+                                <input class="form-check-input" type="checkbox" value="" id="{{ product_object.id }}}">
                                 <label class="form-check-label" for="defaultCheck1">
-                                {{ i.name }}
+                                {{ product_object.name }}
                                 </label>
-                            </div>
-                        {% endfor %} -->
+                            </div>-->
 
+                            <!-- {% for i in sender_toy %}
+                                <div class="form-group">
+                                    <input class="form-check-input" type="checkbox" value="" id="{{ i.id }}}">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                    {{ i.name }}
+                                    </label>
+                                </div>
+                            {% endfor %}  -->
+
+
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalCenter">
+                                Launch demo modal
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <br>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-light"
@@ -269,61 +434,66 @@
                                 </button>
                             </div>
                         </form>
+                    </ul>
                 </div>
-
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div>
-                <div style="margin: 10px;">
-                    Add Comments ({{ num_comments }})
-                    <br>
-                    <hr>
-                    {% if not product_object.comments.all %}
-                    <div class="card-body">
-                        <p>Not comments added yet...</p>
-                    </div>
-                    {% else %}
-                    {% for comment in product_object.comments.all %}
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <p class="image is-32x32">
-                                    {% if request.user.person.profile_pic %}
-                                    <img src="{% static request.user.person.profile_pic.url %}" alt="Placeholder image">
-                                    {% else %}
-                                    <img src="{% static 'images/toybox.jpeg' %}" alt="Placeholder image">
+        <div>
+            <div class="col-sm">
+                <div>
+                    <div style="margin: 10px;">
+                        Add Comments ({{ num_comments }})
+                        <br>
+                        <hr>
+                        {% if not product_object.comments.all %}
+                        <div class="card-body">
+                            <p>Not comments added yet...</p>
+                        </div>
+                        {% else %}
+                        {% for comment in product_object.comments.all %}
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="image is-32x32">
+                                        {% if request.user.person.profile_pic %}
+                                        <img src="{% static request.user.person.profile_pic.url %}"
+                                            alt="Placeholder image">
+                                        {% else %}
+                                        <img src="{% static 'images/toybox.jpeg' %}" alt="Placeholder image">
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5><strong>{{ comment.commenter.username }}</strong> </h5>
+                                </div>
+                                <p>
+                                    {{ comment.comment_body }}
+                                    <br>
+                                    {% if request.user.username == comment.commenter.username %}
+                                    <a class="btn btn-light" href="{% url 'delete_comment' product_object.id %}">Delete
+                                        Comment</a>
                                     {% endif %}
                                 </p>
+                                <p><small>{{ comment.date_added }}</small></p>
                             </div>
-                            <div class="col-md-6">
-                                <h5><strong>{{ comment.commenter.username }}</strong> </h5>
-                            </div>
-                            <p>
-                                {{ comment.comment_body }}
-                                <br>
-                                {% if request.user.username == comment.commenter.username %}
-                                <a class="btn btn-light" href="{% url 'delete_comment' product_object.id %}">Delete
-                                    Comment</a>
-                                {% endif %}
-                            </p>
-                            <p><small>{{ comment.date_added }}</small></p>
+
                         </div>
+                        {% endfor %}
+                        {% endif %}
 
+                        {% if request.user.is_authenticated or request.user.is_staff%}
+                        <p><a class="btn btn-light" href="{% url 'add_comment' product_object.id %}"
+                                style="background-color: #536bf6; color: whitesmoke;">Add Comment</a></p>
+                        {% endif %}
                     </div>
-                    {% endfor %}
-                    {% endif %}
-
-                    {% if request.user.is_authenticated or request.user.is_staff%}
-                    <p><a class="btn btn-light" href="{% url 'add_comment' product_object.id %}"
-                            style="background-color: #536bf6; color: whitesmoke;">Add Comment</a></p>
-                    {% endif %}
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+
 
 
 <div class="row justify-content-center">
@@ -630,9 +800,15 @@
             </a>
         </div>
     </div>
-
-
 </div>
 
-</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+    integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+    crossorigin="anonymous"></script>
 {% endblock %}

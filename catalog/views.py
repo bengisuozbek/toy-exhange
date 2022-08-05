@@ -10,6 +10,8 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.views import generic
+from django.shortcuts import get_object_or_404
+from numpy import integer
 
 from .forms import ContactForm, CreateUserForm, ProductForm, CommentForm, CustomerForm, RequestForm
 from .models import *
@@ -435,14 +437,31 @@ def detailsPage(request, pk):
         form = RequestForm(request.POST)
 
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.sender = request.user
-            instance.requested_toy = product_object
+
+            # product_id = c.product.id
+            # c.save()
+            form_send_toys = request.form.getlist("send_toys")
+            for form_movie_key in form_send_toys:
+                if len(form_send_toys == 1):
+                    body = form_movie_key.name  
+
+            #instance = form.save(commit=False)
+            #body = request.POST['send_toy']
+            #toy_traded = ToyProduct.objects.get(name = body)
+            toy_traded = get_object_or_404(ToyProduct, name=body)
+
+            start = form.cleaned_data['start_date']
+            end = form.cleaned_data['end_date']
+
+
+            instance = ProductRequest(sender = request.user, sender_toy = toy_traded, requested_toy = product_object, start_date = start, end_date = end)
+            #instance.sender = request.user
+            #instance.requested_toy = product_object
             instance.save()
 
-            username = form.cleaned_data.get('sender_toy')
+            #username = form.cleaned_data.get('sender_toy')
             
-            messages.success(request, 'Request was created for ' + product_object + " by "  + username)
+            messages.success(request, 'Request was created for ' + product_object + " by "  + body)
             return redirect('all_toys')
         else:
             print('Form is invalid.')
@@ -736,7 +755,7 @@ def delete_comment(request, pk):
     return redirect(reverse('detail', args=[product_id]))
 
 
-def deneme(request, pk):
+def deneme(request):
     category = request.GET.get('category')
     categories = Category.objects.all()
 
@@ -745,52 +764,66 @@ def deneme(request, pk):
     else:
         product_objects = ToyProduct.objects.filter(category__name=category)
 
-    product_object = ToyProduct.objects.get(id=pk)
-    obj = ToyProduct.objects.get(id=pk)
-    num_comments = Comment.objects.filter(product=product_object).count()
+    #owner = User.objects.get(id=pk)
+    # form = ProductForm(request.POST or None)
 
-    # Comment
-    comments = Comment.objects.filter(
-        product=product_object).order_by('date_added')
+    # if request.method == 'POST':
+    #     if form.is_valid():
+    #         toy = form.save(commit=False)
+    #         owner = User.objects.get(id=pk)
+    #         # you don't need to use this if statment
+    #         if owner:
+    #             toy.owner = owner
+    #             if toy.brand != None and toy.brand != 'Other':
+    #                 toy.user_brand = toy.brand.name
+    #             toy.save()
+    #             form.save_m2m()
+    #             return redirect('/user')
+    #     else:
+    #         print('Form is invalid.')
+    #         return redirect('invalid')
 
-    sender = request.user
 
-    sender_toy = ToyProduct.objects.filter(owner=sender)
-    num_sender_toy = sender_toy.count()
+    # product_object = ToyProduct.objects.get(id=pk)
+    # obj = ToyProduct.objects.get(id=pk)
+    # num_comments = Comment.objects.filter(product=product_object).count()
 
-    form = RequestForm(request.POST or None)
+    # # Comment
+    # comments = Comment.objects.filter(
+    #     product=product_object).order_by('date_added')
 
-    if request.method == 'POST':
-        if form.is_valid():
-            toy_request = form.save(commit=False)
-            #sender = User.objects.get(id = pk)
-            sender = request.user
-            requested_toy = ToyProduct.objects.get(id=pk)
+    # sender = request.user
 
-            # you don't need to use this if statment
-            if sender:
-                toy_request.sender = sender
-                toy_request.save()
-                form.save_m2m()
-                return redirect('/all_toys')
-        else:
-            print('Form is invalid.')
-            return redirect('invalid')
+    # sender_toy = ToyProduct.objects.filter(owner=sender)
+    # num_sender_toy = sender_toy.count()
 
-    # paginator code
-    paginator = Paginator(product_objects, 8)  # 4 is changable!
-    page = request.GET.get('page')
-    product_objects = paginator.get_page(page)
+    # form = RequestForm(request.POST or None)
+
+    # if request.method == 'POST':
+    #     if form.is_valid():
+    #         toy_request = form.save(commit=False)
+    #         #sender = User.objects.get(id = pk)
+    #         sender = request.user
+    #         requested_toy = ToyProduct.objects.get(id=pk)
+
+    #         # you don't need to use this if statment
+    #         if sender:
+    #             toy_request.sender = sender
+    #             toy_request.save()
+    #             form.save_m2m()
+    #             return redirect('/all_toys')
+    #     else:
+    #         print('Form is invalid.')
+    #         return redirect('invalid')
+
+    # # paginator code
+    # paginator = Paginator(product_objects, 8)  # 4 is changable!
+    # page = request.GET.get('page')
+    # product_objects = paginator.get_page(page)
 
     context = {
-        'obj': obj,
-        'form': form,
         'product_objects': product_objects,
         'categories': categories,
-        'num_comments': num_comments,
-        'comments': comments,
-        'num_sender_toy': num_sender_toy,
-        'product_object': product_object,
     }
 
-    return render(request, 'product/detail3.html', context=context)
+    return render(request, 'product/1.html', context=context)
