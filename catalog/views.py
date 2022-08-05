@@ -207,9 +207,11 @@ def userPage(request):
         product_objects = ToyProduct.objects.filter(category__name=category)
 
     user_products = request.user.toyproduct_set.all()
+    user_requests = request.user.productrequest_set.all()
 
     context = {
         'user_products': user_products,
+        'user_requests': user_requests,
         'product_objects': product_objects,
         'categories': categories,
     }
@@ -424,11 +426,9 @@ def detailsPage(request, pk):
     num_comments = Comment.objects.filter(product=product_object).count()
 
     # Comment
-    comments = Comment.objects.filter(
-        product=product_object).order_by('date_added')
+    comments = Comment.objects.filter(product=product_object).order_by('date_added')
 
     sender = request.user
-
     num_sender_toy = sender_toy.count()
 
     form = RequestForm(request.POST or None)
@@ -436,51 +436,44 @@ def detailsPage(request, pk):
     if request.method == 'POST':
         form = RequestForm(request.POST)
 
-        if form.is_valid():
+        # if form.is_valid():
+        #     #instance = form.save(commit=False)
+        #     #body = request.POST['send_toy']
+        #     #toy_traded = ToyProduct.objects.get(name = body)
+        #     toy_traded = get_object_or_404(ToyProduct, name=body)
 
-            # product_id = c.product.id
-            # c.save()
-            form_send_toys = request.form.getlist("send_toys")
-            for form_movie_key in form_send_toys:
-                if len(form_send_toys == 1):
-                    body = form_movie_key.name  
-
-            #instance = form.save(commit=False)
-            #body = request.POST['send_toy']
-            #toy_traded = ToyProduct.objects.get(name = body)
-            toy_traded = get_object_or_404(ToyProduct, name=body)
-
-            start = form.cleaned_data['start_date']
-            end = form.cleaned_data['end_date']
+        #     start = form.cleaned_data['start_date']
+        #     end = form.cleaned_data['end_date']
 
 
-            instance = ProductRequest(sender = request.user, sender_toy = toy_traded, requested_toy = product_object, start_date = start, end_date = end)
-            #instance.sender = request.user
-            #instance.requested_toy = product_object
-            instance.save()
+        #     instance = ProductRequest(sender = request.user, sender_toy = toy_traded, requested_toy = product_object, start_date = start, end_date = end)
+        #     #instance.sender = request.user
+        #     #instance.requested_toy = product_object
+        #     instance.save()
 
-            #username = form.cleaned_data.get('sender_toy')
+        #     #username = form.cleaned_data.get('sender_toy')
             
-            messages.success(request, 'Request was created for ' + product_object + " by "  + body)
-            return redirect('all_toys')
+        #     messages.success(request, 'Request was created for ' + product_object + " by "  + body)
+        #     return redirect('all_toys')
+        # else:
+        #     print('Form is invalid.')
+        #     return redirect('invalid')
+
+
+    if request.method == 'POST':
+        if form.is_valid():
+            toyRequest = form.save(commit=False)
+            product_object = ToyProduct.objects.get(id=pk)
+            # you don't need to use this if statment
+            if sender:
+                toyRequest.sender = sender
+                toyRequest.requested_toy = obj
+                toyRequest.save()
+                form.save_m2m()
+                return redirect('userPage')
         else:
             print('Form is invalid.')
             return redirect('invalid')
-
-
-    # if request.method == 'POST':
-    #     if form.is_valid():
-    #         toyRequest = form.save(commit=False)
-    #         product_object = ToyProduct.objects.get(id=pk)
-    #         # you don't need to use this if statment
-    #         if sender:
-    #             toyRequest.sender = sender
-    #             toyRequest.save()
-    #             form.save_m2m()
-    #             return redirect('all_toys')
-    #     else:
-    #         print('Form is invalid.')
-    #         return redirect('invalid')
     
     # paginator code
     paginator = Paginator(product_objects, 8)  # 4 is changable!

@@ -10,6 +10,7 @@
   <div class="card card-body">
     <div class="col-md">
       <div class="row">
+        <h4>My Toys</h4>
         <div class="col-md">
           <table class="table">
             <tr>
@@ -34,17 +35,62 @@
               <td>{{ product.display_category }}</td>
               <td>{{ product.product_status }}</td>
               <td>{{ product.owner }}</td>
-              <td><a href="{% url 'updateProduct' product.id %}" class="btn btn-light">Update</a></td>
-              <td><a href="{% url 'deleteProduct' product.id %}" class="btn btn-light">Delete</a></td>
+              <td><a href="{% url 'updateProduct' product.id %}" class="btn btn-light" style="background-color: #536bf6d6; color: whitesmoke;">Update</a></td>
+              <td><a href="{% url 'deleteProduct' product.id %}" class="btn btn-light" style="background-color: #536bf6d6; color: whitesmoke;">Delete</a></td>
             </tr>
             {% endfor %}
 
           </table>
         </div>
 
-        <div class="col-md-12 text-center">
-          <a href="{% url 'addProduct' user.id %}" type="button" class="btn btn-light"
-            style="background-color: #c2a5f9;">Add a New Toy</a>
+        <div class="card" style="width: 600rem; height: 4rem; background-color: rgba(211, 211, 211, 0.489); justify-content: center;">
+          <div class="col-md-12 text-center">
+            <a href="{% url 'addProduct' user.id %}" type="button" class="btn btn-light"
+              style="background-color: #c2a5f9; color: whitesmoke;">Add a New Toy</a>
+          </div>
+        </div>
+        
+        <br>
+        <div class="row">
+          <h4>My Requests</h4>
+          <div class="col-md">
+            <table class="table">
+              <tr>
+                <th>Requested Toy</th>
+                <th>Reques Toy Name</th>
+                <th>Requested Toy's Owner</th>
+                <th>Traded Toy</th>
+                <th>Traded Toy Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+              </tr>
+  
+              {% for users in user_requests %}
+              <tr>
+                <td>
+                  <img class="card-img-top" src="{% static  users.requested_toy.image.url %}"
+                    style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                </td>
+                <td>
+                  <a href="{% url 'detail' users.requested_toy.id %}">{{ users.requested_toy.name }}</a>
+                </td>
+                <td>{{ users.requested_toy.owner }}</td>
+                <td>
+                  <img class="card-img-top" src="{% static  users.sender_toy.image.url %}"
+                    style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                </td>
+                <td>
+                  <a href="{% url 'detail' users.sender_toy.id %}">{{ users.sender_toy.name }}</a>
+                </td>
+                <td>{{ users.start_date }}</td>
+                <td>{{ users.end_date }}</td>
+                <td><a href="{% url 'updateProduct' users.id %}" class="btn btn-light" style="background-color: #79c400e3; color: whitesmoke;">Update</a></td>
+                <td><a href="{% url 'deleteProduct' users.id %}" class="btn btn-light" style="background-color: #79c400e3; color: whitesmoke;">Delete</a></td>
+              </tr>
+              {% endfor %}
+  
+            </table>
+          </div>
         </div>
 
       </div>

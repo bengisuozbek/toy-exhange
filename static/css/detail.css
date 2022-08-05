@@ -1,3 +1,26 @@
+h6 {
+    color: #000;
+    font-size: 26px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    margin: 30px 0 60px;
+}
+
+h6::after {
+    content: "";
+    width: 100px;
+    position: absolute;
+    margin: 0 auto;
+    height: 4px;
+    border-radius: 1px;
+    background: #7ac400;
+    left: 0;
+    right: 0;
+    bottom: -20px;
+}
+
 h2 {
     color: #000;
     font-size: 26px;
@@ -196,16 +219,6 @@ h2::after {
 strong {
     font-weight: bold;
 }
-
-
-
-
-
-
-
-
-
-
 
 .card-white .card-heading {
     color: rgb(191, 13, 13);
