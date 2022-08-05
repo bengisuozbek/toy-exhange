@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="wrapper">
+    <div class="card card-body">
+        <div class="col">
+            <div class="row">
+                <h4>My Requests</h4>
+                <h5 style="margin-top: 12pt;"><strong style="color: #536bf6d6;">Incoming Requests</strong></h5>
+                <br>
+                <div class="col">
+                    <table class="table">
+                        <tr>
+                            <th>My Requested Toy</th>
+                            <th>My Requested Toy Name</th>
+                            <th>Sended Toy</th>
+                            <th>Sended Toy Name</th>
+                            <th>Sended Toy's Owner</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+
+                        {% for users in incoming_requests %}
+                        <tr>
+                            <td>
+                                <img class="card-img-top" src="{% static  users.requested_toy.image.url %}"
+                                    style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                            </td>
+                            <td>
+                                <a href="{% url 'detail' users.requested_toy.id %}">{{ users.requested_toy.name }}</a>
+                            </td>
+                            <td>{{ users.requested_toy.owner }}</td>
+                            <td>
+                                <img class="card-img-top" src="{% static  users.sender_toy.image.url %}"
+                                    style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                            </td>
+                            <td>
+                                <a href="{% url 'detail' users.sender_toy.id %}">{{ users.sender_toy.name }}</a>
+                            </td>
+                            <td>{{ users.start_date }}</td>
+                            <td>{{ users.end_date }}</td>
+                            <td><a href="{% url 'update_request' users.id %}" class="btn btn-light"
+                                    style="background-color: #79c400e3; color: whitesmoke;">Update</a></td>
+                            <td><a href="{% url 'delete_request' users.id %}" class="btn btn-light"
+                                    style="background-color: #79c400e3; color: whitesmoke;">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <h5><strong style="color: #536bf6d6;">My Requests</strong></h5>
+                <br>
+                <div class="col">
+                    <table class="table">
+                        <tr>
+                            <th>Requested Toy</th>
+                            <th>Reques Toy Name</th>
+                            <th>Requested Toy's Owner</th>
+                            <th>Traded Toy</th>
+                            <th>Traded Toy Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+
+                        {% for users in user_requests %}
+                        <tr>
+                            <td>
+                                <img class="card-img-top" src="{% static  users.requested_toy.image.url %}"
+                                    style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                            </td>
+                            <td>
+                                <a href="{% url 'detail' users.requested_toy.id %}">{{ users.requested_toy.name }}</a>
+                            </td>
+                            <td>{{ users.requested_toy.owner }}</td>
+                            <td>
+                                <img class="card-img-top" src="{% static  users.sender_toy.image.url %}"
+                                    style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                            </td>
+                            <td>
+                                <a href="{% url 'detail' users.sender_toy.id %}">{{ users.sender_toy.name }}</a>
+                            </td>
+                            <td>{{ users.start_date }}</td>
+                            <td>{{ users.end_date }}</td>
+                            <td><a href="{% url 'update_request' users.id %}" class="btn btn-light"
+                                    style="background-color: #79c400e3; color: whitesmoke;">Update</a></td>
+                            <td><a href="{% url 'delete_request' users.id %}" class="btn btn-light"
+                                    style="background-color: #79c400e3; color: whitesmoke;">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

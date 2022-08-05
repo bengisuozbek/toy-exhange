@@ -13,13 +13,16 @@ smtp şifrem güncellenecek
 
 ****
 ***
-1)  Toybox logosu tıklama -> link düzelt 
-2 HALLOLDU) paginator does not work!!!!1  --> find all !  Current - Next - Back !!!!!
-3) ALL of the TOYS sayfasında üye dropdown ve category dropdown çalışmıyor
+1) ++++++   Toybox logosu tıklama -> link düzelt 
+2) ++++++   paginator does not work!!!!1  --> find all !  Current - Next - Back !!!!!
+3) ++++++   ALL of the TOYS sayfasında üye dropdown ve category dropdown çalışmıyor
 4) add request için sender_toy --> oyuncakların hepsi çıkıyor ve id çıkıyor!
 5) SIMILAR PRODUC iğn detail page
-6) Request içn detail e bak -Z fotmda sender_toy yüklenmiyoe'''
-
+6) ++++++   Request içn UPDATE DELETE 
+6*) ProductRequest'i sil, aynısından ama recipient içeren yeni bir database modeli oluştur!!
+7) Request için bildirim ->
+8) Request için request owner'dan kabul 
+9) message model'inin aynısını REQUEST için uygula!!
 ****
 
 

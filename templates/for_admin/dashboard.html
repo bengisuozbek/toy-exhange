@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col">
                             <br>
                             <h5>Customers:</h5>
                             <hr>
@@ -48,7 +48,7 @@
 
                         </div>
 
-                        <div class="col-md-7">
+                        <div class="col">
                             <br>
                             <h5>Toys:</h5>
                             <hr>
@@ -64,7 +64,8 @@
 
                                     {% for product in product_objects %}
                                     <tr>
-                                        <td><a href="{% url 'detail' product.id %}" style="color: rgb(32, 110, 235);">{{product.name}}</a></td>
+                                        <td><a href="{% url 'detail' product.id %}"
+                                                style="color: rgb(32, 110, 235);">{{product.name}}</a></td>
                                         <td>{{product.date_created}}</td>
                                         <td>{{product.product_status}}</td>
                                         <td><a class="btn btn-sm btn-light"
@@ -77,35 +78,55 @@
                             </div>
                         </div>
 
-                        <!-- <div class="row">
-                            <div class="col-md">
-                                <h5>Products</h5>
-                                <div class="card-body">
-                                    <table class="table">
-                                        <tr>
-                                            <th>Image</th>
-                                            <th>Product</th>
-                                            <th>Category</th>
-                                        </tr>
+                    </div>
 
-                                        {% for i in product_objects %}
-                                        <tr>
-                                            <td>
-                                                <img src="{% static  i.image.url %}" style="width:100px;height:100px;"
-                                                    class="card-img-top">
-                                            </td>
-                                            <td>{{ i.name }}</td>
-                                            <td>{{ i.display_category }} </td>
-                                        </tr>
-                                        {% endfor %}
 
-                                    </table>
-                                </div>
-                            </div>
-                        </div> -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <br>
+                    <h5>Requests</h5>
+                    <hr>
+                    <div class="card card-body" style="width: auto; height:auto;">
+                        <table class="table">
+                            <tr>
+                                <th>Request ID</th>
+                                <th>Reques Toy Name</th>
+                                <th>Requested Toy's Owner</th>
+                                <th>Traded Toy Name</th>
+                                <th>Traded Toy's Owner</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+
+                            {% for users in user_requests %}
+                            <tr>
+                                <td>{{ users.id }}</td>
+                                <td>
+                                    <a href="{% url 'detail' users.requested_toy.id %}">{{ users.requested_toy.name}}</a>
+                                </td>
+                                <td>{{ users.requested_toy.owner }}</td>
+                                
+                                <td>
+                                    <a href="{% url 'detail' users.sender_toy.id %}">{{ users.sender_toy.name }}</a>
+                                </td>
+                                <td>{{ users.sender_toy.owner }}</td>
+                                <td>{{ users.start_date }}</td>
+                                <td>{{ users.end_date }}</td>
+                                <td><a href="{% url 'update_request' users.id %}" class="btn btn-light"
+                                        style="background-color: #79c400e3; color: whitesmoke;">Update</a></td>
+                                <td><a href="{% url 'delete_request' users.id %}" class="btn btn-light"
+                                        style="background-color: #79c400e3; color: whitesmoke;">Delete</a></td>
+                            </tr>
+                            {% endfor %}
+
+                        </table>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

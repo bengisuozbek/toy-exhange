@@ -140,8 +140,6 @@ def searchbar_user(request):
             searched_objects_first_name =  User.objects.all().filter(first_name__icontains=search)
             searched_objects_last_name =  User.objects.all().filter(last_name__icontains=search) 
 
-
-
     #category = request.GET.get('category')
     #categories = Category.objects.all()
 

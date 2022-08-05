@@ -28,8 +28,6 @@ from catalog import views
 #   For the above url, check the conditions! 
 
 urlpatterns = [
-
-   
     path('accounts/', include('allauth.urls')),
 
     # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -56,14 +54,15 @@ urlpatterns = [
     path('login/', views.loginPage, name="loginPage"),
     path('logout/', views.logout_view, name="logout"),
 
-    path('user/', views.userPage, name="user-page"),
+    path('user/', views.userPage, name="userPage"),
+    path('userRequests/', views.user_request_page, name="user_request_page"),
+
     path('customer/<str:pk>/', views.customer, name='customer'),
 
     path('product/<int:pk>/', views.detailsPage, name='detail'),
 
     path('deneme/', views.deneme, name='deneme'),
     
-
     path('addProduct/<int:pk>/', views.addProduct, name='addProduct'),
     path('updateProduct/<int:pk>/', views.updateProduct, name='updateProduct'),
     path('deleteProduct/<int:pk>/', views.deleteProduct, name='deleteProduct'),
