@@ -207,7 +207,7 @@ def userPage(request):
     user_products = request.user.toyproduct_set.all()
 
     user = request.user
-    requests = ProductRequest.get_requests(user=user)
+    requests = RequestforToy.get_requests(user=user)
 
     active_direct = None
     directs = None
@@ -215,7 +215,7 @@ def userPage(request):
     if requests:
         request = requests[0]
         active_direct = request['user'].username
-        directs = ProductRequest.objects.filter(user=user, recipient=request['user'])
+        directs = RequestforToy.objects.filter(user=user, recipient=request['user'])
 
         for request in requests:
             if request['user'].username == active_direct:
@@ -255,7 +255,7 @@ def user_request_page(request):
 
     #incoming_requests = request.user.!!
     user_products = request.user.toyproduct_set.all()
-    user_requests = request.user.requesttoy_set.all()
+    user_requests = request.user.requestfortoy_set.all()
 
     context = {
         'user_products': user_products,
@@ -527,7 +527,7 @@ def dashboard(request):
 
     customers = Person.objects.all()
     orders = ToyProduct.objects.all()
-    user_requests = ProductRequest.objects.all()
+    user_requests = RequestforToy.objects.all()
 
     num_instances_available = ToyProduct.objects.filter(
         product_status__exact='a').count()
@@ -649,7 +649,7 @@ def delete_comment(request, pk):
 
 @login_required(login_url='loginPage')
 def update_request(request, pk):
-    toy_request = ProductRequest.objects.get(id=pk)
+    toy_request = RequestforToy.objects.get(id=pk)
     request_id = toy_request.id
     #product = ToyProduct.objects.get(id=pk)
     #name = product.name
@@ -674,7 +674,7 @@ def update_request(request, pk):
 
 @login_required(login_url='loginPage')
 def delete_request(request, pk):
-    toy_request = ProductRequest.objects.get(id=pk)
+    toy_request = RequestforToy.objects.get(id=pk)
     #product = ToyProduct.objects.get(id=pk)
     toy_request.delete()
     return redirect('userPage')

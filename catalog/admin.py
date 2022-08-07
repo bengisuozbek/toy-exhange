@@ -25,6 +25,6 @@ class ToyProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'owner', 'brand', 'age', 'display_category')
 
 
-@admin.register(ProductRequest)
+@admin.register(RequestforToy)
 class ToyProductAdmin(admin.ModelAdmin):
     list_display = ('sender', 'sender_toy', 'requested_toy', 'notes', 'start_date', 'end_date')

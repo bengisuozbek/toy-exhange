@@ -19,10 +19,10 @@ smtp şifrem güncellenecek
 4) add request için sender_toy --> oyuncakların hepsi çıkıyor ve id çıkıyor!
 5) SIMILAR PRODUC iğn detail page
 6) ++++++   Request içn UPDATE DELETE 
-6*) ProductRequest'i sil, aynısından ama recipient içeren yeni bir database modeli oluştur!!
+6*) ++++++  ProductRequest'i sil, aynısından ama recipient içeren yeni bir database modeli oluştur!! ---->>>>  RequestforToy is created
 7) Request için bildirim ->
 8) Request için request owner'dan kabul 
-9) message model'inin aynısını REQUEST için uygula!!
+9) ------   message model'inin aynısını REQUEST için uygula!!
 ****
 
 

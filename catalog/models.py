@@ -120,16 +120,16 @@ class Contact(models.Model): # for support page!
 
     def __str__(self):
         return self.email
-
         
-class ProductRequest(models.Model):
+
+class RequestforToy(models.Model):
     id = models.AutoField(primary_key=True)
 
     sender = models.ForeignKey(User, null=True, blank=False, on_delete=models.CASCADE, editable=False)
-    sender_toy = models.ForeignKey(ToyProduct, on_delete=models.CASCADE, related_name='requestsender')
+    sender_toy = models.ForeignKey(ToyProduct, on_delete=models.CASCADE, related_name='toyrequestsender')
 
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE)
-    requested_toy = models.ForeignKey(ToyProduct, on_delete=models.CASCADE, related_name='requestborrow')
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='toyrequestrecipient')
+    requested_toy = models.ForeignKey(ToyProduct, on_delete=models.CASCADE, related_name='toyrequestborrow')
 
     notes = models.CharField(max_length=250, help_text="If you have something to add, you can write it here.")
 
