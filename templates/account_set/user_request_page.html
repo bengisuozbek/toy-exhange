@@ -24,7 +24,7 @@
                             <th>End Date</th>
                         </tr>
 
-                        {% for users in incoming_requests %}
+                        {% for users in user_incoming_requests %}
                         <tr>
                             <td>
                                 <img class="card-img-top" src="{% static  users.requested_toy.image.url %}"

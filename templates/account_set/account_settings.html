@@ -20,11 +20,9 @@
     <div class="card card-body">
         <div class="col-md">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-sm-3">
                     <div class="card card-body">
-                        <a class="btn btn-light" style="background: #c2a5f9 !important;" href="{% url 'home' %}">
-                            &#8592;
-                            Back to Profile</a>
+                        <!--  -->
                         <hr>
                         <h3 style="text-align: center;">Account Settings</h3>
                         <hr>
@@ -32,33 +30,31 @@
                     </div>
                 </div>
 
-                <div class="col-md-9">
-                    <div class="card card-body">
-                        <form method="POST" action="" enctype="multipart/form-data">
-                            {% csrf_token %}
+                <div class="col">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
 
-                            {% for field in form.visible_fields %}
-                            <div class="form-group">
-                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field|add_class:'form-control' }}
-                                {% for error in field.errors %}
-                                <span class="help-block">{{ error }}</span>
-                                {% endfor %}
-                            </div>
+                        {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field|add_class:'form-control' }}
+                            {% for error in field.errors %}
+                            <span class="help-block">{{ error }}</span>
                             {% endfor %}
+                        </div>
+                        {% endfor %}
 
-                            <div>
-                                <br>
-                            </div>
+                        <div>
+                            <br>
+                        </div>
 
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-light" style="background: #c2a5f9 !important;">
-                                    <span class="glyphicon glyphicon-ok"></span> Update Information
-                                </button>
-                            </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-light" style="background: #c2a5f9 !important;">
+                                <span class="glyphicon glyphicon-ok"></span> Update Information
+                            </button>
+                        </div>
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -65,7 +65,7 @@ class ToyProduct(models.Model):
     # Category class has already been defined so we can specify the object above.
     category = models.ManyToManyField(Category)
 
-    image =  models.ImageField(default = "imageicon.png", upload_to="static/images/uploads", null=True, blank=True)
+    image =  models.ImageField(default = "imageicon.png", null=True, blank=True)
     description = models.CharField(max_length=200, null=True, blank=True)
     date_created = models.DateField(auto_now_add=True, null=True)
     
@@ -121,7 +121,6 @@ class Contact(models.Model): # for support page!
     def __str__(self):
         return self.email
         
-
 class RequestforToy(models.Model):
     id = models.AutoField(primary_key=True)
 

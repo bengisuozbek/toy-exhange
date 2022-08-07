@@ -38,8 +38,6 @@ urlpatterns = [
     path('upload/', include('price.urls')),
     path('message/', include('message.urls')),
 
-    path('home/', views.home, name='home'),
-
     path('allToys/', views.all_toys, name="all_toys"),
     path('privacy/', views.privacy, name="privacy"),
     path('category/<int:pk>/', views.category, name="category"),
@@ -77,3 +75,7 @@ urlpatterns = [
 
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
