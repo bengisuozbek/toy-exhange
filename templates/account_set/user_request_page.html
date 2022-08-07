@@ -8,6 +8,7 @@
         <div class="col">
             <div class="row">
                 <h4>My Requests</h4>
+                <br>
                 <h5 style="margin-top: 12pt;"><strong style="color: #536bf6d6;">Incoming Requests</strong></h5>
                 <br>
                 <div class="col">
@@ -31,7 +32,8 @@
                             </td>
                             <td>
                                 <strong style="font-size: 10pt;">My Requested Toy Name:</strong>
-                                <a href="{% url 'detail' users.requested_toy.id %}">{{ users.requested_toy.name }}</a>
+                                <a href="{% url 'detail' users.requested_toy.id %}" style="color: rgb(32, 110, 235);">
+                                    {{ users.requested_toy.name }}</a>
                             </td>
                             <td>
                                 <img class="card-img-top" src="{% static  users.sender_toy.image.url %}"
@@ -39,11 +41,13 @@
                             </td>
                             <td>
                                 <strong style="font-size: 10pt;">Sended Toy Name:</strong>
-                                <a href="{% url 'detail' users.sender_toy.id %}">{{ users.sender_toy.name }}</a>
+                                <a href="{% url 'detail' users.sender_toy.id %}" style="color: rgb(32, 110, 235);">
+                                    {{ users.sender_toy.name }}</a>
 
                                 <p></p>
 
-                                <strong style="font-size: 10pt;">Sended Toy's Owner:</strong> {{ users.sender }}</td>
+                                <strong style="font-size: 10pt;">Sended Toy's Owner:</strong> {{ users.sender }}
+                            </td>
                             </td>
                             <td>{{ users.start_date }}</td>
                             <td>{{ users.end_date }}</td>
@@ -61,7 +65,10 @@
                     </table>
                 </div>
             </div>
-            
+
+            <br>
+            <br>
+
             <div class="row">
                 <h5><strong style="color: #536bf6d6;">Accepted Requests</strong></h5>
                 <br>
@@ -85,23 +92,27 @@
                             </td>
                             <td>
                                 <strong style="font-size: 10pt;">Requested Toy Name:</strong>
-                                <a href="{% url 'detail' users.requested_toy.id %}">{{ users.requested_toy.name }}</a>
-                           
+                                <a href="{% url 'detail' users.requested_toy.id %}" style="color: rgb(32, 110, 235);">
+                                    {{ users.requested_toy.name }}</a>
+
                                 <p> </p>
 
-                                <strong style="font-size: 10pt;">Requested Toy's Owner:</strong> {{ users.requested_toy.owner }}</td>
+                                <strong style="font-size: 10pt;">Requested Toy's Owner:</strong> {{
+                                users.requested_toy.owner }}
+                            </td>
                             <td>
                                 <img class="card-img-top" src="{% static  users.sender_toy.image.url %}"
                                     style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
                             </td>
                             <td>
                                 <strong style="font-size: 10pt;">Traded Toy Name:</strong>
-                                <a href="{% url 'detail' users.sender_toy.id %}">{{ users.sender_toy.name }}</a>
+                                <a href="{% url 'detail' users.sender_toy.id %}" style="color: rgb(32, 110, 235);">
+                                    {{ users.sender_toy.name }}</a>
                             </td>
                             <td>{{ users.start_date }}</td>
                             <td>{{ users.end_date }}</td>
                             {% if users.is_accepted %}
-                                <td>Accepted</td>
+                            <td>Accepted</td>
                             {% endif %}
                         </tr>
                         {% endif %}
@@ -111,6 +122,8 @@
                 </div>
             </div>
 
+            <br>
+            <br>
             <div class="row">
                 <h5><strong style="color: #536bf6d6;">My Requests</strong></h5>
                 <br>
@@ -133,11 +146,14 @@
                             </td>
                             <td>
                                 <strong style="font-size: 10pt;">Requested Toy Name:</strong>
-                                <a href="{% url 'detail' users.requested_toy.id %}">{{ users.requested_toy.name }}</a>
-                           
+                                <a href="{% url 'detail' users.requested_toy.id %}" style="color: rgb(32, 110, 235);">
+                                    {{ users.requested_toy.name }}</a>
+
                                 <p> </p>
 
-                                <strong style="font-size: 10pt;">Requested Toy's Owner:</strong> {{ users.requested_toy.owner }}</td>
+                                <strong style="font-size: 10pt;">Requested Toy's Owner:</strong> {{
+                                users.requested_toy.owner }}
+                            </td>
                             </td>
                             <td>
                                 <img class="card-img-top" src="{% static  users.sender_toy.image.url %}"
@@ -145,7 +161,8 @@
                             </td>
                             <td>
                                 <strong style="font-size: 10pt;">Traded Toy Name:</strong>
-                                <a href="{% url 'detail' users.sender_toy.id %}">{{ users.sender_toy.name }}</a>
+                                <a href="{% url 'detail' users.sender_toy.id %}" style="color: rgb(32, 110, 235);">
+                                    {{ users.sender_toy.name }}</a>
                             </td>
                             <td>{{ users.start_date }}</td>
                             <td>{{ users.end_date }}</td>

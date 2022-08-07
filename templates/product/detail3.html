@@ -11,8 +11,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="{% static 'css/detail.css' %}">
-<link rel="stylesheet" href="{% static 'static/css/sidebars.css' %}">
-<link rel="stylesheet" href="{% static 'static/css/style.css' %}">
 
 <style>
     .toy_picture {
@@ -70,7 +68,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card" style="height: auto; width: auto; background-color: rgba(236, 104, 181, 0.187);">
+            <div class="card" style="height: auto; width: auto; background-color: rgba(222, 143, 189, 0.289);">
                 <div class="form-group">
                     <h6>Create a Request for {{ product_object.name }}</h6>
                     <br>
@@ -91,11 +89,12 @@
                             {% endfor %}
 
                             <button type="button" class="btn btn-light"
-                                style="background-color: rgba(226, 44, 117, 0.866); color: white;"
+                                style="background-color: #79c400e2; color: white;"
                                 data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
                                 Click to see your Toys
                             </button>
 
+                            <br>
                             <br>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-light"
