@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.views import generic
 from django.shortcuts import get_object_or_404
 
-from .forms import ContactForm, CreateUserForm, ProductForm, CommentForm, CustomerForm, RequestForm 
+from .forms import ContactForm, CreateUserForm, ProductForm, CommentForm, CustomerForm, RequestForm
 from .models import *
 from catalog.decorators import unauthenticated_user, allowed_users, admin_only
 
@@ -208,7 +208,7 @@ def userPage(request):
 
     num_users = User.objects.all().count() - 1
     num_products = ToyProduct.objects.all().count()
-    
+
     context = {
         'user_products': user_products,
         'num_users': num_users,
@@ -216,10 +216,9 @@ def userPage(request):
         'product_objects': product_objects,
         'categories': categories,
     }
-    
 
-    #user_requests = request.user.productrequest_set.all() -->>>->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ÖNEMLİİİİ 
-    #user_toy_requests = request.user.productrequest_set.all()
+    # user_requests = request.user.productrequest_set.all() -->>>->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ÖNEMLİİİİ
+    # user_toy_requests = request.user.productrequest_set.all()
 
     return render(request, 'account_set/user.html', context)
 
@@ -235,13 +234,18 @@ def user_request_page(request):
     else:
         product_objects = ToyProduct.objects.filter(category__name=category)
 
-    #incoming_requests = request.user.!!
-    user_incoming_requests = RequestforToy.objects.filter(recipient = request.user)
-    user_requests = request.user.requestfortoy_set.all()
+    # incoming_requests = request.user.!!
+    user_incoming_requests = RequestforToy.objects.filter(
+        recipient=request.user)
+    user_accepted_requests = user_incoming_requests.filter(is_accepted=True)
 
+    # = requests.filter(is_accepted = False)
+    # user_accepted_requests = request.filter(is_accepted = True)
+    user_requests = request.user.requestfortoy_set.all()
 
     context = {
         'user_incoming_requests': user_incoming_requests,
+        'user_accepted_requests': user_accepted_requests,
         'user_requests': user_requests,
         'product_objects': product_objects,
         'categories': categories,
@@ -249,7 +253,6 @@ def user_request_page(request):
     return render(request, 'account_set/user_request_page.html', context)
 
 
-    
 @login_required(login_url='loginPage')
 def accountSettings(request):
 
@@ -419,16 +422,16 @@ def searchbar(request):
             searched_objects_category = ToyProduct.objects.all().filter(
                 category__name__icontains=search)
 
-    #category = request.GET.get('category')
-    #categories = Category.objects.all()
+    # category = request.GET.get('category')
+    # categories = Category.objects.all()
 
     # if category == None:
     #    product_objects = ToyProduct.objects.all()
     # else:
     #    product_objects = ToyProduct.objects.filter(category__name = category)
 
-    #product_object = ToyProduct.objects.get(id=pk)
-    #num_comments = Comment.objects.filter(product=product_object).count()
+    # product_object = ToyProduct.objects.get(id=pk)
+    # num_comments = Comment.objects.filter(product=product_object).count()
 
     context = {
         'searched_objects_name': searched_objects_name,
@@ -453,32 +456,41 @@ def detailsPage(request, pk):
     sender_toy = request.user.toyproduct_set.all()
 
     product_object = ToyProduct.objects.get(id=pk)
-    obj = ToyProduct.objects.get(id=pk)
 
     num_comments = Comment.objects.filter(product=product_object).count()
-
     # Comment
-    comments = Comment.objects.filter(product=product_object).order_by('date_added')
+    comments = Comment.objects.filter(
+        product=product_object).order_by('date_added')
 
     sender = request.user
-    
-    # SEND REQUEST
 
-    form = RequestForm(request.POST or None)
-
+    form = RequestForm(instance=product_object)
     if request.method == 'POST':
+        form = RequestForm(request.POST, instance=product_object)
         if form.is_valid():
-            toyRequest = form.save(commit=False)
+            fstart_date = form.cleaned_data['start_date']
+            fend_date = form.cleaned_data['end_date']
+            fnotes = form.cleaned_data['notes']
+            fsender_toy = form.cleaned_data['sender_toy']
 
-            if sender:
-                toyRequest.sender = sender
-                toyRequest.recipient = ToyProduct.objects.get(id=pk).owner
-                toyRequest.requested_toy = ToyProduct.objects.get(id=pk)
-                form.save_m2m()
-                return redirect('userPage')
+            # toyRequest.sender = sender
+            #     toyRequest.recipient = product_object.owner
+            #     toyRequest.requested_toy = product_object
+            #     toyRequest.is_accepted = False
+            #     toyRequest.is_ignored = False
+
+            c = RequestforToy(sender=sender, sender_toy=fsender_toy, recipient=product_object.owner,
+                              requested_toy=product_object, notes=fnotes, start_date=fstart_date,
+                              end_date=fend_date, is_accepted=False, is_ignored=False)
+
+            c.save()
+            return redirect('user_request_page')
         else:
             print('Form is invalid.')
             return redirect('invalid')
+
+    else:
+        form = RequestForm()
 
     # paginator code
     paginator = Paginator(product_objects, 8)  # 4 is changable!
@@ -486,7 +498,6 @@ def detailsPage(request, pk):
     product_objects = paginator.get_page(page)
 
     context = {
-        'obj': obj,
         'form': form,
         'sender_toy': sender_toy,
         'product_objects': product_objects,
@@ -638,8 +649,8 @@ def delete_comment(request, pk):
 def update_request(request, pk):
     toy_request = RequestforToy.objects.get(id=pk)
     request_id = toy_request.id
-    #product = ToyProduct.objects.get(id=pk)
-    #name = product.name
+    # product = ToyProduct.objects.get(id=pk)
+    # name = product.name
 
     form = RequestForm(instance=toy_request)
 
@@ -647,7 +658,7 @@ def update_request(request, pk):
         form = RequestForm(request.POST, request.FILES, instance=toy_request)
         if form.is_valid():
             form.save()
-            return redirect('userPage')
+            return redirect('user_request_page')
         else:
             print('Form is invalid.')
             return redirect('invalid')
@@ -660,11 +671,28 @@ def update_request(request, pk):
 
 
 @login_required(login_url='loginPage')
+def accept_request(request, pk):
+    toy_request = RequestforToy.objects.get(id=pk)
+    toy_request.is_accepted = True
+    toy_request.save()
+
+    return redirect('user_request_page')
+
+
+@login_required(login_url='loginPage')
 def delete_request(request, pk):
     toy_request = RequestforToy.objects.get(id=pk)
-    #product = ToyProduct.objects.get(id=pk)
     toy_request.delete()
-    return redirect('userPage')
+    return redirect('user_request_page')
+
+
+@login_required(login_url='loginPage')
+def ignore_request(request, pk):
+    toy_request = RequestforToy.objects.get(id=pk)
+    toy_request.is_ignored = True
+    toy_request.save()
+
+    return redirect('user_request_page')
 
 
 def deneme(request):
@@ -676,7 +704,7 @@ def deneme(request):
     else:
         product_objects = ToyProduct.objects.filter(category__name=category)
 
-    #owner = User.objects.get(id=pk)
+    # owner = User.objects.get(id=pk)
     # form = ProductForm(request.POST or None)
 
     # if request.method == 'POST':

@@ -45,7 +45,13 @@ class RequestForm(forms.ModelForm):
         model = RequestforToy
         fields = ['start_date', 'end_date', 'notes', 'sender_toy']
         widgets = {
-            'notes': forms.Textarea(attrs={'class': 'form-control'}),
+            'notes': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'id': 'new-class-name two',
+                    'rows': 3,
+                    'cols': 40
+                }),
             'start_date': DateInput,
             'end_date': DateInput
         }

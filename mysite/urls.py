@@ -67,6 +67,8 @@ urlpatterns = [
 
     path('updateRequest/<int:pk>/', views.update_request, name='update_request'),
     path('deleteRequest/<int:pk>/', views.delete_request, name='delete_request'),
+    path('accept_request/<int:pk>/', views.accept_request, name='accept_request'),
+    path('ignore_request/<int:pk>/', views.ignore_request, name='ignore_request'),
         
     path('<int:pk>/add-comment/', views.add_comment, name='add_comment'),
     path('<int:pk>/delete-comment/', views.delete_comment, name='delete_comment'),

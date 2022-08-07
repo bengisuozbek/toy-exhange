@@ -120,7 +120,7 @@ class Contact(models.Model): # for support page!
 
     def __str__(self):
         return self.email
-        
+
 class RequestforToy(models.Model):
     id = models.AutoField(primary_key=True)
 
@@ -134,6 +134,9 @@ class RequestforToy(models.Model):
 
     start_date = models.DateField(verbose_name="Start Date", help_text="Start date for toy is on ...", null=True, blank=False)
     end_date = models.DateField(verbose_name="End Date" , help_text="Coming back on ...", null=True, blank=False)
+
+    is_accepted = models.BooleanField(default=False)
+    is_ignored = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['sender', 'sender_toy', 'requested_toy']
