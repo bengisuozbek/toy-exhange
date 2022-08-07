@@ -145,26 +145,26 @@ def logout_view(request):
     return redirect('loginPage')
 
 
-@login_required(login_url='loginPage')
-def home(request):
+# @login_required(login_url='loginPage')
+# def home(request):
 
-    category = request.GET.get('category')
-    categories = Category.objects.all()
+#     category = request.GET.get('category')
+#     categories = Category.objects.all()
 
-    if category == None:
-        product_objects = ToyProduct.objects.all()
-    else:
-        product_objects = ToyProduct.objects.filter(category__name=category)
+#     if category == None:
+#         product_objects = ToyProduct.objects.all()
+#     else:
+#         product_objects = ToyProduct.objects.filter(category__name=category)
 
-    # user = request.user.id
-    # request_list = ToyRequestList.objects.get(owner=user)
+#     # user = request.user.id
+#     # request_list = ToyRequestList.objects.get(owner=user)
 
-    context = {
-        'product_objects': product_objects,
-        'categories': categories,
-        # 'request_list': request_list,
-    }
-    return render(request, 'registration/home.html', context)
+#     context = {
+#         'product_objects': product_objects,
+#         'categories': categories,
+#         # 'request_list': request_list,
+#     }
+#     return render(request, 'registration/home.html', context)
 
 
 @login_required(login_url='loginPage')
@@ -206,21 +206,6 @@ def userPage(request):
 
     user_products = request.user.toyproduct_set.all()
 
-    user = request.user
-    requests = RequestforToy.get_requests(user=user)
-
-    active_direct = None
-    directs = None
-    
-    if requests:
-        request = requests[0]
-        active_direct = request['user'].username
-        directs = RequestforToy.objects.filter(user=user, recipient=request['user'])
-
-        for request in requests:
-            if request['user'].username == active_direct:
-                request['unread'] = 0
-
     num_users = User.objects.all().count() - 1
     num_products = ToyProduct.objects.all().count()
     
@@ -228,9 +213,6 @@ def userPage(request):
         'user_products': user_products,
         'num_users': num_users,
         'num_products': num_products,
-        'directs': directs,
-        'requests': requests,
-        'active_direct': active_direct,
         'product_objects': product_objects,
         'categories': categories,
     }
@@ -254,11 +236,12 @@ def user_request_page(request):
         product_objects = ToyProduct.objects.filter(category__name=category)
 
     #incoming_requests = request.user.!!
-    user_products = request.user.toyproduct_set.all()
+    user_incoming_requests = RequestforToy.objects.filter(recipient = request.user)
     user_requests = request.user.requestfortoy_set.all()
 
+
     context = {
-        'user_products': user_products,
+        'user_incoming_requests': user_incoming_requests,
         'user_requests': user_requests,
         'product_objects': product_objects,
         'categories': categories,
@@ -285,7 +268,7 @@ def accountSettings(request):
         form = CustomerForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            return redirect(reverse('home'))
+            return redirect(reverse('account'))
         else:
             print('Form is invalid.')
             return redirect('invalid')
@@ -471,6 +454,7 @@ def detailsPage(request, pk):
 
     product_object = ToyProduct.objects.get(id=pk)
     obj = ToyProduct.objects.get(id=pk)
+
     num_comments = Comment.objects.filter(product=product_object).count()
 
     # Comment
@@ -478,6 +462,8 @@ def detailsPage(request, pk):
 
     sender = request.user
     
+    # SEND REQUEST
+
     form = RequestForm(request.POST or None)
 
     if request.method == 'POST':
@@ -485,8 +471,8 @@ def detailsPage(request, pk):
             toyRequest = form.save(commit=False)
 
             if sender:
-                toyRequest.from_user = sender
-                toyRequest.to_user_username = ToyProduct.objects.get(id=pk).owner.username
+                toyRequest.sender = sender
+                toyRequest.recipient = ToyProduct.objects.get(id=pk).owner
                 toyRequest.requested_toy = ToyProduct.objects.get(id=pk)
                 form.save_m2m()
                 return redirect('userPage')
@@ -501,6 +487,7 @@ def detailsPage(request, pk):
 
     context = {
         'obj': obj,
+        'form': form,
         'sender_toy': sender_toy,
         'product_objects': product_objects,
         'categories': categories,
@@ -586,7 +573,7 @@ def updateProduct(request, pk):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('/category')
+            return redirect('userPage')
         else:
             print('Form is invalid.')
             return redirect('invalid')
@@ -750,4 +737,4 @@ def deneme(request):
         'categories': categories,
     }
 
-    return render(request, 'product/1.html', context=context)
+    return render(request, 'product/detail3.html', context=context)
