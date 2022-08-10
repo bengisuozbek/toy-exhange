@@ -546,7 +546,7 @@ def detailsPage(request, pk):
         'product_object': product_object,
     }
 
-    return render(request, 'product/detail3.html', context)
+    return render(request, 'product/detail.html', context)
 
 
 @login_required(login_url='loginPage')
@@ -804,4 +804,4 @@ def deneme(request):
         'categories': categories,
     }
 
-    return render(request, 'product/detail3.html', context=context)
+    return render(request, 'product/detail.html', context=context)
