@@ -53,10 +53,9 @@ class RequestForm(forms.ModelForm):
                     'cols': 40
                 }),
             'start_date': DateInput,
-            'end_date': DateInput
+            'end_date': DateInput,
         }
-
-       
+           
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact

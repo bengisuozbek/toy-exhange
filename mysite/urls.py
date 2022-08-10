@@ -46,6 +46,7 @@ urlpatterns = [
 
     path('searchbar/', views.searchbar, name="searchbar"),
     path('invalid/', views.invalid, name="invalid"),
+    path('invalidRequest/<int:pk>/', views.invalidRequest, name="invalidRequest"),
     
     path('account/', views.accountSettings, name="account"),
     path('register/', views.register, name="register"),

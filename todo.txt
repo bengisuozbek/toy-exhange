@@ -24,7 +24,13 @@ smtp şifrem güncellenecek
 8) +++++++  Request için request owner'dan kabul 
 9) ------   message model'inin aynısını REQUEST için uygula!!
 10) ++++++  Dışarıdan fotoğraf yüklenmiyor! 
-11) support sayfası!!
+11) ++++++  support sayfası!!
+12) request restriction 
+    -   OK.    start < end
+    -   OK.    dont create if the sender_user = requested_user
+    -   OK.    dont create if the request was created
+    -   start -> min Current
+
 ****
 
 

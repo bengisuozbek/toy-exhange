@@ -76,6 +76,32 @@ def invalid(request):
     return render(request, 'invalid.html', context=context)
 
 
+def invalidRequest(request, pk):
+
+    category = request.GET.get('category')
+    categories = Category.objects.all()
+
+    if category == None:
+        product_objects = ToyProduct.objects.all()
+    else:
+        product_objects = ToyProduct.objects.filter(category__name=category)
+
+    # paginator code
+    paginator = Paginator(product_objects, 8)  # 4 is changable!
+    page = request.GET.get('page')
+    product_objects = paginator.get_page(page)
+
+    product_object = ToyProduct.objects.get(id=pk)
+
+    context = {
+        'product_objects': product_objects,
+        'product_object': product_object,
+        'categories': categories,
+    }
+
+    return render(request, 'product/invalid_product.html', context=context)
+
+
 @unauthenticated_user
 def register(request):
 
@@ -463,34 +489,47 @@ def detailsPage(request, pk):
         product=product_object).order_by('date_added')
 
     sender = request.user
+    product_requests = RequestforToy.objects.all() 
 
     form = RequestForm(instance=product_object)
     if request.method == 'POST':
         form = RequestForm(request.POST, instance=product_object)
         if form.is_valid():
+
             fstart_date = form.cleaned_data['start_date']
             fend_date = form.cleaned_data['end_date']
             fnotes = form.cleaned_data['notes']
             fsender_toy = form.cleaned_data['sender_toy']
 
-            # toyRequest.sender = sender
-            #     toyRequest.recipient = product_object.owner
-            #     toyRequest.requested_toy = product_object
-            #     toyRequest.is_accepted = False
-            #     toyRequest.is_ignored = False
+            if(fend_date < fstart_date):
+                print('The end date should be a date after start date.')
+                return redirect(reverse('invalidRequest', args=[product_object.id]))
+            if(product_object.owner == request.user):
+                print('The toy belongs to current user. Request cannot be created.')
+                return redirect(reverse('invalidRequest', args=[product_object.id]))
 
             c = RequestforToy(sender=sender, sender_toy=fsender_toy, recipient=product_object.owner,
-                              requested_toy=product_object, notes=fnotes, start_date=fstart_date,
-                              end_date=fend_date, is_accepted=False, is_ignored=False)
+                               requested_toy=product_object, notes=fnotes, start_date=fstart_date,
+                               end_date=fend_date, is_accepted=False, is_ignored=False)
 
-            c.save()
-            return redirect('user_request_page')
+            for i in product_requests:
+                if i.sender == request.user:
+                    if i.sender_toy == fsender_toy and i.requested_toy == product_object and i.id != c.id:
+                        print("CREATED BEFORE")
+                        print('The request was created before.')
+                        return redirect(reverse('invalidRequest', args=[product_object.id]))
+                    else:
+                        c.save()
+                        return redirect('user_request_page')
+
         else:
-            print('Form is invalid.')
+            print('Form is invalid due to date chose.')
             return redirect('invalid')
 
     else:
         form = RequestForm()
+
+    
 
     # paginator code
     paginator = Paginator(product_objects, 8)  # 4 is changable!
