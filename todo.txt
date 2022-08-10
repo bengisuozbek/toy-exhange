@@ -26,9 +26,9 @@ smtp şifrem güncellenecek
 10) ++++++  Dışarıdan fotoğraf yüklenmiyor! 
 11) ++++++  support sayfası!!
 12) request restriction 
-    -   OK.    start < end
-    -   OK.    dont create if the sender_user = requested_user
-    -   OK.    dont create if the request was created
+    +   OK.    start < end
+    +   OK.    dont create if the sender_user = requested_user
+    +   OK.    dont create if the request was created
     -   start -> min Current
 
 ****
