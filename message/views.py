@@ -40,6 +40,7 @@ def inbox(request):
         'directs': directs,
         'messages': messages,
         'active_direct': active_direct,
+        'user': user,
     }
     
     return render(request, 'direct_message/inbox.html', context)

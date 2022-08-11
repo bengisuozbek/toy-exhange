@@ -30,7 +30,8 @@ smtp şifrem güncellenecek
     +   OK.    dont create if the sender_user = requested_user
     +   OK.    dont create if the request was created
     -   start -> min Current
-
+13) heroku xxx social_django ile çalışmıyor
+14) yeni düzenleme !!!! 
 ****
 
 

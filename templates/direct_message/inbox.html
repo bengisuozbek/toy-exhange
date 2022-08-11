@@ -2,15 +2,13 @@
 {% load static %}
 
 {% block content %}
+<title>Messages</title>
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <div class="columns is-mobile">
   <div class="column is-one-quarter bg-light text-dark">
     <aside class="menu">
-      <!-- <h4 class="title is-4">
-        Messages
-      </h4> -->
       <p class="menu-label">MESSAGES</p>
 
       <ul style="overflow-y: scroll; height: 400px" class="menu-list">
@@ -67,7 +65,7 @@
                 <small>@{{ direct.sender.username }}</small> on: <strong><small>{{ direct.date|date:'N d G:i'}}</small></strong>
               </p>
               <p style="font-size: 12px;">
-                {{ direct.body }}
+                {{ direct.body }} 
               </p>
             </div>
           </div>
@@ -79,11 +77,15 @@
     <form role="form" method="POST" action="{% url 'send_direct' %}">
       {% csrf_token %}
       <article class="media">
-        <figure class="media-left">
-          <p class="image is-64x64">
-            <img src="https://bulma.io/images/placeholders/128x128.png">
-          </p>
-        </figure>
+        <div class="media-left">
+          <figure class="image is-64x64">
+            {% if request.user.person.profile_pic %}
+            <img src="{% static request.user.person.profile_pic.url %}" alt="Placeholder image">
+            {% else %}
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+            {% endif %}
+          </figure>
+        </div>
         <div class="media-content">
           <input type="hidden" name="to_user" value="{{ active_direct }}">
           <div class="field">
