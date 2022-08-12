@@ -32,6 +32,8 @@ smtp şifrem güncellenecek
     -   start -> min Current
 13) heroku xxx social_django ile çalışmıyor
 14) yeni düzenleme !!!! 
+15) ÖNEMLİ: yeni kişiye mesaj atma!!!! ÇALIŞMı,YP
+16) YORUM DÜZELT -> detaild page
 ****
 
 

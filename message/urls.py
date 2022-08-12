@@ -7,6 +7,6 @@ urlpatterns = [
     path('directs/<username>/', views.directs, name='directs'),
     path('send/', views.send_direct, name='send_direct'),
     path('new/', views.user_search, name='user_search'),
-    path('new/<username>/', views.new_conversation, name='user_search'),
+    path('new/<username>/', views.new_conversation, name='new_conversation'),
     path('searchbarUser/', views.searchbar_user, name="searchbar_user"),
 ]

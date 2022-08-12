@@ -20,11 +20,11 @@
           <div class="box">
             <article class="media">
               <div class="media-left">
-                <figure class="image is-64x64">
+                <figure class="image is-32x32">
                   {% if message.user.person.profile_pic %}
-                  <img src="{% static message.user.person.profile_pic.url %}" alt="Placeholder image">
+                  <img class="is-rounded" src="{% static message.user.person.profile_pic.url %}">
                   {% else %}
-                  <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                  <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
                   {% endif %}
                 </figure>
               </div>
@@ -35,6 +35,14 @@
                     <small>@{{ message.user.username }}</small>
                   </p>
                 </div>
+              </div>
+
+              <div class="content">
+                {% if message.unread %}
+                <p style="font-weight: bold; color: red;">
+                  <i class="material-icons">mark_chat_unread</i> {{ message.unread }}
+                </p>
+                {% endif %}        
               </div>
             </article>
           </div>
@@ -78,11 +86,11 @@
       {% csrf_token %}
       <article class="media">
         <div class="media-left">
-          <figure class="image is-64x64">
+          <figure class="image is-32x32">
             {% if request.user.person.profile_pic %}
-            <img src="{% static request.user.person.profile_pic.url %}" alt="Placeholder image">
+            <img class="is-rounded" src="{% static request.user.person.profile_pic.url %}" alt="Placeholder image">
             {% else %}
-            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+            <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
             {% endif %}
           </figure>
         </div>

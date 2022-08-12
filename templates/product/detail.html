@@ -91,8 +91,8 @@
 
                             <p>You must choose your toy's id that will be traded from Sender Toy.</p>
                             <button type="button" class="btn btn-light"
-                                style="background-color: #79c400e2; color: white;"
-                                data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                style="background-color: #79c400e2; color: white;" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalCenter">
                                 Click to see your Toys
                             </button>
 
@@ -168,6 +168,52 @@
             </div>
             {% else %}
             {% for comment in product_object.comments.all %}
+            <article class="media">
+                <figure class="media-left">
+                    <p class="image is-32x32">
+                        {% if comment.commenter.person.profile_pic %}
+                        <img class="is-rounded" src="{% static comment.commenter.person.profile_pic.url %}">
+                        {% else %}
+                        <img src="https://bulma.io/images/placeholders/128x128.png">
+                        {% endif %}
+
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <b>{{ comment.commenter.first_name}} {{ comment.commenter.last_name }}</b> 
+                          
+                            <b>@{{ comment.commenter.username }}</small>
+                            <br>
+                            {{ comment.comment_body }}
+                        </p>
+                    </div>
+                    <!-- <nav class="level is-mobile">
+                    <div class="level-left">
+                      <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                      </a>
+                      <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                      </a>
+                      <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                      </a>
+                    </div>
+                  </nav> -->
+                </div>
+                {% if request.user.username == comment.commenter.username %}
+                <div class="media-right">
+                    <p style="font-size: 8pt;">{{ comment.date_added }}</p>
+                    <a class="btn btn-light" href="{% url 'delete_comment' product_object.id %}"
+                        style="font-size: 8pt; background-color: rgba(149, 149, 149, 0.651); color: white;">Delete</a>
+                </div>
+                {% endif %}
+            </article>
+
+            <!-- 
+
             <div class="card-body">
                 <div class="row">
                     <div class="col">
@@ -180,26 +226,31 @@
                         </p>
                     </div>
                     <div class="col-md-6">
-                        <h5><strong>{{ comment.commenter.username }}</strong> </h5>
+                        <p style="font-size: 10pt;">
+                            <b>{{ comment.commenter.username }}</b>
+                            <small>{{ comment.date_added }}</small>
+                        </p>
+
                     </div>
-                    <p>
-                        {{ comment.comment_body }}
-                        <br>
-                        {% if request.user.username == comment.commenter.username %}
-                        <a class="btn btn-light" href="{% url 'delete_comment' product_object.id %}">Delete
-                            Comment</a>
-                        {% endif %}
-                    </p>
-                    <p><small>{{ comment.date_added }}</small></p>
+                    <p>{{ comment.comment_body }}</p>
+                    <br>
+                    {% if request.user.username == comment.commenter.username %}
+                    <a class="btn btn-light" href="{% url 'delete_comment' product_object.id %}">Delete
+                        Comment</a>
+                    {% endif %}
+
+                    <p></p>
                 </div>
 
-            </div>
+            </div> -->
             {% endfor %}
             {% endif %}
 
             {% if request.user.is_authenticated or request.user.is_staff%}
-            <p><a class="btn btn-light" href="{% url 'add_comment' product_object.id %}"
-                    style="background-color: #536bf6; color: whitesmoke;">Add Comment</a></p>
+            <p>
+                <a class="btn btn-light" href="{% url 'add_comment' product_object.id %}"
+                    style="background-color: #536bf6; color: whitesmoke;">Add Comment</a>   
+           </p>
             {% endif %}
         </div>
     </div>

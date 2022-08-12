@@ -43,8 +43,7 @@
     display: flex;
     text-decoration: none;
     transition: all 0.3s;
-}
-
+  }
 </style>
 
 <div class="wrapper">
@@ -64,38 +63,37 @@
   <div id="content">
     <h5>Available Toys </h5>
     <div class="wrapper" style="width: 75%;">
-        <div class="my-box p-5">
-          <div class="container">
-            <div class="row row-cols-1 row-cols-md-3">
-              {% for product in product_objects %}
-              <div class="col mb-4">
-                <div class="card" style="float: left; margin-left: 0;
+      <div class="my-box p-5">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-md-3">
+            {% for product in product_objects %}
+            <div class="col mb-4">
+              <div class="card" style="float: left; margin-left: 0;
                 width: 16rem; margin: 1px; padding: 10px 3px;">
-                  <img class="card-img-top" src="{% static  product.image.url %}"
-                    style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">{{ product.brand }}</p>
-                    <p class="card-text">{{ product.display_category }}</p>
-                    <a href="{% url 'detail' product.id %}" class="btn btn-light">View</a>
-                  </div>
+                <img class="card-img-top" src="{% static  product.image.url %}"
+                  style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.name }}</h5>
+                  <p class="card-text">{{ product.brand }}</p>
+                  <p class="card-text">{{ product.display_category }}</p>
+                  <a href="{% url 'detail' product.id %}" class="btn btn-light">View</a>
                 </div>
               </div>
-              {% endfor %}
             </div>
+            {% endfor %}
+          </div>
 
-            <div class="container-fluid my-5">
-              <h5 class="center fw-bold"> Toy Prices </h5>
-              <div class="row">
-                <div class="col-8 me-auto">
-                  <div class="owl-carousel owl-theme">
-                    <div class="item mb-4">
-                      <div class="card border-0 shadow">
-                        <img src="{% static 'images/toybox.jpeg' %}" alt="" class="card-img-top">
-                        <div class="card-body">
-                          <div class="card-title text-center">
-                            <h6>Toy</h6>
-                          </div>
+          <div class="container-fluid my-5">
+            <h5 class="center fw-bold"> Toy Prices </h5>
+            <div class="row">
+              <div class="col-8 me-auto">
+                <div class="owl-carousel owl-theme">
+                  <div class="item mb-4">
+                    <div class="card border-0 shadow">
+                      <img src="{% static 'images/toybox.jpeg' %}" alt="" class="card-img-top">
+                      <div class="card-body">
+                        <div class="card-title text-center">
+                          <h6>Toy</h6>
                         </div>
                       </div>
                     </div>
@@ -103,62 +101,63 @@
                 </div>
               </div>
             </div>
+          </div>
 
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-            <!-- Option 1: Bootstrap Bundle with Popper -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-              integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-              crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-              integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-              crossorigin="anonymous"></script>
-            <script>
-              $('.owl-carousel').owlCarousel({
-                loop: true,
-                margin: 12,
-                nav: true,
-                responsive: {
-                  0: {
-                    items: 1
-                  },
-                  600: {
-                    items: 2
-                  },
-                  1000: {
-                    items: 3
-                  }
+          <!-- Option 1: Bootstrap Bundle with Popper -->
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous"></script>
+          <script>
+            $('.owl-carousel').owlCarousel({
+              loop: true,
+              margin: 12,
+              nav: true,
+              responsive: {
+                0: {
+                  items: 1
+                },
+                600: {
+                  items: 2
+                },
+                1000: {
+                  items: 3
                 }
-              })
-            </script>
+              }
+            })
+          </script>
 
-            <!-- SLIDER END -->
+          <!-- SLIDER END -->
 
-            <div class="row">
-              <div class="col-md-3 offset-md-4">
-                <ul class="pagination">
-                  {% if product_objects.has_previous %}
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{ product_objects.previous_page_number }}">Previous</a>
-                  </li>
-                  {% endif %}
+          <div class="row">
+            <div class="col-md-3 offset-md-4">
+              <ul class="pagination">
+                {% if product_objects.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ product_objects.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
 
-                  <li class="page-item active">
-                    <a class="page-link" href="?page={{ product_objects.number }}">Current</a>
-                  </li>
+                <li class="page-item active">
+                  <a class="page-link" href="?page={{ product_objects.number }}">Current</a>
+                </li>
 
-                  {% if product_objects.has_next %}
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{ product_objects.next_page_number }}">Next</a>
-                  </li>
-                  {% endif %}
-                </ul>
-              </div>
+                {% if product_objects.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ product_objects.next_page_number }}">Next</a>
+                </li>
+                {% endif %}
+              </ul>
             </div>
           </div>
         </div>
-      
+      </div>
+
     </div>
   </div>
 </div>

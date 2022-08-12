@@ -2,37 +2,179 @@
 {% load static %}
 
 {% block content %}
+
+
+<style>
+    img {
+        width: 128px;
+        height: 128px;
+    }
+
+    .my-box {
+        margin: 0px;
+        width: auto;
+    }
+
+    .wrapper {
+        margin: 0px;
+        display: flex;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+</style>
+
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+
+
+<div class="wrapper">
+    <div class="container">
+        {% if searched_objects_user_name %}
+        <h5>Search Results for <strong>{{ search }}</strong></h5>
+        <div class="row row-cols-1 row-cols-md-4">
+            <div class="col is-one-quarter">
+                {% for i in searched_objects_user_name %}
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                {% if i.person.profile_pic %}
+                                <img class="is-rounded" src="{{ i.person.profile_pic.url }}">
+                                {% else %}
+                                <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+                                {% endif %}
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <h5 class="card-title">@{{ i.username }}</h5>
+                                {% if i.first_name %}
+                                <p class="card-text">{{ i.first_name }} {{ i.last_name }}</p>
+                                {% else %}
+                                {% endif %}
+                                <a href="{% url 'new_conversation' user.username %}" class="button btn-light"
+                                    style="background-color: #7ac400; color: whitesmoke;">
+                                    Send a message!</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% elif searched_objects_first_name %}
+        <h5>Search Results for <strong>{{ search }}</strong></h5>
+        <div class="row row-cols-1 row-cols-md-4">
+            <div class="col is-one-quarter">
+                {% for i in searched_objects_first_name %}
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                {% if i.person.profile_pic %}
+                                <img class="is-rounded" src="{{ i.person.profile_pic.url }}">
+                                {% else %}
+                                <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+                                {% endif %}
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <h5 class="card-title">@{{ i.username }}</h5>
+                                {% if i.first_name %}
+                                <p class="card-text">{{ i.first_name }} {{ i.last_name }}</p>
+                                {% else %}
+                                {% endif %}
+                                <a href="{% url 'new_conversation' user.username %}" class="button btn-light"
+                                    style="background-color: #7ac400; color: whitesmoke;">
+                                    Send a message!</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% elif searched_objects_last_name %}
+        <h5>Search Results for <strong>{{ search }}</strong></h5>
+        <div class="row row-cols-1 row-cols-md-4">
+            <div class="col is-one-quarter">
+                {% for i in searched_objects_last_name %}
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                {% if i.person.profile_pic %}
+                                <img class="is-rounded" src="{{ i.person.profile_pic.url }}">
+                                {% else %}
+                                <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+                                {% endif %}
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <h5 class="card-title">@{{ i.username }}</h5>
+                                {% if i.first_name %}
+                                <p class="card-text">{{ i.first_name }} {{ i.last_name }}</p>
+                                {% else %}
+                                {% endif %}
+                                <a href="{% url 'new_conversation' user.username %}" class="button btn-light"
+                                    style="background-color: #7ac400; color: whitesmoke;">
+                                    Send a message!</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<!-- 
 {% if searched_objects_user_name %}
 <div class="wrapper">
-    <div class="card p-5" style="width: 85%;">
+    <div class="my-box p-5" style="width: 85%;">
         <div class="container">
             <div class="row row-cols-1 row-cols-md-3">
                 {% for i in searched_objects_user_name %}
                 <div class="col mb-4">
-                    <div class="card h-100" style="width: 32rem;">
-                        <img class="card-img-top" src="{% static  i.image.url %}"
+                    <div class="card"  style="float: left; margin-left: 0;
+                    width: 16rem; margin: 1px; padding: 10px 3px;">
+                        {% if user.person.profile_pic %}
+                        <img class="card-img-top" src="{{ user.person.profile_pic.url }}"
                             style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                        {% else %}
+                        <img class="card-img-top" src="https://bulma.io/images/placeholders/96x96.png"
+                            style="width:100px; height:100px; margin-left: auto; margin-right: auto;">
+                        {% endif %}
+
                         <div class="card-body">
-                            <h5 class="card-title">{{ i.username }}</h5>
-                            <p class="card-text">{{ i.first_name }}</p>
-                            <p class="card-text">{{ i.last_name }}</p>
-                            <!--
+                            <h5 class="card-title">@{{ i.username }}</h5>
+                            <p class="card-text">{{ i.first_name }} {{ i.last_name }}</p>
+                            !--
                                 user profile eklenecek
 
                               <a href="{% url 'detail' i.id %}" class="btn btn-light">View</a>
 
 
-                              -->
+                              --
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'new_conversation' user.username %}" class="button is-info">Send a
+                                message!</a>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-            {% include 'paginator.html' %}
         </div>
+        {% endfor %}
     </div>
+    {% include 'paginator.html' %}
+</div>
+</div>
 </div>
 {% elif searched_objects_first_name %}
 <div class="wrapper">
@@ -48,13 +190,33 @@
                             <h5 class="card-title">{{ i.username }}</h5>
                             <p class="card-text">{{ i.first_name }}</p>
                             <p class="card-text">{{ i.last_name }}</p>
-                            <!--
+                            !--
                                 user profile eklenecek
 
                               <a href="{% url 'detail' i.id %}" class="btn btn-light">View</a>
 
 
-                              -->
+                              --
+
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    {% if user.person.profile_pic %}
+                                    <img src="{{ user.person.profile_pic.url }}" alt="Placeholder image">
+                                    {% else %}
+                                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                                    {% endif %}
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>{{ user.person.first_name }} {{ user.person.last_name
+                                            }}</strong><small>@{{ user.username }}</small>
+                                    </p>
+                                    <a href="{% url 'new_conversation' user.username %}" class="button is-info">Send a
+                                        message!</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,13 +240,13 @@
                             <h5 class="card-title">{{ i.username }}</h5>
                             <p class="card-text">{{ i.first_name }}</p>
                             <p class="card-text">{{ i.last_name }}</p>
-                            <!--
+                            !--
                                     user profile eklenecek
     
                                   <a href="{% url 'detail' i.id %}" class="btn btn-light">View</a>
     
     
-                                  -->
+                                  --
                         </div>
                     </div>
                 </div>
@@ -99,12 +261,10 @@
     <div class="card card-body" style="width: 85%;">
         <h2>Nothing found for this criteria!</h2>
         <br>
-        <a href="{% url 'user_search' %}" class="btn btn-light" style="background-color: #7386D5; width: 12rem; color: whitesmoke;">All of the Toys</a>
-    </div>   
+        <a href="{% url 'user_search' %}" class="btn btn-light"
+            style="background-color: #7386D5; width: 12rem; color: whitesmoke;">Search User for New Message</a>
+    </div>
 </div>
-
-
-    <a href="{% url '' %}" class="btn btn-light my-2" style="background-color: #7386D5;">New Message</a>
 </p>
-{% endif %}
+{% endif %} -->
 {% endblock %}
