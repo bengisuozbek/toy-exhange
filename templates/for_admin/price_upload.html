@@ -5,48 +5,58 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
 
-<br>
-<div class="row">
-    <div class="col-md-3">
-        <div class="card card-body">
-            <a class="btn btn-light" style="background: #6d7fcc !important;" href="#"> &#8592;
-                Button</a>
-            <hr>
-            <h3 style="text-align: center;">Account Settings</h3>
-        </div>          
-    </div>
+<div class="wrapper">
+    <div class="card card-body">
+        <div class="col-md">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-body align-items-center" style="width: 150rem;">
+                        <hr>
+                        <h2 style="text-align: center;">Excel Import for <b>Similar Product Information</b></h2>
 
-    {%if messages %}  
-        {% for message in messages %}
-            <div>
-                <strong>{{message|safe}}</strong>
-            </div>
-        {% endfor %}
-    {% else %}
-        {{product}}
-        <div class="col-md-9">
-            <div class="card card-body">
-                <form method="POST" action="" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    
-                    <label>Upload a File</label>
-                    <input type="file" name="file">
-                    <p>Only accepts CSV files.</p>
+                        {%if messages %}
+                        {% for message in messages %}
+                        <div>
+                            <strong>{{message|safe}}</strong>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        {{product}}
+                        <div class="col-">
+                            <div class="card card-body"
+                                style="width: 30rem; background-color: rgba(222, 143, 189, 0.289);">
+                                <form method="POST" action="" enctype="multipart/form-data">
+                                    {% csrf_token %}
 
-                    <div>
-                        <br>
+                                    <label>Upload a File</label>
+                                    <!-- <input type="file" name="file"> -->
+                                    <p>Only accepts CSV files.</p>
+                                    <p>In the Excel file, toy information must include Sr.No, Name, Price1</p>
+
+
+                                    {{form}}
+                                    <div>
+                                        <br>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-light"
+                                            style="background: #6d7fcc !important; color: whitesmoke;">
+                                            Upload
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
-                                    
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-light" style="background: #6d7fcc !important;">
-                        <span class="glyphicon glyphicon-ok"></span> Upload
-                        </button>
-                    </div>
-
-                </form>
+                </div>
             </div>
         </div>
-  {% endif %}
+    </div>
+</div>
 
 {% endblock %}

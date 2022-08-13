@@ -25,6 +25,10 @@
         <li class="nav-item">
           <a class="hello-msg" href="{% url 'dashboard' %}">Dashboard</a>
         </li>
+
+        <li class="nav-item">
+          <a class="hello-msg" href="{% url 'price_upload' %}">File Upload</a>
+        </li>
         {% elif user.is_authenticated %}
         <li class="nav-item">
           <a class="hello-msg" href="{% url 'userPage' %}">My Toys</a>

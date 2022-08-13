@@ -12,6 +12,8 @@ from django.contrib import messages
 from django.views import generic
 from django.shortcuts import get_object_or_404
 
+from price.models import *
+
 from .forms import ContactForm, CreateUserForm, ProductForm, CommentForm, CustomerForm, RequestForm
 from .models import *
 from catalog.decorators import unauthenticated_user, allowed_users, admin_only
@@ -479,6 +481,8 @@ def detailsPage(request, pk):
     else:
         product_objects = ToyProduct.objects.filter(category__name=category)
 
+    toy_data = cimridata.objects.all()
+
     sender_toy = request.user.toyproduct_set.all()
 
     product_object = ToyProduct.objects.get(id=pk)
@@ -544,6 +548,7 @@ def detailsPage(request, pk):
         'num_comments': num_comments,
         'comments': comments,
         'product_object': product_object,
+        'toy_data': toy_data,
     }
 
     return render(request, 'product/detail.html', context)

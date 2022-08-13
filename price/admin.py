@@ -5,7 +5,14 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import *
-                                  
-@admin.register(akakce)
+
+admin.site.register(cimri)
+admin.site.register(cimridata)
+
+@admin.register(cimritoy)
 class RequestofToyAdmin(admin.ModelAdmin):
-    list_display = ('date', 'serial_number', 'name', 'prices1')
+    list_display = ('date', 'serial', 'name', 'price1', 'price2')
+
+@admin.register(toyfromcimri)
+class RequestofToyAdmin(admin.ModelAdmin):
+    list_display = ('date', 'serial', 'name', 'price1', 'price2')

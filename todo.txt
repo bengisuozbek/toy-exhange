@@ -30,10 +30,12 @@ smtp şifrem güncellenecek
     +   OK.    dont create if the sender_user = requested_user
     +   OK.    dont create if the request was created
     -   start -> min Current
-13) heroku xxx social_django ile çalışmıyor
+13) ++++++  heroku xxx social_django ile çalışmıyor
 14) yeni düzenleme !!!! 
 15) ÖNEMLİ: yeni kişiye mesaj atma!!!! ÇALIŞMı,YP
-16) YORUM DÜZELT -> detaild page
+16) ++++++  YORUM DÜZELT -> detaild page
+17) ++++++  Forgot password çalışmıyoe *> login page 
+
 ****
 
 
@@ -63,6 +65,7 @@ css files için static/css ya da css/ olarak incele. Hangisinde css'ler inceleni
 
 
 
+
 ## Settings'de Github ve Twitter eklenecek. 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
@@ -71,5 +74,3 @@ AUTHENTICATION_BACKENDS = (
 
     'django.contrib.auth.backends.ModelBackend',
 )
-
-

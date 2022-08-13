@@ -4,6 +4,11 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from .models import *
 
+class CsvModelForm(forms.ModelForm):
+    class Meta:
+        model = Csv
+        fields = ('file_name',)
+
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User

@@ -6,6 +6,15 @@ from django.conf import settings
 from datetime import date
 from django.contrib.auth.models import User
 
+class Csv(models.Model):
+    file_name = models.FileField(upload_to='csv')
+    uploaded = models.DateTimeField(auto_now_add=True)
+    activated = models.BooleanField(default=False)
+    
+    def __str__(self):
+        """String for representing the Model object."""
+        return str(self.file_name)
+
 class Category(models.Model): # represents toy category
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200, help_text='Enter a toy category')

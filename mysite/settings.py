@@ -235,13 +235,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'bengisuozbek1998@gmail.com'
-EMAIL_HOST_PASSWORD = 'Pati23haziran'
+EMAIL_HOST_USER = 'toy.exchange.application@gmail.com'
+EMAIL_HOST_PASSWORD = 'Admin2022'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-CONTACT_EMAIL = 'bengisuozbek1998@gmail.com'
-ADMIN_EMAIL = ['bengisuozbek1998@gmail.com']
+CONTACT_EMAIL = 'toy.exchange.application@gmail.com'
+ADMIN_EMAIL = ['toy.exchange.application@gmail.com']
 # ADMIN_EMAILS = ['bengisuozbek1998@gmail.com', ]
 
 # Simplified static file serving.

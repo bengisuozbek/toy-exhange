@@ -92,21 +92,21 @@ images = img.find_all('img')
 
 #print(images)
 
-for image in images:
-    name = image['alt']
-    link = image['data-src']
-    imageContent.append(link.strip())
-    print(name, "lnk: ", link)
+# for image in images:
+#     name = image['alt']
+#     link = image['data-src']
+#     imageContent.append(link.strip())
+#     print(name, "lnk: ", link)
 
 
 file_name = 'cimri1111.csv'
 
 with open(file_name, 'w') as file:
     writer = csv.writer(file)
-    writer.writerow(['Sr.No', 'Name', 'Prices1', 'Prices2', 'image'])
+    writer.writerow(['serial', 'name', 'price1', 'price2'])
 
     for i in range(len(Names)):
-        writer.writerow([i, Names[i], Prices1[i], Prices2[i], imageContent[i]])
+        writer.writerow([i, Names[i], Prices1[i], Prices2[i]])
         #print(i)
         #print(Names[i])
         #print(Prices1[i])
