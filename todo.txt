@@ -10,6 +10,19 @@ pip3 install xlml
 
 smtp şifrem güncellenecek
 
+--
+CSV FILES:
+
+cimri1111.csv örnek
+
+375,99 -> 375.99 yapılmalı 
+id kolonu konabilir, 
+sayıca data azaltılmalı 
+brand eklenebilir
+
+--
+
+
 
 ****
 ***

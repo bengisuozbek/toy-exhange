@@ -35,6 +35,14 @@
                     <small>@{{ message.user.username }}</small>
                   </p>
                 </div>
+
+                <div class="content">
+                  {% if message.unread %}
+                  <p style="font-weight: bold; color:#7386D5;">
+                    <i class="material-icons">mark_chat_unread</i>{{ message.unread }}
+                  </p>
+                  {% endif %}
+                </div>
               </div>
 
               <div class="content">

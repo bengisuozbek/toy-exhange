@@ -9,6 +9,7 @@ admin.site.register(Category)
 admin.site.register(Comment)
 admin.site.register(Contact)
 admin.site.register(Csv)
+admin.site.register(datafromcimri)
 
 #admin.site.register(ToyRequest)
 #admin.site.register(ToyRequestList)

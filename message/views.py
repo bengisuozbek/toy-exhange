@@ -109,14 +109,15 @@ def user_search(request):
 
 
 @login_required(login_url='loginPage')
-def new_conversation(request, username):
+def new_conversation(request, sended_username):
     from_user = request.user
-    body = 'Says Hello!'
+    body = "Says Hello!"
 
     try:
-        to_user = User.objects.get(username=username)
+        to_user = User.objects.get(username=sended_username)
     except Exception as e:
         return redirect('user_search')
+
     if from_user != to_user:
         Message.send_message(from_user, to_user, body)
     return redirect('inbox')

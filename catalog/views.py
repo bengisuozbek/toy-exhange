@@ -482,6 +482,7 @@ def detailsPage(request, pk):
         product_objects = ToyProduct.objects.filter(category__name=category)
 
     toy_data = cimridata.objects.all()
+    data = datafromcimri.objects.all()
 
     sender_toy = request.user.toyproduct_set.all()
 
@@ -549,6 +550,7 @@ def detailsPage(request, pk):
         'comments': comments,
         'product_object': product_object,
         'toy_data': toy_data,
+        'data': data,
     }
 
     return render(request, 'product/detail.html', context)

@@ -46,13 +46,23 @@ def price_upload(request):
                         toy_name = row[2]
                         prices1 = row[3]
                         prices2 = row[4]
-                        cimridata.objects.create(
+
+                        datafromcimri.objects.create(
                             id = int(row[1]) + 1,
                             serial = serial_number, 
                             name = toy_name,
                             price1 = prices1,
                             price2 = prices2,
                         )
+
+                        # cimridata.objects.create(
+                        #     id = int(row[1]) + 1,
+                        #     serial = serial_number, 
+                        #     name = toy_name,
+                        #     price1 = prices1,
+                        #     price2 = prices2,
+                        # )
+
                         # print(row)
                         # print(type(row))
                 

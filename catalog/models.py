@@ -15,6 +15,16 @@ class Csv(models.Model):
         """String for representing the Model object."""
         return str(self.file_name)
 
+class datafromcimri(models.Model):
+    name = models.CharField(max_length=255)
+    price1 = models.FloatField(default=0)
+    price2 = models.CharField(max_length=255)
+    serial = models.CharField(max_length=255)
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return str(self.name)
+
 class Category(models.Model): # represents toy category
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200, help_text='Enter a toy category')

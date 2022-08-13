@@ -52,7 +52,7 @@
                                 <p class="card-text">{{ i.first_name }} {{ i.last_name }}</p>
                                 {% else %}
                                 {% endif %}
-                                <a href="{% url 'new_conversation' user.username %}" class="button btn-light"
+                                <a href="{% url 'new_conversation' i.username %}" class="button btn-light"
                                     style="background-color: #7ac400; color: whitesmoke;">
                                     Send a message!</a>
                             </div>
@@ -85,7 +85,7 @@
                                 <p class="card-text">{{ i.first_name }} {{ i.last_name }}</p>
                                 {% else %}
                                 {% endif %}
-                                <a href="{% url 'new_conversation' user.username %}" class="button btn-light"
+                                <a href="{% url 'new_conversation' i.username %}" class="button btn-light"
                                     style="background-color: #7ac400; color: whitesmoke;">
                                     Send a message!</a>
                             </div>
@@ -118,7 +118,7 @@
                                 <p class="card-text">{{ i.first_name }} {{ i.last_name }}</p>
                                 {% else %}
                                 {% endif %}
-                                <a href="{% url 'new_conversation' user.username %}" class="button btn-light"
+                                <a href="{% url 'new_conversation' i.username %}" class="button btn-light"
                                     style="background-color: #7ac400; color: whitesmoke;">
                                     Send a message!</a>
                             </div>
