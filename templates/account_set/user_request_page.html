@@ -170,11 +170,12 @@
                             {% if users.is_ignored == False %}
                             <td><a href="{% url 'update_request' users.id %}" class="btn btn-light"
                                     style="background-color: #79c400e3; color: whitesmoke;">Update</a></td>
-                            <td><a href="{% url 'delete_request' users.id %}" class="btn btn-light"
-                                    style="background-color: #79c400e3; color: whitesmoke;">Delete</a></td>
                             {% elif users.is_ignored %}
                             <td>The request is not accepted.</td>
                             {% endif %}
+                            <td><a href="{% url 'delete_request' users.id %}" class="btn btn-light"
+                                style="background-color: #79c400e3; color: whitesmoke;">Delete</a>
+                            </td>
                         </tr>
                         {% endfor %}
 

@@ -39,7 +39,6 @@ urlpatterns = [
     path('message/', include('message.urls')),
 
     path('allToys/', views.all_toys, name="all_toys"),
-    path('privacy/', views.privacy, name="privacy"),
     path('category/<int:pk>/', views.category, name="category"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('support/', views.support, name="support"),
@@ -59,8 +58,6 @@ urlpatterns = [
     path('customer/<str:pk>/', views.customer, name='customer'),
 
     path('product/<int:pk>/', views.detailsPage, name='detail'),
-
-    path('deneme/', views.deneme, name='deneme'),
     
     path('addProduct/<int:pk>/', views.addProduct, name='addProduct'),
     path('updateProduct/<int:pk>/', views.updateProduct, name='updateProduct'),

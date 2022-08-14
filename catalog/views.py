@@ -353,23 +353,23 @@ def all_toys(request):
     return render(request, 'all_toys.html', context=context)
 
 
-@login_required(login_url='loginPage')
-def privacy(request):
-    categories = Category.objects.all()
+# @login_required(login_url='loginPage')
+# def privacy(request):
+#     categories = Category.objects.all()
 
-    product_objects = ToyProduct.objects.all()
+#     product_objects = ToyProduct.objects.all()
 
-    # paginator code
-    product_objects = ToyProduct.objects.filter(status='Available')
-    paginator = Paginator(product_objects, 6)  # 4 is changable!
-    page = request.GET.get('page')
-    product_objects = paginator.get_page(page)
+#     # paginator code
+#     product_objects = ToyProduct.objects.filter(status='Available')
+#     paginator = Paginator(product_objects, 6)  # 4 is changable!
+#     page = request.GET.get('page')
+#     product_objects = paginator.get_page(page)
 
-    context = {
-        'product_objects': product_objects,
-        'categories': categories,
-    }
-    return render(request, 'privacy.html', context=context)
+#     context = {
+#         'product_objects': product_objects,
+#         'categories': categories,
+#     }
+#     return render(request, 'privacy.html', context=context)
 
 
 @login_required(login_url='loginPage')
@@ -514,7 +514,7 @@ def detailsPage(request, pk):
 
             for i in product_requests:
                 if i.sender == request.user:
-                    if i.sender_toy == fsender_toy and i.requested_toy == product_object and i.id != c.id:
+                    if (i.sender_toy == fsender_toy) and (i.requested_toy == product_object):
                         print("CREATED BEFORE")
                         print('The request was created before.')
                         return redirect(reverse('invalidRequest', args=[product_object.id]))
@@ -710,10 +710,15 @@ def accept_request(request, pk):
     toy_request = RequestforToy.objects.get(id=pk)
     toy_request.is_accepted = True
     toy_id = toy_request.requested_toy.id
-    print(toy_id)
     toy = ToyProduct.objects.get(id=toy_id)
     toy.status = 'Reserved'
     toy.save()
+
+    toy2_id = toy_request.sender_toy.id
+    toy2 = ToyProduct.objects.get(id=toy2_id)
+    toy2.status = 'Reserved'
+    toy2.save()
+
     toy_request.save()
 
     return redirect('user_request_page')
@@ -733,76 +738,3 @@ def ignore_request(request, pk):
     toy_request.save()
 
     return redirect('user_request_page')
-
-
-def deneme(request):
-    category = request.GET.get('category')
-    categories = Category.objects.all()
-
-    if category == None:
-        product_objects = ToyProduct.objects.all()
-    else:
-        product_objects = ToyProduct.objects.filter(category__name=category)
-
-    # owner = User.objects.get(id=pk)
-    # form = ProductForm(request.POST or None)
-
-    # if request.method == 'POST':
-    #     if form.is_valid():
-    #         toy = form.save(commit=False)
-    #         owner = User.objects.get(id=pk)
-    #         # you don't need to use this if statment
-    #         if owner:
-    #             toy.owner = owner
-    #             if toy.brand != None and toy.brand != 'Other':
-    #                 toy.user_brand = toy.brand.name
-    #             toy.save()
-    #             form.save_m2m()
-    #             return redirect('/user')
-    #     else:
-    #         print('Form is invalid.')
-    #         return redirect('invalid')
-
-    # product_object = ToyProduct.objects.get(id=pk)
-    # obj = ToyProduct.objects.get(id=pk)
-    # num_comments = Comment.objects.filter(product=product_object).count()
-
-    # # Comment
-    # comments = Comment.objects.filter(
-    #     product=product_object).order_by('date_added')
-
-    # sender = request.user
-
-    # sender_toy = ToyProduct.objects.filter(owner=sender)
-    # num_sender_toy = sender_toy.count()
-
-    # form = RequestForm(request.POST or None)
-
-    # if request.method == 'POST':
-    #     if form.is_valid():
-    #         toy_request = form.save(commit=False)
-    #         #sender = User.objects.get(id = pk)
-    #         sender = request.user
-    #         requested_toy = ToyProduct.objects.get(id=pk)
-
-    #         # you don't need to use this if statment
-    #         if sender:
-    #             toy_request.sender = sender
-    #             toy_request.save()
-    #             form.save_m2m()
-    #             return redirect('/all_toys')
-    #     else:
-    #         print('Form is invalid.')
-    #         return redirect('invalid')
-
-    # # paginator code
-    # paginator = Paginator(product_objects, 8)  # 4 is changable!
-    # page = request.GET.get('page')
-    # product_objects = paginator.get_page(page)
-
-    context = {
-        'product_objects': product_objects,
-        'categories': categories,
-    }
-
-    return render(request, 'product/detail.html', context=context)

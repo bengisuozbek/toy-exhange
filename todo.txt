@@ -51,8 +51,8 @@ brand eklenebilir
 15) ++++++  ÖNEMLİ: yeni kişiye mesaj atma!!!! ÇALIŞMı,YP
 16) ++++++  YORUM DÜZELT -> detaild page
 17) ++++++  Forgot password çalışmıyoe *> login page 
-18) toy product status -> reserved olmuyor
-19) all of the toys listed by AVAILABLE 
+18) ++++++  toy product status -> reserved olmuyor
+19) ++++++  all of the toys listed by AVAILABLE 
 
 ****
 
