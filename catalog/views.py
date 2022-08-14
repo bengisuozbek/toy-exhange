@@ -342,9 +342,8 @@ def all_toys(request):
     categories = Category.objects.all()
 
     product_objects = ToyProduct.objects.all()
-
-    # paginator code
     product_objects = ToyProduct.objects.filter(product_status='a')
+    # paginator code
     paginator = Paginator(product_objects, 8)  # 4 is changable!
     page = request.GET.get('page')
     product_objects = paginator.get_page(page)
@@ -481,7 +480,6 @@ def detailsPage(request, pk):
     else:
         product_objects = ToyProduct.objects.filter(category__name=category)
 
-    toy_data = cimridata.objects.all()
     data = datafromcimri.objects.all()
 
     sender_toy = request.user.toyproduct_set.all()
@@ -490,8 +488,7 @@ def detailsPage(request, pk):
 
     num_comments = Comment.objects.filter(product=product_object).count()
     # Comment
-    comments = Comment.objects.filter(
-        product=product_object).order_by('date_added')
+    comments = Comment.objects.filter(product=product_object).order_by('date_added')
 
     sender = request.user
     product_requests = RequestforToy.objects.all() 
@@ -526,16 +523,13 @@ def detailsPage(request, pk):
                     else:
                         c.save()
                         return redirect('user_request_page')
-
         else:
             print('Form is invalid due to date chose.')
             return redirect('invalid')
-
     else:
         form = RequestForm()
 
     
-
     # paginator code
     paginator = Paginator(product_objects, 8)  # 4 is changable!
     page = request.GET.get('page')
@@ -549,7 +543,6 @@ def detailsPage(request, pk):
         'num_comments': num_comments,
         'comments': comments,
         'product_object': product_object,
-        'toy_data': toy_data,
         'data': data,
     }
 
@@ -720,6 +713,10 @@ def update_request(request, pk):
 def accept_request(request, pk):
     toy_request = RequestforToy.objects.get(id=pk)
     toy_request.is_accepted = True
+    toy_id = toy_request.requested_toy.id
+    print(toy_id)
+    toy = ToyProduct.objects.get(id=toy_id)
+    toy.product_status = 'r'
     toy_request.save()
 
     return redirect('user_request_page')

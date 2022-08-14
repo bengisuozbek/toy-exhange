@@ -26,6 +26,9 @@ brand eklenebilir
 
 ****
 ***
+
+ÖENMLİ -->>> product - status değişmeli ! 
+
 1) ++++++   Toybox logosu tıklama -> link düzelt 
 2) ++++++   paginator does not work!!!!1  --> find all !  Current - Next - Back !!!!!
 3) ++++++   ALL of the TOYS sayfasında üye dropdown ve category dropdown çalışmıyor
@@ -45,9 +48,11 @@ brand eklenebilir
     -   start -> min Current
 13) ++++++  heroku xxx social_django ile çalışmıyor
 14) yeni düzenleme !!!! 
-15) ÖNEMLİ: yeni kişiye mesaj atma!!!! ÇALIŞMı,YP
+15) ++++++  ÖNEMLİ: yeni kişiye mesaj atma!!!! ÇALIŞMı,YP
 16) ++++++  YORUM DÜZELT -> detaild page
 17) ++++++  Forgot password çalışmıyoe *> login page 
+18) toy product status -> reserved olmuyor
+19) all of the toys listed by AVAILABLE 
 
 ****
 
