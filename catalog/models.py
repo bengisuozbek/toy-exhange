@@ -1,3 +1,4 @@
+from statistics import mode
 from django.db import models
 
 from django.urls import reverse
@@ -89,6 +90,8 @@ class ToyProduct(models.Model):
     date_created = models.DateField(auto_now_add=True, null=True)
     
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True) 
+
+    status = models.CharField(max_length=20, default="Available")
 
     STATUS = (
         ('a', 'Available'),

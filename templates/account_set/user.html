@@ -34,7 +34,7 @@
               </td>
               <td>{{ product.brand }}</td>
               <td>{{ product.display_category }}</td>
-              <td>{{ product.product_status }}</td>
+              <td>{{ product.status }}</td>
               <td>{{ product.owner }}</td>
               <td><a href="{% url 'updateProduct' product.id %}" class="btn btn-light" style="background-color: #536bf6d6; color: whitesmoke;">Update</a></td>
               <td><a href="{% url 'deleteProduct' product.id %}" class="btn btn-light" style="background-color: #536bf6d6; color: whitesmoke;">Delete</a></td>

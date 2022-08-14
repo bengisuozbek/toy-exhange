@@ -55,6 +55,9 @@
                 <p class="card-text">{{ product.brand }}</p>
                 <p class="card-text">{{ product.display_category }}</p>
                 <a href="{% url 'detail' product.id %}" class="btn btn-light">View</a>
+                {% if product.owner == request.user %}
+                <a style="color:#7386D5;">My Toy</a>
+                {% endif %}
               </div>
             </div>
           </div>

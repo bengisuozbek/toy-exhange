@@ -32,10 +32,8 @@ def index(request):
     # Generate counts of some of the main objects
     num_toy = ToyProduct.objects.all().count()
 
-    num_instances_available = ToyProduct.objects.filter(
-        product_status__exact='a').count()
-    num_instances_reserved = ToyProduct.objects.filter(
-        product_status__exact='r').count()
+    num_instances_available = ToyProduct.objects.filter(status__exact='Available').count()
+    num_instances_reserved = ToyProduct.objects.filter(status__exact='Reserved').count()
     num_products = ToyProduct.objects.all().count()
 
     # num of visitors
@@ -322,7 +320,7 @@ def category(request, pk):
     toys = ToyProduct.objects.filter(category__name=cat_name)
 
     # paginator code
-    product_objects = ToyProduct.objects.filter(product_status='a')
+    product_objects = ToyProduct.objects.filter(status='Available')
     paginator = Paginator(product_objects, 6)  # 4 is changable!
     page = request.GET.get('page')
     product_objects = paginator.get_page(page)
@@ -342,7 +340,7 @@ def all_toys(request):
     categories = Category.objects.all()
 
     product_objects = ToyProduct.objects.all()
-    product_objects = ToyProduct.objects.filter(product_status='a')
+    product_objects = ToyProduct.objects.filter(status='Available')
     # paginator code
     paginator = Paginator(product_objects, 8)  # 4 is changable!
     page = request.GET.get('page')
@@ -362,7 +360,7 @@ def privacy(request):
     product_objects = ToyProduct.objects.all()
 
     # paginator code
-    product_objects = ToyProduct.objects.filter(product_status='a')
+    product_objects = ToyProduct.objects.filter(status='Available')
     paginator = Paginator(product_objects, 6)  # 4 is changable!
     page = request.GET.get('page')
     product_objects = paginator.get_page(page)
@@ -566,10 +564,8 @@ def dashboard(request):
     orders = ToyProduct.objects.all()
     user_requests = RequestforToy.objects.all()
 
-    num_instances_available = ToyProduct.objects.filter(
-        product_status__exact='a').count()
-    num_instances_reserved = ToyProduct.objects.filter(
-        product_status__exact='r').count()
+    num_instances_available = ToyProduct.objects.filter(status__exact='Available').count()
+    num_instances_reserved = ToyProduct.objects.filter(status__exact='Reserved').count()
     num_products = ToyProduct.objects.all().count()
 
     context = {
@@ -716,7 +712,8 @@ def accept_request(request, pk):
     toy_id = toy_request.requested_toy.id
     print(toy_id)
     toy = ToyProduct.objects.get(id=toy_id)
-    toy.product_status = 'r'
+    toy.status = 'Reserved'
+    toy.save()
     toy_request.save()
 
     return redirect('user_request_page')
