@@ -106,12 +106,12 @@
                             <tr>
                                 <td>{{ users.id }}</td>
                                 <td>
-                                    <a href="{% url 'detail' users.requested_toy.id %}">{{ users.requested_toy.name}}</a>
+                                    <a style="color: rgb(32, 110, 235);" href="{% url 'detail' users.requested_toy.id %}">{{ users.requested_toy.name}}</a>
                                 </td>
                                 <td>{{ users.requested_toy.owner }}</td>
                                 
                                 <td>
-                                    <a href="{% url 'detail' users.sender_toy.id %}">{{ users.sender_toy.name }}</a>
+                                    <a style="color: rgb(32, 110, 235);"  href="{% url 'detail' users.sender_toy.id %}">{{ users.sender_toy.name }}</a>
                                 </td>
                                 <td>{{ users.sender_toy.owner }}</td>
                                 <td>{{ users.start_date }}</td>
