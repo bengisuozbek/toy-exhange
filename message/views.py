@@ -111,7 +111,7 @@ def user_search(request):
 @login_required(login_url='loginPage')
 def new_conversation(request, sended_username):
     from_user = request.user
-    body = "Say Hello!"
+    body = "Says Hello!"
 
     try:
         to_user = User.objects.get(username=sended_username)
