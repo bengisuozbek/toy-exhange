@@ -512,15 +512,15 @@ def detailsPage(request, pk):
                                requested_toy=product_object, notes=fnotes, start_date=fstart_date,
                                end_date=fend_date, is_accepted=False, is_ignored=False)
 
-            for i in product_requests:
-                if i.sender == request.user:
-                    if (i.sender_toy == fsender_toy) and (i.requested_toy == product_object):
-                        print("CREATED BEFORE")
-                        print('The request was created before.')
-                        return redirect(reverse('invalidRequest', args=[product_object.id]))
-                    else:
-                        c.save()
-                        return redirect('user_request_page')
+            # for i in product_requests:
+            #     if i.sender == request.user:
+            #         if (i.sender_toy == fsender_toy) and (i.requested_toy == product_object):
+            #             print("CREATED BEFORE")
+            #             print('The request was created before.')
+            #             return redirect(reverse('invalidRequest', args=[product_object.id]))
+            #         else:
+            c.save()
+            return redirect('user_request_page')
         else:
             print('Form is invalid due to date chose.')
             return redirect('invalid')
