@@ -2,6 +2,13 @@
 
 TOY EXCHANGE APPLICATION
 
+* Introduction:
+    - By using this application, people can reach more toys more easily by exchange method. Children can choose the toys they want from the application by looking at the toy photos. 
+    - Users, whether logged in or not, can access a page displaying all available toys. However, access to other sections of the platform requires users to be logged in. A protection mechanism is in place for admins, registered users, and non-registered users. Admins have the privilege to view sensitive data within the system.
+    - Users can send messages to other users regarding a toy or submit a request for it. Messaging is not real-time; users need to refresh the page to see new messages. To improve this, I plan to integrate WebSocket for real-time communication. 
+    - When a user decides to proceed with an exchange, they send a request, which the other party must approve to finalize the trade. I am working on a business plan to enhance the flow of accepted requests.
+    - Users can see the market prices of the toys they are viewing through web scraping. Information about similar products from sites like Cimri will be displayed in a dedicated section. To ensure data freshness, I plan to schedule a daily automated task to update the information.
+
 * To Login, 
     - Test User: 
         * USERNAME:   test
