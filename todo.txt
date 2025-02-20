@@ -53,7 +53,7 @@ brand eklenebilir
 17) ++++++  Forgot password çalışmıyoe *> login page 
 18) ++++++  toy product status -> reserved olmuyor
 19) ++++++  all of the toys listed by AVAILABLE 
-
+20) Sign Up'ta password restriction'ını için kullanıcıya bilgi vermek : 8+ characters
 ****
 
 

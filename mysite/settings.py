@@ -12,10 +12,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os # needed in TEMPLATES, DIRS section
-import dj_database_url # Heroku: Update database configuration from $DATABASE_URL.
+#import dj_database_url # Heroku: Update database configuration from $DATABASE_URL.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -67,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware', # is added
+    'allauth.account.middleware.AccountMiddleware', 
 
     'social_django.middleware.SocialAuthExceptionMiddleware', # is added for social auth app
 ]
@@ -98,16 +100,22 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
 # FOR HEROKU POSTGRES !
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+
 
 
 # Password validation
@@ -131,9 +139,9 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
 
-    'django.contrib.auth.backends.ModelBackend',
-
     'allauth.account.auth_backends.AuthenticationBackend',
+    
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 # Internationalization
@@ -220,8 +228,8 @@ LOGOUT_REDIRECT_URL = '/logout/'
 LOGIN_URL = 'catalog/login'
 LOGOUT_URL = 'catalog/logout'
 
-SOCIAL_AUTH_FACEBOOK_KEY = "453188142826932"
-SOCIAL_AUTH_FACEBOOK_SECRET = "93563f41be0e617641f7826f73665038"
+SOCIAL_AUTH_FACEBOOK_KEY = "xxxx"
+SOCIAL_AUTH_FACEBOOK_SECRET = "xxxx"
 #for extra info
 SOCIAL_AUTH_FACEBOOK_SCOPE = [
     'email',
@@ -235,13 +243,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'toy.exchange.application@gmail.com'
-EMAIL_HOST_PASSWORD = 'Admin2022'
+EMAIL_HOST_USER = 'MailAddress'
+EMAIL_HOST_PASSWORD = 'Password'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-CONTACT_EMAIL = 'toy.exchange.application@gmail.com'
-ADMIN_EMAIL = ['toy.exchange.application@gmail.com']
+CONTACT_EMAIL = 'MailAddress'
+ADMIN_EMAIL = ['MailAddress']
 # ADMIN_EMAILS = ['bengisuozbek1998@gmail.com', ]
 
 # Simplified static file serving.

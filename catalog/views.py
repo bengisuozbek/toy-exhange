@@ -114,7 +114,7 @@ def register(request):
         product_objects = ToyProduct.objects.filter(category__name=category)
 
     form = CreateUserForm()
-
+    
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
 
@@ -126,6 +126,7 @@ def register(request):
             return redirect('loginPage')
         else:
             print('Form is invalid.')
+            print('Form errors:', form.errors)  
             return redirect('invalid')
 
     context = {

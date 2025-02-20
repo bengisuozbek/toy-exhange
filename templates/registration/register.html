@@ -146,12 +146,13 @@
 											<div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
 
 							 -->
+										<!-- Sign In with Facebook and Google don't work for now. -->
 										<div class="d-flex justify-content-center text-center mt-4 pt-1">
-											<a href="{% provider_login_url 'facebook' method='oauth2' %}"
+											<a
 												class="text-white"><i
 													class="fab fa-facebook-f fa-lg  mx-4 px-2"></i></a>
 
-											<a href="{% provider_login_url 'google' %}" class="text-white"><i
+											<a class="text-white"><i
 													class="fab fa-google fa-lg  mx-4 px-2"></i></a>
 										</div>
 									</form>

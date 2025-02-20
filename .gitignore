@@ -8,6 +8,9 @@
 
 *.csv
 
+# Ignore virtual environments
+venv/
+
 *.DS_Store
 static/images/csv/cimri1111_0yRvGUh.csv
 .gitignore
